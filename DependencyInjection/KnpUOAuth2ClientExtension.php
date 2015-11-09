@@ -11,6 +11,16 @@ use Symfony\Component\Config\FileLocator;
 
 class KnpUOAuth2ClientExtension extends Extension
 {
+    /**
+     * @var bool
+     */
+    private $checkExternalClassExistence;
+
+    public function __construct($checkExternalClassExistence = true)
+    {
+        $this->checkExternalClassExistence = $checkExternalClassExistence;
+    }
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $processor = new Processor();
@@ -24,9 +34,8 @@ class KnpUOAuth2ClientExtension extends Extension
         if (isset($providers['facebook'])) {
             $providerConfig = $providers['facebook'];
             $class = 'League\OAuth2\Client\Provider\Facebook';
-            if (!class_exists($class)) {
-                // TODO - PUT THIS BACK!
-                //throw new \LogicException('Run `composer require league/oauth2-facebook` in order to use the "facebook" OAuth provider.');
+            if ($this->checkExternalClassExistence && !class_exists($class)) {
+                throw new \LogicException('Run `composer require league/oauth2-facebook` in order to use the "facebook" OAuth provider.');
             }
 
             $options = array(

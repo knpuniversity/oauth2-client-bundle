@@ -24,7 +24,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
     public function testFacebookProviderMakesService()
     {
         $this->configuration = new ContainerBuilder();
-        $loader = new KnpUOAuth2ClientExtension();
+        $loader = new KnpUOAuth2ClientExtension(false);
         $config = array('providers' => array('facebook' => array(
             'client_id' => 'CLIENT_ID',
             'client_secret' => 'SECRET',
