@@ -31,33 +31,75 @@ class KnpUOAuth2ClientExtension extends Extension
         $loader->load('services.xml');
 
         $providers = $config['providers'];
+
         if (isset($providers['facebook'])) {
-            $providerConfig = $providers['facebook'];
-            $class = 'League\OAuth2\Client\Provider\Facebook';
-            if ($this->checkExternalClassExistence && !class_exists($class)) {
-                throw new \LogicException('Run `composer require league/oauth2-facebook` in order to use the "facebook" OAuth provider.');
-            }
+            $this->configureFacebook($providers['facebook'], $container);
+        }
+        if (isset($providers['github'])) {
+            $this->configureGithub($providers['github'], $container);
+        }
+    }
 
-            $options = array(
-                'clientId' => $providerConfig['client_id'],
-                'clientSecret' => $providerConfig['client_secret'],
-                'graphApiVersion' => $providerConfig['graph_api_version'],
-            );
+    private function configureFacebook(array $config, ContainerBuilder $container)
+    {
+        $options = array(
+            'clientId' => $config['client_id'],
+            'clientSecret' => $config['client_secret'],
+            'graphApiVersion' => $config['graph_api_version'],
+        );
 
-            $definition = $container->register(
-                'knpu.oauth.facebook_provider',
-                $class
-            );
-            $definition->setFactory(array(
-                new Reference('knpu.oauth.provider_factory'),
-                'createProvider'
-            ));
-            $definition->setArguments(array(
-                $class,
-                $options,
-                $providerConfig['redirect_route'],
-                $providerConfig['redirect_params']
+        $this->configureProvider(
+            $container,
+            'facebook',
+            'League\OAuth2\Client\Provider\Facebook',
+            'league/oauth2-facebook',
+            $options,
+            $config['redirect_route'],
+            $config['redirect_params']
+        );
+    }
+
+    private function configureGithub(array $config, ContainerBuilder $container)
+    {
+        $options = array(
+            'clientId' => $config['client_id'],
+            'clientSecret' => $config['client_secret'],
+        );
+
+        $this->configureProvider(
+            $container,
+            'facebook',
+            'League\OAuth2\Client\Provider\Github',
+            'league/oauth2-github',
+            $options,
+            $config['redirect_route'],
+            $config['redirect_params']
+        );
+    }
+
+    private function configureProvider(ContainerBuilder $container, $name, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams)
+    {
+        if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
+            throw new \LogicException(sprintf(
+                'Run `composer require %s` in order to use the "%s" OAuth provider.',
+                $packageName,
+                $name
             ));
         }
+
+        $definition = $container->register(
+            sprintf('knpu.oauth.%s_provider', $name),
+            $providerClass
+        );
+        $definition->setFactory(array(
+            new Reference('knpu.oauth.provider_factory'),
+            'createProvider'
+        ));
+        $definition->setArguments(array(
+            $providerClass,
+            $options,
+            $redirectRoute,
+            $redirectParams
+        ));
     }
 }
