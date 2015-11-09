@@ -1,0 +1,21 @@
+{
+    "name": "knpuniversity/oauth2-client-bundle",
+    "type": "symfony-bundle",
+    "description": "Integration with league/oauth2-client to provide services",
+    "keywords": ["oauth", "oauth2"],
+    "homepage": "http://knpuniversity.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ryan Weaver",
+            "email": "ryan@knpuniversity.com"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "~2.3|~3.0",
+        "league/oauth2-client": "^1.0"
+    },
+    "autoload": {
+        "psr-4": { "KnpU\\OAuth2ClientBundle\\": "" }
+    }
+}
