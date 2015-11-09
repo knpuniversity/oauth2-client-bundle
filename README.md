@@ -1,7 +1,7 @@
 # KnpUOAuth2ClientBundle
 
 This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/)
-and allows you to easily create different "providers" are services in your container.
+and allows you to easily create different "providers" as services in your container.
 
 If you configure the `facebook` provider, then you'll have a new service
 in your container called `knpu.oauth.facebook_provider`.
