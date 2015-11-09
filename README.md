@@ -11,6 +11,7 @@ knpu_oauth2_client:
             client_id: foo
             client_secret: bar
             graph_api_version: 2.3
+            # the route that you're redirected to after
             redirect_route: connect_facebook_check
             redirect_params: {}
         github:
@@ -18,9 +19,6 @@ knpu_oauth2_client:
             client_secret: bar
             redirect_route: connect_github_check
             redirect_params: {}
-        google:
-            hosted_domain:
-        instagram:
-        linkedin:
+        # todo - add more
         # http://oauth2-client.thephpleague.com/providers/thirdparty/
 ```
