@@ -32,7 +32,6 @@ class KnpUOAuth2ClientExtension extends Extension
 
         $providers = $config['providers'];
 
-
         if (isset($providers['facebook'])) {
             $this->configureFacebook($providers['facebook'], $container);
         }
@@ -44,7 +43,6 @@ class KnpUOAuth2ClientExtension extends Extension
         if (isset($providers['google'])) {
             $this->configureGoogle($providers['google'], $container);
         }
-
     }
 
     private function configureFacebook(array $config, ContainerBuilder $container)
@@ -89,7 +87,6 @@ class KnpUOAuth2ClientExtension extends Extension
         $options = array(
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-//             'redirectUri'  => $config['redirect_route'],
             'hostedDomain' => $config['hosted_domain'],
         );
 
@@ -107,7 +104,6 @@ class KnpUOAuth2ClientExtension extends Extension
             $config['redirect_params']
         );
     }
-
 
     private function configureProvider(ContainerBuilder $container, $name, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams)
     {

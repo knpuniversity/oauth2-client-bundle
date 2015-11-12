@@ -60,7 +60,6 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-
     private function configureGoogle(NodeBuilder $builder)
     {
         $builder
