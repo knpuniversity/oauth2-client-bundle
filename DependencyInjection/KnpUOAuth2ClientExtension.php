@@ -35,8 +35,13 @@ class KnpUOAuth2ClientExtension extends Extension
         if (isset($providers['facebook'])) {
             $this->configureFacebook($providers['facebook'], $container);
         }
+
         if (isset($providers['github'])) {
             $this->configureGithub($providers['github'], $container);
+        }
+
+        if (isset($providers['google'])) {
+            $this->configureGoogle($providers['google'], $container);
         }
     }
 
@@ -68,9 +73,32 @@ class KnpUOAuth2ClientExtension extends Extension
 
         $this->configureProvider(
             $container,
-            'facebook',
+            'github',
             'League\OAuth2\Client\Provider\Github',
             'league/oauth2-github',
+            $options,
+            $config['redirect_route'],
+            $config['redirect_params']
+        );
+    }
+
+    private function configureGoogle(array $config, ContainerBuilder $container)
+    {
+        $options = array(
+            'clientId' => $config['client_id'],
+            'clientSecret' => $config['client_secret'],
+            'hostedDomain' => $config['hosted_domain'],
+        );
+
+        if (isset($config['access_type'])) {
+            $options['access_type'] = $config['access_type'];
+        }
+
+        $this->configureProvider(
+            $container,
+            'google',
+            'League\OAuth2\Client\Provider\Google',
+            'league/oauth2-google',
             $options,
             $config['redirect_route'],
             $config['redirect_params']

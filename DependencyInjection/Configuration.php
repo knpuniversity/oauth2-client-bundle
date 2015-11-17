@@ -20,6 +20,7 @@ class Configuration implements ConfigurationInterface
             ->children();
         $this->configureFacebook($providersNode);
         $this->configureGithub($providersNode);
+        $this->configureGoogle($providersNode);
         $providersNode
             ->end()
             ->end()
@@ -52,6 +53,23 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('client_id')->isRequired()->end()
                     ->scalarNode('client_secret')->isRequired()->end()
                     ->scalarNode('redirect_route')->isRequired()->end()
+                    ->arrayNode('redirect_params')
+                        ->prototype('scalar')->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    private function configureGoogle(NodeBuilder $builder)
+    {
+        $builder
+            ->arrayNode('google')
+                ->children()
+                    ->scalarNode('client_id')->isRequired()->end()
+                    ->scalarNode('client_secret')->isRequired()->end()
+                    ->scalarNode('redirect_route')->isRequired()->end()
+                    ->scalarNode('hosted_domain')->isRequired()->end()
+                    ->scalarNode('access_type')->end()
                     ->arrayNode('redirect_params')
                         ->prototype('scalar')->end()
                     ->end()
