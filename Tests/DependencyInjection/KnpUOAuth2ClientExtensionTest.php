@@ -109,6 +109,13 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         return $tests;
     }
 
+    public function testGetAllSupportedTypes()
+    {
+        $types = KnpUOAuth2ClientExtension::getAllSupportedTypes();
+
+        $this->assertTrue(in_array('facebook', $types));
+    }
+
     protected function tearDown()
     {
         unset($this->configuration);

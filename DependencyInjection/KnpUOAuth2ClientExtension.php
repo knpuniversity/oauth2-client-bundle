@@ -2,8 +2,11 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -18,8 +21,8 @@ class KnpUOAuth2ClientExtension extends Extension
     private $checkExternalClassExistence;
 
     static private $supportedProviderTypes = array(
-        'facebook' => 'configureFacebook',
-        'github' => 'configureGithub',
+        'facebook',
+        'github',
     );
 
     public function __construct($checkExternalClassExistence = true)
@@ -39,44 +42,46 @@ class KnpUOAuth2ClientExtension extends Extension
         $providers = $config['providers'];
 
         foreach ($providers as $key => $providerConfig) {
-            // manual validation
-            $requiredConfig = array('type', 'client_id', 'client_secret', 'redirect_route');
-            foreach ($requiredConfig as $requiredConfigKey) {
-                $this->validateRequiredProviderConfig($providerConfig, $requiredConfigKey, $key);
-            }
-
-            if (!isset($providerConfig['redirect_params'])) {
-                $providerConfig['redirect_params'] = array();
-            }
-
-            if (!is_array($providerConfig['redirect_params'])) {
+            // manually make sure "type" is there
+            if (!isset($providerConfig['type'])) {
                 throw new InvalidConfigurationException(sprintf(
-                    'Your "knpu_oauth2_client.providers.%s.redirect_params" config must be an array. Currently, it is a %s',
-                    $key,
-                    gettype($providerConfig['redirect_params'])
+                    'Your "knpu_oauth2_client.providers." config entry is missing the "type" key.',
+                    $key
                 ));
             }
 
             $type = $providerConfig['type'];
             unset($providerConfig['type']);
-            if (!isset(self::$supportedProviderTypes[$type])) {
+            if (!in_array($type, self::$supportedProviderTypes)) {
                 throw new InvalidConfigurationException(sprintf(
                     'The "knpu_oauth2_client.providers" config "type" key "%s" is not supported. We support (%s)',
                     $type,
-                    implode(', ', array_keys(self::$supportedProviderTypes))
+                    implode(', ', self::$supportedProviderTypes)
                 ));
             }
 
+            // process the configuration
+            $tree = new TreeBuilder();
+            $node = $tree->root('knpu_oauth2_client/providers/'.$key);
+            $this->buildConfigurationForType($node, $type);
+            $processor = new Processor();
+            $config = $processor->process($tree->buildTree(), array($providerConfig));
+
             // call the specific configuration method
-            $method = self::$supportedProviderTypes[$type];
-            $definition = $this->$method($providerConfig, $container, $key);
+            $buildProviderMethod = sprintf('build%sProvider', ucfirst($type));
+            $this->$buildProviderMethod($config, $container, $key);
         }
     }
 
-    private function configureFacebook(array $config, ContainerBuilder $container, $providerKey)
+    private function buildFacebookConfiguration(NodeBuilder $node)
     {
-        $this->validateRequiredProviderConfig($config, 'graph_api_version', $providerKey);
+        $node
+            ->scalarNode('graph_api_version')->isRequired()->end()
+        ;
+    }
 
+    private function buildFacebookProvider(array $config, ContainerBuilder $container, $providerKey)
+    {
         $options = array(
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
@@ -95,7 +100,14 @@ class KnpUOAuth2ClientExtension extends Extension
         );
     }
 
-    private function configureGithub(array $config, ContainerBuilder $container, $providerKey)
+    private function buildGithubConfiguration(NodeBuilder $node)
+    {
+        $node
+            ->scalarNode('graph_api_version')->isRequired()->end()
+        ;
+    }
+
+    private function buildGithubProvider(array $config, ContainerBuilder $container, $providerKey)
     {
         $options = array(
             'clientId' => $config['client_id'],
@@ -150,14 +162,25 @@ class KnpUOAuth2ClientExtension extends Extension
         ));
     }
 
-    private function validateRequiredProviderConfig(array $providerConfig, $requiredConfigKey, $providerKey)
+    public static function getAllSupportedTypes()
     {
-        if (!isset($providerConfig[$requiredConfigKey])) {
-            throw new InvalidConfigurationException(sprintf(
-                'Your "knpu_oauth2_client.providers.%s" config entry is missing a "%s" key.',
-                $providerKey,
-                $requiredConfigKey
-            ));
-        }
+        return self::$supportedProviderTypes;
+    }
+
+    public function buildConfigurationForType(NodeDefinition $node, $type)
+    {
+        $optionsNode = $node->children();
+        $optionsNode
+            ->scalarNode('client_id')->isRequired()->end()
+            ->scalarNode('client_secret')->isRequired()->end()
+            ->scalarNode('redirect_route')->isRequired()->end()
+            ->arrayNode('redirect_params')
+                ->prototype('scalar')
+            ->end();
+
+        // allow the specific providers to configure
+        $buildConfigMethod = sprintf('build%sConfiguration', ucfirst($type));
+        $this->$buildConfigMethod($optionsNode);
+        $optionsNode->end();
     }
 }
