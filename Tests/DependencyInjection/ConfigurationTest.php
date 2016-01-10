@@ -10,17 +10,30 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideConfigurationTests
      */
-    public function testDefaultConfig(array $startingConfig, array $expectedConfig)
+    public function testDefaultConfig(array $startingConfig, $expectedConfig)
     {
-        $processor = new Processor();
-        $config = $processor->processConfiguration(
-            new Configuration(true), array($startingConfig)
-        );
+        $expectsException = false === $expectedConfig;
 
-        $this->assertEquals(
-            $expectedConfig,
-            $config
-        );
+        $processor = new Processor();
+        try {
+            $config = $processor->processConfiguration(
+                new Configuration(true), array($startingConfig)
+            );
+
+            if ($expectsException) {
+                $this->fail('Configuration did not throw an exception!');
+            }
+
+            $this->assertEquals(
+                $expectedConfig,
+                $config
+            );
+        } catch (\Exception $e) {
+            // this is expected... unless it's not
+            if (!$expectsException) {
+                throw $e;
+            }
+        }
     }
 
     public function provideConfigurationTests()
@@ -33,6 +46,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         );
 
         $fbConfig = array(
+            'type' => 'facebook',
             'client_id' => 'ABC',
             'client_secret' => '123',
             'graph_api_version' => '2.3',
@@ -40,8 +54,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'redirect_params' => array('foo' => 'bars')
         );
         $tests[] = array(
-            array('providers' => array('facebook' => $fbConfig)),
-            array('providers' => array('facebook' => $fbConfig)),
+            array('providers' => array('facebook1' => $fbConfig)),
+            array('providers' => array('facebook1' => $fbConfig)),
+        );
+
+        $tests[] = array(
+            array('providers' => array('facebook2' => 'some_string')),
+            false
         );
 
         return $tests;
