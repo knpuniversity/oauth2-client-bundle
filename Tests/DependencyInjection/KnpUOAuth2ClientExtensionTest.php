@@ -3,7 +3,10 @@
 namespace KnpU\OAuth2ClientBundle\Tests\DependencyInjection;
 
 use KnpU\OAuth2ClientBundle\DependencyInjection\KnpUOAuth2ClientExtension;
+use Symfony\Component\Config\Definition\ArrayNode;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -52,6 +55,49 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
             ),
             $definition->getArguments()
         );
+    }
+
+    /**
+     * @dataProvider provideTypesAndConfig
+     */
+    public function testAllProvidersCreateDefinition($type, array $inputConfig)
+    {
+        $this->configuration = new ContainerBuilder();
+        $loader = new KnpUOAuth2ClientExtension(false);
+        $inputConfig['type'] = $type;
+        $config = array('providers' => array('test_client' => $inputConfig));
+        $loader->load(array($config), $this->configuration);
+
+        $this->assertTrue($this->configuration->hasDefinition('knpu.oauth2.test_client'));
+    }
+
+    public function provideTypesAndConfig()
+    {
+        $tests = array();
+        $extension = new KnpUOAuth2ClientExtension();
+
+        foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
+            $tree = new TreeBuilder();
+            $configNode = $tree->root('testing');
+            $extension->buildConfigurationForType($configNode, $type);
+
+            /** @var ArrayNode $arrayNode */
+            $arrayNode = $tree->buildTree();
+            $config = array();
+            // loop through and assign some random values
+            foreach ($arrayNode->getChildren() as $child) {
+                /** @var NodeInterface $child */
+                if ($child instanceof ArrayNode) {
+                    $config[$child->getName()] = array();
+                } else {
+                    $config[$child->getName()] = rand();
+                }
+            }
+
+            $tests[] = array($type, $config);
+        }
+
+        return $tests;
     }
 
     /**
