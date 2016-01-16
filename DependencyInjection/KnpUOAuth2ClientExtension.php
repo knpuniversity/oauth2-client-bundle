@@ -2,11 +2,11 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -20,9 +20,11 @@ class KnpUOAuth2ClientExtension extends Extension
      */
     private $checkExternalClassExistence;
 
+    private $configurators = array();
+
     static private $supportedProviderTypes = array(
-        'facebook',
-        'github',
+        'facebook' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator',
+        'github' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator',
     );
 
     public function __construct($checkExternalClassExistence = true)
@@ -52,7 +54,7 @@ class KnpUOAuth2ClientExtension extends Extension
 
             $type = $providerConfig['type'];
             unset($providerConfig['type']);
-            if (!in_array($type, self::$supportedProviderTypes)) {
+            if (!isset(self::$supportedProviderTypes[$type])) {
                 throw new InvalidConfigurationException(sprintf(
                     'The "knpu_oauth2_client.providers" config "type" key "%s" is not supported. We support (%s)',
                     $type,
@@ -67,63 +69,19 @@ class KnpUOAuth2ClientExtension extends Extension
             $processor = new Processor();
             $config = $processor->process($tree->buildTree(), array($providerConfig));
 
-            // call the specific configuration method
-            $buildProviderMethod = sprintf('build%sProvider', ucfirst($type));
-            $this->$buildProviderMethod($config, $container, $key);
+            $configurator = $this->getConfigurator($type);
+            // hey, we should add the provider service!
+            $this->configureProvider(
+                $container,
+                $type,
+                $key,
+                $configurator->getProviderClass(),
+                $configurator->getPackagistName(),
+                $configurator->getProviderOptions($config),
+                $config['redirect_route'],
+                $config['redirect_params']
+            );
         }
-    }
-
-    private function buildFacebookConfiguration(NodeBuilder $node)
-    {
-        $node
-            ->scalarNode('graph_api_version')->isRequired()->end()
-        ;
-    }
-
-    private function buildFacebookProvider(array $config, ContainerBuilder $container, $providerKey)
-    {
-        $options = array(
-            'clientId' => $config['client_id'],
-            'clientSecret' => $config['client_secret'],
-            'graphApiVersion' => $config['graph_api_version'],
-        );
-
-        $this->configureProvider(
-            $container,
-            'facebook',
-            $providerKey,
-            'League\OAuth2\Client\Provider\Facebook',
-            'league/oauth2-facebook',
-            $options,
-            $config['redirect_route'],
-            $config['redirect_params']
-        );
-    }
-
-    private function buildGithubConfiguration(NodeBuilder $node)
-    {
-        $node
-            ->scalarNode('graph_api_version')->isRequired()->end()
-        ;
-    }
-
-    private function buildGithubProvider(array $config, ContainerBuilder $container, $providerKey)
-    {
-        $options = array(
-            'clientId' => $config['client_id'],
-            'clientSecret' => $config['client_secret'],
-        );
-
-        $this->configureProvider(
-            $container,
-            'github',
-            $providerKey,
-            'League\OAuth2\Client\Provider\Github',
-            'league/oauth2-github',
-            $options,
-            $config['redirect_route'],
-            $config['redirect_params']
-        );
     }
 
     /**
@@ -164,10 +122,25 @@ class KnpUOAuth2ClientExtension extends Extension
 
     public static function getAllSupportedTypes()
     {
-        return self::$supportedProviderTypes;
+        return array_keys(self::$supportedProviderTypes);
     }
 
-    public function buildConfigurationForType(NodeDefinition $node, $type)
+    /**
+    * @param string $type
+    * @return ProviderConfiguratorInterface
+    */
+   public function getConfigurator($type)
+   {
+       if (!isset($this->configurators[$type])) {
+           $class = self::$supportedProviderTypes[$type];
+
+           $this->configurators[$type] = new $class();
+       }
+
+       return $this->configurators[$type];
+   }
+
+    private function buildConfigurationForType(NodeDefinition $node, $type)
     {
         $optionsNode = $node->children();
         $optionsNode
@@ -178,9 +151,9 @@ class KnpUOAuth2ClientExtension extends Extension
                 ->prototype('scalar')
             ->end();
 
-        // allow the specific providers to configure
-        $buildConfigMethod = sprintf('build%sConfiguration', ucfirst($type));
-        $this->$buildConfigMethod($optionsNode);
+        // allow the specific provider to add more options
+        $this->getConfigurator($type)
+            ->buildConfiguration($optionsNode);
         $optionsNode->end();
     }
 }

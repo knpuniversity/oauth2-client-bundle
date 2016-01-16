@@ -77,13 +77,19 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new KnpUOAuth2ClientExtension();
 
         foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
+            $configurator = $extension->getConfigurator($type);
             $tree = new TreeBuilder();
             $configNode = $tree->root('testing');
-            $extension->buildConfigurationForType($configNode, $type);
+            $configurator->buildConfiguration($configNode->children(), $type);
 
             /** @var ArrayNode $arrayNode */
             $arrayNode = $tree->buildTree();
-            $config = array();
+            $config = array(
+                'client_id' => 'CLIENT_ID_TEST',
+                'client_secret' => 'CLIENT_SECRET_TEST',
+                'redirect_route' => 'go_there',
+                'redirect_params' => array()
+            );
             // loop through and assign some random values
             foreach ($arrayNode->getChildren() as $child) {
                 /** @var NodeInterface $child */
