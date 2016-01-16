@@ -164,29 +164,29 @@ class FacebookController extends Controller
 # app/config/config.yml
 knpu_oauth2_client:
     providers:
-        # the key "facebook_client" can be anything: it determines the service name
-        # will create a service: "knpu.oauth2.facebook_client"
+        # will create service: "knpu.oauth2.facebook_client"
+        # composer require league/oauth2-facebook
         facebook_client:
-            # must be one of the valid types
+            # must be "facebook" - it activates that type!
             type: facebook
-            client_id: foo
-            client_secret: bar
-            graph_api_version: 2.3
-            # the route that you're redirected to after
+            client_id: Your_Real_Client_Id
+            client_secret: Your_Real_Client_Secret
+            # a route name you'll create
             redirect_route: connect_facebook_check
             redirect_params: {}
+            graph_api_version: v2.5
 
-        # will create a service: "knpu.oauth2.github_client"
+        # will create service: "knpu.oauth2.github_client"
+        # composer require league/oauth2-github
         github_client:
-            # must be one of the valid types
+            # must be "github" - it activates that type!
             type: github
-            client_id: foo
-            client_secret: bar
+            client_id: Your_Real_Client_Id
+            client_secret: Your_Real_Client_Secret
+            # a route name you'll create
             redirect_route: connect_github_check
             redirect_params: {}
-
-        # todo - add more
-        # http://oauth2-client.thephpleague.com/providers/thirdparty/
+            
 ```
 
 ## Contributing

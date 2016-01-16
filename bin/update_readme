@@ -1,0 +1,97 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * Run this script to automatically update the Configuratio section
+ * of the README.md file.
+ */
+
+require __DIR__.'/../vendor/autoload.php';
+
+use KnpU\OAuth2ClientBundle\DependencyInjection\KnpUOAuth2ClientExtension;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ArrayNode;
+use Symfony\Component\Config\Definition\NodeInterface;
+
+$sectionTemplate = <<<EOF
+        # will create service: "knpu.oauth2.%PROVIDER_NAME%_client"
+        # composer require %PACKAGE_NAME%
+        %PROVIDER_NAME%_client:
+            # must be "%PROVIDER_NAME%" - it activates that type!
+            type: %PROVIDER_NAME%
+            client_id: Your_Real_Client_Id
+            client_secret: Your_Real_Client_Secret
+            # a route name you'll create
+            redirect_route: connect_%PROVIDER_NAME%_check
+            redirect_params: {}
+            %ADDITIONAL_CONFIG%
+EOF;
+
+$extension = new KnpUOAuth2ClientExtension();
+$configSections = [];
+foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
+    $tree = new TreeBuilder();
+    $configNode = $tree->root('generating_readme');
+    $configurator = $extension->getConfigurator($type);
+    $configurator->buildConfiguration($configNode->children());
+
+    /** @var ArrayNode $arrayNode */
+    $arrayNode = $tree->buildTree();
+    $customKeys = array();
+
+    foreach ($arrayNode->getChildren() as $child) {
+        /** @var NodeInterface $child */
+
+        if ($child instanceof ArrayNode) {
+            $defaultValue = $child->getDefaultValue()
+                // *should* ? come out looking like valid-ish YAML
+                ? json_encode($child->getDefaultValue())
+                : '{}';
+        } else {
+            $defaultValue = $child->getDefaultValue()
+                ? $child->getDefaultValue()
+                : "''";
+        }
+
+        $customKeys[] = sprintf('%s: %s', $child->getName(), $defaultValue);
+    }
+
+    $newSection = str_replace('%PROVIDER_NAME%', $type, $sectionTemplate);
+    $newSection = str_replace('%PACKAGE_NAME%', $configurator->getPackagistName(), $newSection);
+    $newSection = str_replace(
+        '%ADDITIONAL_CONFIG%',
+        implode("\n            ", $customKeys),
+        $newSection
+    );
+    $configSections[] = $newSection;
+}
+
+$configurationText = <<<EOF
+## Configuration
+
+```yml
+# app/config/config.yml
+knpu_oauth2_client:
+    providers:
+%PROVIDERS_ENTRIES%
+```
+
+## Contributing
+EOF;
+
+$finalConfigurationText = str_replace(
+    '%PROVIDERS_ENTRIES%',
+    implode("\n\n", $configSections),
+    $configurationText
+);
+
+$currentContents = file_get_contents(__DIR__.'/../README.md');
+$startPos = strpos($currentContents, '## Configuration');
+$endPos = strpos($currentContents, '## Contributing');
+
+$newReadmeContents = substr($currentContents, 0, $startPos);
+$newReadmeContents .= $finalConfigurationText;
+$newReadmeContents .= substr($currentContents, $endPos+15);
+
+file_put_contents(__DIR__.'/../README.md', $newReadmeContents);
+echo "\n\n    README.md Updated!\n\n";
