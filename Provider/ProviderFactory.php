@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle;
+namespace KnpU\OAuth2ClientBundle\Provider;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
