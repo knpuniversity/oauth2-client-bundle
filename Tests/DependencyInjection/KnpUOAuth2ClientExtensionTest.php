@@ -40,12 +40,25 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         $loader->load(array($config), $this->configuration);
 
         $definition = $this->configuration->getDefinition('knpu.oauth2.facebook_client');
-        $factory = $definition->getFactory();
-        // make sure the factory is correct
-        $this->assertEquals(
-            array(new Reference('knpu.oauth.provider_factory'), 'createProvider'),
-            $factory
-        );
+
+        if (method_exists($definition, 'getFactory')) {
+            $factory = $definition->getFactory();
+            // make sure the factory is correct
+            $this->assertEquals(
+                array(new Reference('knpu.oauth.provider_factory'), 'createProvider'),
+                $factory
+            );
+        } else {
+            // 2.3-2.5 compat
+            $factoryService = $definition->getFactoryService();
+            // make sure the factory is correct
+            $this->assertEquals(
+                'knpu.oauth.provider_factory',
+                $factoryService
+            );
+            $this->assertEquals('createProvider', $definition->getFactoryMethod());
+        }
+
         $this->assertEquals(
             array(
                 'League\OAuth2\Client\Provider\Facebook',
