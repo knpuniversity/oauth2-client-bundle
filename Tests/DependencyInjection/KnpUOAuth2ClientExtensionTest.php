@@ -181,6 +181,12 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('facebook', $types));
     }
 
+    public function testGetAlias()
+    {
+        $extension = new KnpUOAuth2ClientExtension();
+        $this->assertEquals('knpu_oauth2_client', $extension->getAlias());
+    }
+
     protected function tearDown()
     {
         unset($this->configuration);

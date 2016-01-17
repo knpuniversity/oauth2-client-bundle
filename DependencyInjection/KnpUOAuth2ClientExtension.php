@@ -147,6 +147,16 @@ class KnpUOAuth2ClientExtension extends Extension
        return $this->configurators[$type];
    }
 
+    /**
+     * Overridden so the alias isn't "knp_uo_auth2_client"
+     *
+     * @return string
+     */
+    public function getAlias()
+    {
+        return 'knpu_oauth2_client';
+    }
+
     private function buildConfigurationForType(NodeDefinition $node, $type)
     {
         $optionsNode = $node->children();
