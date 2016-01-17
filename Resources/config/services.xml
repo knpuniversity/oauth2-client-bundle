@@ -9,5 +9,4 @@
             <argument type="service" id="router" />
         </service>
     </services>
-
 </container>
