@@ -108,10 +108,17 @@ class KnpUOAuth2ClientExtension extends Extension
             sprintf('knpu.oauth2.%s', $providerKey),
             $providerClass
         );
-        $definition->setFactory(array(
-            new Reference('knpu.oauth.provider_factory'),
-            'createProvider'
-        ));
+
+        if (method_exists($definition, 'setFactory')) {
+            $definition->setFactory(array(
+                new Reference('knpu.oauth.provider_factory'),
+                'createProvider'
+            ));
+        } else {
+            // for 2.3-2.5 compatibility
+            $definition->setFactoryService('knpu.oauth.provider_factory');
+            $definition->setFactoryMethod('createProvider');
+        }
         $definition->setArguments(array(
             $providerClass,
             $options,
