@@ -191,7 +191,7 @@ knpu_oauth2_client:
 
 ## Contributing
 
-Of course, open source if fueled by everyone's ability to give just a little
+Of course, open source is fueled by everyone's ability to give just a little
 bit of their time for the greater good. If you'd like to see a feature, you
 can request it - but creating a pull request is an even better way to get
 things done.
