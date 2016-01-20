@@ -73,7 +73,7 @@ knpu_oauth2_client:
             # see the controller example below
             redirect_route: connect_facebook_check
             redirect_params: {}
-            graph_api_version: 2.3
+            graph_api_version: v2.3
 ```
 
 **For a full configuration reference and all the "types" supported,
