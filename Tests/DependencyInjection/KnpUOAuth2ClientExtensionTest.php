@@ -60,7 +60,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
 
         $clientDefinition = $this->configuration->getDefinition('knpu.oauth2.client.facebook');
         $this->assertEquals(
-            'KnpU\OAuth2ClientBundle\Provider\OAuth2Client',
+            'KnpU\OAuth2ClientBundle\Client\OAuth2Client',
             $clientDefinition->getClass()
         );
         $this->assertEquals(

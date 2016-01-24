@@ -13,9 +13,11 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase
         $kernel = new TestKernel('dev', true);
         $kernel->boot();
         $container = $kernel->getContainer();
-        $this->assertTrue($container->has('knpu.oauth2.my_facebook_client'));
+        $this->assertTrue($container->has('knpu.oauth2.client.my_facebook'));
 
-        $fbProvider = $container->get('knpu.oauth2.my_facebook_client');
-        $this->assertInstanceOf('League\OAuth2\Client\Provider\Facebook', $fbProvider);
+        /** @var \KnpU\OAuth2ClientBundle\Client\OAuth2Client $client */
+        $client = $container->get('knpu.oauth2.client.my_facebook');
+        $this->assertInstanceOf('KnpU\OAuth2ClientBundle\Client\OAuth2Client', $client);
+        $this->assertInstanceOf('League\OAuth2\Client\Provider\Facebook', $client->getOAuth2Provider());
     }
 }

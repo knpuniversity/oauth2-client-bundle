@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle\Provider;
+namespace KnpU\OAuth2ClientBundle\Client;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;

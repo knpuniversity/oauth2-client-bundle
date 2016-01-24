@@ -126,7 +126,7 @@ class KnpUOAuth2ClientExtension extends Extension
 
         $clientDefinition = $container->register(
             sprintf('knpu.oauth2.client.%s', $providerKey),
-            'KnpU\OAuth2ClientBundle\Provider\OAuth2Client'
+            'KnpU\OAuth2ClientBundle\Client\OAuth2Client'
         );
         $clientDefinition->setArguments(array(
             new Reference($providerServiceKey),

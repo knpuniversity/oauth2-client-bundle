@@ -30,7 +30,7 @@ class TestKernel extends Kernel
 
             $container->loadFromExtension('knpu_oauth2_client', array(
                 'providers' => array(
-                    'my_facebook_client' => array(
+                    'my_facebook' => array(
                         'type' => 'facebook',
                         'client_id' => 'FOOO',
                         'client_secret' => 'BAR',

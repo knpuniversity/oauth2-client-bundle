@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.3|~3.0",
-        "symfony/dependency-injection": "~2.7|~3.0",
+        "symfony/framework-bundle": "~2.4|~3.0",
+        "symfony/dependency-injection": "~2.8|~3.0",
         "symfony/routing": "~2.3|~3.0",
         "symfony/http-foundation": "~2.4|~3.0",
         "league/oauth2-client": "^1.0"
