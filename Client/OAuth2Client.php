@@ -2,7 +2,11 @@
 
 namespace KnpU\OAuth2ClientBundle\Client;
 
+use KnpU\OAuth2ClientBundle\Extension\InvalidStateException;
+use KnpU\OAuth2ClientBundle\Extension\MissingAuthorizationCodeException;
 use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -12,7 +16,7 @@ class OAuth2Client
 
     private $requestStack;
 
-    private $stateless = false;
+    private $isStateless = false;
 
     const OAUTH2_SESSION_STATE_KEY = 'knpu.oauth2_client_state';
 
@@ -27,7 +31,7 @@ class OAuth2Client
      */
     public function setAsStateless()
     {
-        $this->stateless = true;
+        $this->isStateless = true;
     }
 
     /**
@@ -47,7 +51,7 @@ class OAuth2Client
         $url = $this->provider->getAuthorizationUrl($options);
 
         // set the state (unless we're stateless)
-        if (!$this->stateless) {
+        if (!$this->isStateless) {
             $this->getSession()->set(
                 self::OAUTH2_SESSION_STATE_KEY,
                 $this->provider->getState()
@@ -55,6 +59,62 @@ class OAuth2Client
         }
 
         return new RedirectResponse($url);
+    }
+
+    /**
+     * Call this after the user is redirected back to get the access token.
+     *
+     * @return \League\OAuth2\Client\Token\AccessToken
+     *
+     * @throws InvalidStateException
+     * @throws MissingAuthorizationCodeException
+     * @throws IdentityProviderException If token cannot be fetched
+     */
+    public function getAccessToken()
+    {
+        if (!$this->isStateless) {
+            $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
+            $actualState = $this->getCurrentRequest()->query->get('state');
+            if (!$actualState || ($actualState !== $expectedState)) {
+                throw new InvalidStateException('Invalid state');
+            }
+        }
+
+        $code = $this->getCurrentRequest()->query->get('code');
+
+        if (!$code) {
+            throw new MissingAuthorizationCodeException('No "code" query parameter was found!');
+        }
+
+        return $this->provider->getAccessToken('authorization_code', array(
+            'code' => $code
+        ));
+    }
+
+    /**
+     * Returns the "User" information (called a resource owner).
+     *
+     * @param AccessToken $accessToken
+     * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
+     */
+    public function fetchUserFromToken(AccessToken $accessToken)
+    {
+        return $this->provider->getResourceOwner($accessToken);
+    }
+
+    /**
+     * Shortcut to fetch the access token and user all at once.
+     *
+     * Only use this if you don't need the access token, but only
+     * need the user.
+     *
+     * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
+     */
+    public function fetchUser()
+    {
+        $token = $this->getAccessToken();
+
+        return $this->fetchUserFromToken($token);
     }
 
     /**

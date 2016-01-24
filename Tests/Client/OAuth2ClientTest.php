@@ -3,6 +3,7 @@
 namespace KnpU\OAuth2ClientBundle\Tests\DependencyInjection;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
+use Symfony\Component\HttpFoundation\Request;
 
 class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -67,5 +68,34 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
             'Symfony\Component\HttpFoundation\RedirectResponse',
             $response
         );
+    }
+
+    public function testGetAccessToken()
+    {
+        $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
+        $session = $this->prophesize('Symfony\Component\HttpFoundation\Session\SessionInterface');
+
+        $request = new Request();
+        $request->query->set('state', 'THE_STATE');
+        $request->query->set('code', 'CODE_ABC');
+        $request->setSession($session->reveal());
+
+        $requestStack->getCurrentRequest()
+            ->willReturn($request);
+
+        $session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+            ->willReturn('THE_STATE');
+
+        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $provider = $this->prophesize('League\OAuth2\Client\Provider\AbstractProvider');
+        $provider->getAccessToken('authorization_code', array('code' => 'CODE_ABC'))
+            ->willReturn($expectedToken->reveal());
+
+        $client = new OAuth2Client(
+            $provider->reveal(),
+            $requestStack->reveal()
+        );
+        $actualToken = $client->getAccessToken();
+        $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 }
