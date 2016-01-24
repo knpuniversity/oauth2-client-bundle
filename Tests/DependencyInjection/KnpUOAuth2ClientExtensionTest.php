@@ -29,7 +29,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension(false);
-        $config = array('providers' => array('facebook_client' => array(
+        $config = array('providers' => array('facebook' => array(
             'type' => 'facebook',
             'client_id' => 'CLIENT_ID',
             'client_secret' => 'SECRET',
@@ -39,9 +39,9 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         )));
         $loader->load(array($config), $this->configuration);
 
-        $definition = $this->configuration->getDefinition('knpu.oauth2.facebook_client');
+        $providerDefinition = $this->configuration->getDefinition('knpu.oauth2.provider.facebook');
 
-        $factory = $definition->getFactory();
+        $factory = $providerDefinition->getFactory();
         // make sure the factory is correct
         $this->assertEquals(
             array(new Reference('knpu.oauth.provider_factory'), 'createProvider'),
@@ -55,7 +55,20 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
                 'the_route_name',
                 array('route_params' => 'foo')
             ),
-            $definition->getArguments()
+            $providerDefinition->getArguments()
+        );
+
+        $clientDefinition = $this->configuration->getDefinition('knpu.oauth2.client.facebook');
+        $this->assertEquals(
+            'KnpU\OAuth2ClientBundle\Provider\OAuth2Client',
+            $clientDefinition->getClass()
+        );
+        $this->assertEquals(
+            [
+                new Reference('knpu.oauth2.provider.facebook'),
+                new Reference('request_stack'),
+            ],
+            $clientDefinition->getArguments()
         );
     }
 
@@ -67,10 +80,10 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension(false);
         $inputConfig['type'] = $type;
-        $config = array('providers' => array('test_client' => $inputConfig));
+        $config = array('providers' => array('test_service' => $inputConfig));
         $loader->load(array($config), $this->configuration);
 
-        $this->assertTrue($this->configuration->hasDefinition('knpu.oauth2.test_client'));
+        $this->assertTrue($this->configuration->hasDefinition('knpu.oauth2.provider.test_service'));
     }
 
     public function provideTypesAndConfig()

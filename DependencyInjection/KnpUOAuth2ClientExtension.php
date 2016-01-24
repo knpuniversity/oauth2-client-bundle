@@ -71,7 +71,7 @@ class KnpUOAuth2ClientExtension extends Extension
 
             $configurator = $this->getConfigurator($type);
             // hey, we should add the provider service!
-            $this->configureProvider(
+            $this->configureProviderAndClient(
                 $container,
                 $type,
                 $key,
@@ -94,7 +94,7 @@ class KnpUOAuth2ClientExtension extends Extension
      * @param string $redirectRoute Route name for the redirect URL
      * @param array $redirectParams Route params for the redirect URL
      */
-    private function configureProvider(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams)
+    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams)
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
             throw new \LogicException(sprintf(
@@ -104,22 +104,36 @@ class KnpUOAuth2ClientExtension extends Extension
             ));
         }
 
-        $definition = $container->register(
-            sprintf('knpu.oauth2.%s', $providerKey),
+        $providerServiceKey = sprintf('knpu.oauth2.provider.%s', $providerKey);
+
+        $providerDefinition = $container->register(
+            $providerServiceKey,
             $providerClass
         );
+        $providerDefinition->setPublic(false);
 
-        $definition->setFactory(array(
+        $providerDefinition->setFactory(array(
             new Reference('knpu.oauth.provider_factory'),
             'createProvider'
         ));
 
-        $definition->setArguments(array(
+        $providerDefinition->setArguments(array(
             $providerClass,
             $options,
             $redirectRoute,
             $redirectParams
         ));
+
+        $clientDefinition = $container->register(
+            sprintf('knpu.oauth2.client.%s', $providerKey),
+            'KnpU\OAuth2ClientBundle\Provider\OAuth2Client'
+        );
+        $clientDefinition->setArguments(array(
+            new Reference($providerServiceKey),
+            new Reference('request_stack')
+        ));
+
+        // todo - set to stateless if requested
     }
 
     public static function getAllSupportedTypes()
