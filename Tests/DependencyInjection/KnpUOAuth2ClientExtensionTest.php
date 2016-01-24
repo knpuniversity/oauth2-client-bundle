@@ -103,7 +103,8 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
                 'client_id' => 'CLIENT_ID_TEST',
                 'client_secret' => 'CLIENT_SECRET_TEST',
                 'redirect_route' => 'go_there',
-                'redirect_params' => array()
+                'redirect_params' => array(),
+                'use_state' => rand(0, 1) == 0
             );
             // loop through and assign some random values
             foreach ($arrayNode->getChildren() as $child) {

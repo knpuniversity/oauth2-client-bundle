@@ -79,7 +79,8 @@ class KnpUOAuth2ClientExtension extends Extension
                 $configurator->getPackagistName(),
                 $configurator->getProviderOptions($config),
                 $config['redirect_route'],
-                $config['redirect_params']
+                $config['redirect_params'],
+                $config['use_state']
             );
         }
     }
@@ -93,8 +94,9 @@ class KnpUOAuth2ClientExtension extends Extension
      * @param array $options        Options passed to when constructing the provider
      * @param string $redirectRoute Route name for the redirect URL
      * @param array $redirectParams Route params for the redirect URL
+     * @param bool $useState
      */
-    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams)
+    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState)
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
             throw new \LogicException(sprintf(
@@ -133,7 +135,10 @@ class KnpUOAuth2ClientExtension extends Extension
             new Reference('request_stack')
         ));
 
-        // todo - set to stateless if requested
+        // if stateless, do it!
+        if (!$useState) {
+            $clientDefinition->addMethodCall('setAsStateless');
+        }
     }
 
     public static function getAllSupportedTypes()
@@ -174,8 +179,10 @@ class KnpUOAuth2ClientExtension extends Extension
             ->scalarNode('client_secret')->isRequired()->end()
             ->scalarNode('redirect_route')->isRequired()->end()
             ->arrayNode('redirect_params')
-                ->prototype('scalar')
-            ->end();
+                ->prototype('scalar')->end()
+            ->end()
+            ->booleanNode('use_state')->defaultValue(true)->end()
+        ;
 
         // allow the specific provider to add more options
         $this->getConfigurator($type)
