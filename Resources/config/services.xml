@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="knpu.oauth.provider_factory" class="KnpU\OAuth2ClientBundle\Provider\ProviderFactory" public="false">
+        <service id="knpu.oauth.provider_factory" class="KnpU\OAuth2ClientBundle\DependencyInjection\ProviderFactory" public="false">
             <argument type="service" id="router" />
         </service>
     </services>

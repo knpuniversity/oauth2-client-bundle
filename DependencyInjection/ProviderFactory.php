@@ -1,9 +1,14 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle\Provider;
+namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Used to create the individual Provider objects in the service container.
+ *
+ * You won't need to use this directly.
+ */
 class ProviderFactory
 {
     private $generator;
