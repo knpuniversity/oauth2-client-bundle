@@ -39,9 +39,12 @@ class OAuth2Client
      */
     public function redirect(array $scopes = array())
     {
-        $url = $this->provider->getAuthorizationUrl([
-            'scopes' => $scopes,
-        ]);
+        $options = array();
+        if (!empty($scopes)) {
+            $options['scopes'] = $scopes;
+        }
+
+        $url = $this->provider->getAuthorizationUrl($options);
 
         // set the state (unless we're stateless)
         if (!$this->stateless) {
@@ -72,7 +75,7 @@ class OAuth2Client
         $request = $this->requestStack->getCurrentRequest();
 
         if (!$request) {
-            throw new \LogicException('There is not "current request", and it is needed to perform this action');
+            throw new \LogicException('There is no "current request", and it is needed to perform this action');
         }
 
         return $request;
