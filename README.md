@@ -172,30 +172,36 @@ $longLivedToken = $provider->getLongLivedAccessToken($accessToken);
 ```yml
 # app/config/config.yml
 knpu_oauth2_client:
-    providers:
-        # will create service: "knpu.oauth2.facebook_client"
+    clients:
+        # will create service: "knpu.oauth2.client.facebook"
         # composer require league/oauth2-facebook
-        facebook_client:
+        facebook:
             # must be "facebook" - it activates that type!
             type: facebook
-            client_id: Your_Real_Client_Id
-            client_secret: Your_Real_Client_Secret
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %facebook_client_id%
+            client_secret: %facebook_client_secret%
             # a route name you'll create
             redirect_route: connect_facebook_check
             redirect_params: {}
             graph_api_version: v2.5
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
 
-        # will create service: "knpu.oauth2.github_client"
+        # will create service: "knpu.oauth2.client.github"
         # composer require league/oauth2-github
-        github_client:
+        github:
             # must be "github" - it activates that type!
             type: github
-            client_id: Your_Real_Client_Id
-            client_secret: Your_Real_Client_Secret
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %github_client_id%
+            client_secret: %github_client_secret%
             # a route name you'll create
             redirect_route: connect_github_check
             redirect_params: {}
             
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
 ```
 
 ## Contributing

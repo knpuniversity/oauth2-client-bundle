@@ -14,17 +14,20 @@ use Symfony\Component\Config\Definition\ArrayNode;
 use Symfony\Component\Config\Definition\NodeInterface;
 
 $sectionTemplate = <<<EOF
-        # will create service: "knpu.oauth2.%PROVIDER_NAME%_client"
+        # will create service: "knpu.oauth2.client.%PROVIDER_NAME%"
         # composer require %PACKAGE_NAME%
-        %PROVIDER_NAME%_client:
+        %PROVIDER_NAME%:
             # must be "%PROVIDER_NAME%" - it activates that type!
             type: %PROVIDER_NAME%
-            client_id: Your_Real_Client_Id
-            client_secret: Your_Real_Client_Secret
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %%PROVIDER_NAME%_client_id%
+            client_secret: %%PROVIDER_NAME%_client_secret%
             # a route name you'll create
             redirect_route: connect_%PROVIDER_NAME%_check
             redirect_params: {}
             %ADDITIONAL_CONFIG%
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
 EOF;
 
 $extension = new KnpUOAuth2ClientExtension();
@@ -72,7 +75,7 @@ $configurationText = <<<EOF
 ```yml
 # app/config/config.yml
 knpu_oauth2_client:
-    providers:
+    clients:
 %PROVIDERS_ENTRIES%
 ```
 
