@@ -1,8 +1,12 @@
 # KnpUOAuth2ClientBundle
 
-This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/)
-and allows you to easily configure an "OAuth 2 Provider" service that can help you
-"Connect to Facebook", or really connect to and talk with an OAuth2 API.
+Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
+
+* "Social" authentication / login
+* "Connect with Facebook" type of functionality
+* Fetching access keys via OAuth2 to be used with an API
+
+This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/).
 
 ## Installation
 
@@ -29,30 +33,22 @@ public function registerBundles()
 }
 ```
 
-Awesome! Now, you'll want to configure a provider.
+Awesome! Now, you'll want to configure a client.
 
-## Configuring a Provider (e.g. Facebook)
+## Configuring a Client (e.g. for Facebook)
 
-The league/oauth2-client library that this bundle uses can connect
-to many "OAuth2 Providers", like Facebook, GitHub and more. For a
-full list, see [Provider Client Libraries](https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDERS.md).
-
-Suppose you want to connect with Facebook. Here are the steps:
+You'll need to configure *one* client for *each* OAuth2 server
+(GitHub, Facebook, etc) that you want to talk to.
 
 ### Step 1) Download the client library
 
-Each "provider" (e.g. Facebook, GitHub) requires a separate
-library to connect with it (and these have their own documentation).
+Choose the one you want from this list and install it
+via Composer:
 
-Find the library you need from the
-[Provider Client Libraries](https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDERS.md)
-and then follow its instructions to download it.
-
-For the Facebook client library, this means:
-
-```bash
-composer require league/oauth2-facebook
-```
+| OAuth2 Provider                                                 | Install                                     |
+| --------------------------------------------------------------- | ------------------------------------------- |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)     | composer require league/oauth2-facebook     |
+| [GitHub](https://...)                                           | composer require league/oauth2-github       |
 
 ### Step 2) Configure the provider
 
@@ -63,9 +59,10 @@ this will look something like this.
 # app/config/config.yml
 knpu_oauth2_client:
     providers:
-        # the key "facebook_client" can be anything: it determines the service name
-        # will create a service: "knpu.oauth2.facebook_client"
-        facebook_client:
+        # the key "facebook_main" can be anything, it
+        # will create a service: "knpu.oauth2.client.facebook_main"
+        facebook_main:
+            # this will be one of the supported types
             type: facebook
             client_id: YOUR_FACEBOOK_APP_ID
             client_secret: YOUR_FACEBOOK_APP_SECRET
@@ -76,28 +73,26 @@ knpu_oauth2_client:
             graph_api_version: 2.3
 ```
 
-**For a full configuration reference and all the "types" supported,
-see [Configuration](#Configuration).**
+**See the full configuration for *all* the supported "types"
+in the [Configuration](#Configuration) section.**
 
 The `type` is `facebook` because we're connecting to Facebook. You
 can see all the supported `type` values below in the [Configuration](#Configuration)
 section.
 
-Most of the configuration will be the same for Github, Facebook or
-any other type. But some configuration may vary (like `graph_api_version`,
-which is specific to Facebook).
+### Step 3) Use the Client Service
 
-### Step 3) Use the service
+Each client you configured now has its own service that can be
+used to communicate with the OAuth2 server.
 
-Since we used the key `facebook_client` above, we now have a service
-called `knpu.oauth2.facebook_client` that can be used in a controller:
+To start the OAuth process, you'll need to create a route and
+controller that redirects to Facebook. Because we used the
+key `facebook_main` above, you can simply:
 
 ```php
 // ...
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -110,45 +105,33 @@ class FacebookController extends Controller
      */
     public function connectAction()
     {
-        /** @var $provider \League\OAuth2\Client\Provider\Facebook */
-        $provider = $this->container
-            ->get('knpu.oauth2.facebook_client');
-
-        $url = $provider->getAuthorizationUrl(array(
-            // use whatever "scopes" you need
-            'scopes' => array('email'),
-        ));
-
         // will redirect to Facebook!
-        return new RedirectResponse($url);
+        return $this->get('oauth2.registry')
+            ->getClient('facebook_main') // key used in config.yml
+            ->redirect();
     }
 
     /**
      * After going to Facebook, you're redirect back here
      * because this is the "redirect_route" you configured
+     * in config.yml
      *
      * @Route("/connect/facebook/check", name="connect_facebook_check")
      */
     public function connectAction(Request $request)
     {
-        /** @var $provider \League\OAuth2\Client\Provider\Facebook */
-        $provider = $this->container
-            ->get('knpu.oauth2.facebook_client');
+        /** @var \KnpU\OAuth2ClientBundle\Client\OAuth2Client $client */
+        $client = $this->get('oauth2.registry')
+            ->getClient('facebook_main');
 
         try {
-            /** @var \League\OAuth2\Client\Token\AccessToken $accessToken */
-            $accessToken = $provider->getAccessToken('authorization_code', [
-                'code' => $request->get('code')
-            ]);
-
-            // getResourceOwner returns a ResourceOwnerInterface, but often
-            // individual providers (e.g. Facebook) return a more-specific
-            // object with more useful methods
+            // the exact class depends on which provider you're using
             /** @var \League\OAuth2\Client\Provider\FacebookUser $user */
-            $user = $provider->getResourceOwner($accessToken);
+            $user = $client->fetchUser();
 
             // do something with all this new power!
-            return new Response('Hi there '.$user->getFirstName());
+            $user->getFirstName();
+            // ...
         } catch (IdentityProviderException $e) {
             // something went wrong!
             // probably you should return the reason to the user
@@ -156,6 +139,32 @@ class FacebookController extends Controller
         }
     }
 }
+```
+
+Now, just go (or link to) `/connect/facebook` and watch the flow!
+
+There are multiple ways to access the objects you need to get your
+work done:
+
+```php
+// KnpU\OAuth2ClientBundle\Client\ClientRegistry
+$registry = $this->get('oauth2.registry');
+
+// two ways to access the client
+$client = $registry->getClient('facebook_main');
+$client = $this->get('knpu.oauth2.client.facebook_main');
+
+$scopes = ['public_profile', 'email'];
+$client->redirect($scopes);
+
+// get access token and then user
+$accessToken = $client->getAccessToken();
+$user = $client->fetchUserFromToken($accessToken);
+
+// access the underlying "provider" from league/oauth2-client
+$provider = $client->getOAuth2Provider();
+// if you're using Facebook, then this works:
+$longLivedToken = $provider->getLongLivedAccessToken($accessToken);
 ```
 
 ## Configuration
