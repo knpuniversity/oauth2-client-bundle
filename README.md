@@ -78,10 +78,10 @@ knpu_oauth2_client:
 ```
 
 **See the full configuration for *all* the supported "types"
-in the [Configuration](#Configuration) section.**
+in the [Configuration](#configuration) section.**
 
 The `type` is `facebook` because we're connecting to Facebook. You
-can see all the supported `type` values below in the [Configuration](#Configuration)
+can see all the supported `type` values below in the [Configuration](#configuration)
 section.
 
 ### Step 3) Use the Client Service
