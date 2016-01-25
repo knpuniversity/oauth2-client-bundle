@@ -43,6 +43,7 @@ class KnpUOAuth2ClientExtension extends Extension
 
         $providers = $config['providers'];
 
+        $clientServiceKeys = array();
         foreach ($providers as $key => $providerConfig) {
             // manually make sure "type" is there
             if (!isset($providerConfig['type'])) {
@@ -70,8 +71,9 @@ class KnpUOAuth2ClientExtension extends Extension
             $config = $processor->process($tree->buildTree(), array($providerConfig));
 
             $configurator = $this->getConfigurator($type);
-            // hey, we should add the provider service!
-            $this->configureProviderAndClient(
+
+            // hey, we should add the provider/client service!
+            $clientServiceKey = $this->configureProviderAndClient(
                 $container,
                 $type,
                 $key,
@@ -82,7 +84,12 @@ class KnpUOAuth2ClientExtension extends Extension
                 $config['redirect_params'],
                 $config['use_state']
             );
+
+            $clientServiceKeys[$key] = $clientServiceKey;
         }
+
+        $container->getDefinition('knpu.oauth2.registry')
+            ->replaceArgument(1, $clientServiceKeys);
     }
 
     /**
@@ -115,7 +122,7 @@ class KnpUOAuth2ClientExtension extends Extension
         $providerDefinition->setPublic(false);
 
         $providerDefinition->setFactory(array(
-            new Reference('knpu.oauth.provider_factory'),
+            new Reference('knpu.oauth2.provider_factory'),
             'createProvider'
         ));
 
@@ -126,8 +133,9 @@ class KnpUOAuth2ClientExtension extends Extension
             $redirectParams
         ));
 
+        $clientServiceKey = sprintf('knpu.oauth2.client.%s', $providerKey);
         $clientDefinition = $container->register(
-            sprintf('knpu.oauth2.client.%s', $providerKey),
+            $clientServiceKey,
             'KnpU\OAuth2ClientBundle\Client\OAuth2Client'
         );
         $clientDefinition->setArguments(array(
@@ -139,6 +147,8 @@ class KnpUOAuth2ClientExtension extends Extension
         if (!$useState) {
             $clientDefinition->addMethodCall('setAsStateless');
         }
+
+        return $clientServiceKey;
     }
 
     public static function getAllSupportedTypes()

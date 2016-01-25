@@ -44,7 +44,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         $factory = $providerDefinition->getFactory();
         // make sure the factory is correct
         $this->assertEquals(
-            array(new Reference('knpu.oauth.provider_factory'), 'createProvider'),
+            array(new Reference('knpu.oauth2.provider_factory'), 'createProvider'),
             $factory
         );
 
