@@ -28,4 +28,14 @@ class GithubProviderConfigurator implements ProviderConfiguratorInterface
     {
         return 'league/oauth2-github';
     }
+
+    public function getLibraryHomepage()
+    {
+        return 'https://github.com/thephpleague/oauth2-github';
+    }
+
+    public function getProviderDisplayName()
+    {
+        return 'GitHub';
+    }
 }

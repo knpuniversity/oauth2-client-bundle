@@ -34,4 +34,14 @@ class FacebookProviderConfigurator implements ProviderConfiguratorInterface
     {
         return 'league/oauth2-facebook';
     }
+
+    public function getLibraryHomepage()
+    {
+        return 'https://github.com/thephpleague/oauth2-facebook';
+    }
+
+    public function getProviderDisplayName()
+    {
+        return 'Facebook';
+    }
 }

@@ -29,4 +29,18 @@ interface ProviderConfiguratorInterface
      * @return string
      */
     public function getPackagistName();
+
+    /**
+     * Returns the URL to the homepage for this library.
+     *
+     * @return string
+     */
+    public function getLibraryHomepage();
+
+    /**
+     * Display name like "Facebook" or "GitHub" that this integrates with.
+     *
+     * @return string
+     */
+    public function getProviderDisplayName();
 }

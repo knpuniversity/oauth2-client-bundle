@@ -45,10 +45,17 @@ You'll need to configure *one* client for *each* OAuth2 server
 Choose the one you want from this list and install it
 via Composer:
 
-| OAuth2 Provider                                                 | Install                                     |
-| --------------------------------------------------------------- | ------------------------------------------- |
-| [Facebook](https://github.com/thephpleague/oauth2-facebook)     | composer require league/oauth2-facebook     |
-| [GitHub](https://...)                                           | composer require league/oauth2-github       |
+<a name="client-downloader-table"></a>
+
+Choose the one you want from this list and install it
+via Composer:
+
+| OAuth2 Provider                                              | Install                                  |
+| ------------------------------------------------------------ | ---------------------------------------- |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook  |
+| [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github    |
+
+<span name="end-client-downloader-table"></span>
 
 ### Step 2) Configure the provider
 
