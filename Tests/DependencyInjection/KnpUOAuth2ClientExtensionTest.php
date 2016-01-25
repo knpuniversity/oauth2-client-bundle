@@ -15,7 +15,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
     /** @var ContainerBuilder */
     protected $configuration;
 
-    public function testNoProvidersMakesNoServices()
+    public function testNoClientMakesNoServices()
     {
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension();
@@ -29,7 +29,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension(false);
-        $config = array('providers' => array('facebook' => array(
+        $config = array('clients' => array('facebook' => array(
             'type' => 'facebook',
             'client_id' => 'CLIENT_ID',
             'client_secret' => 'SECRET',
@@ -75,15 +75,16 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideTypesAndConfig
      */
-    public function testAllProvidersCreateDefinition($type, array $inputConfig)
+    public function testAllClientsCreateDefinition($type, array $inputConfig)
     {
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension(false);
         $inputConfig['type'] = $type;
-        $config = array('providers' => array('test_service' => $inputConfig));
+        $config = array('clients' => array('test_service' => $inputConfig));
         $loader->load(array($config), $this->configuration);
 
         $this->assertTrue($this->configuration->hasDefinition('knpu.oauth2.provider.test_service'));
+        $this->assertTrue($this->configuration->hasDefinition('knpu.oauth2.client.test_service'));
     }
 
     public function provideTypesAndConfig()
@@ -126,11 +127,11 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      * @dataProvider provideBadConfiguration
      */
-    public function testBadProvidersConfiguration(array $badProvidersConfig)
+    public function testBadClientsConfiguration(array $badClientsConfig)
     {
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension(false);
-        $config = array('providers' => $badProvidersConfig);
+        $config = array('clients' => $badClientsConfig);
         $loader->load(array($config), $this->configuration);
     }
 

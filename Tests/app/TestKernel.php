@@ -29,7 +29,7 @@ class TestKernel extends Kernel
             ));
 
             $container->loadFromExtension('knpu_oauth2_client', array(
-                'providers' => array(
+                'clients' => array(
                     'my_facebook' => array(
                         'type' => 'facebook',
                         'client_id' => 'FOOO',

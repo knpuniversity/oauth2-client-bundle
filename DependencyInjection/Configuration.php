@@ -14,7 +14,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->arrayNode('providers')
+            ->arrayNode('clients')
                 ->prototype('array')
                     ->prototype('variable')->end()
                 ->end()

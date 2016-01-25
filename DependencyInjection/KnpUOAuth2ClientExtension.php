@@ -41,23 +41,23 @@ class KnpUOAuth2ClientExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $providers = $config['providers'];
+        $clientConfigurations = $config['clients'];
 
         $clientServiceKeys = array();
-        foreach ($providers as $key => $providerConfig) {
+        foreach ($clientConfigurations as $key => $clientConfig) {
             // manually make sure "type" is there
-            if (!isset($providerConfig['type'])) {
+            if (!isset($clientConfig['type'])) {
                 throw new InvalidConfigurationException(sprintf(
-                    'Your "knpu_oauth2_client.providers." config entry is missing the "type" key.',
+                    'Your "knpu_oauth2_client.clients." config entry is missing the "type" key.',
                     $key
                 ));
             }
 
-            $type = $providerConfig['type'];
-            unset($providerConfig['type']);
+            $type = $clientConfig['type'];
+            unset($clientConfig['type']);
             if (!isset(self::$supportedProviderTypes[$type])) {
                 throw new InvalidConfigurationException(sprintf(
-                    'The "knpu_oauth2_client.providers" config "type" key "%s" is not supported. We support (%s)',
+                    'The "knpu_oauth2_client.clients" config "type" key "%s" is not supported. We support (%s)',
                     $type,
                     implode(', ', self::$supportedProviderTypes)
                 ));
@@ -65,10 +65,10 @@ class KnpUOAuth2ClientExtension extends Extension
 
             // process the configuration
             $tree = new TreeBuilder();
-            $node = $tree->root('knpu_oauth2_client/providers/'.$key);
+            $node = $tree->root('knpu_oauth2_client/clients/'.$key);
             $this->buildConfigurationForType($node, $type);
             $processor = new Processor();
-            $config = $processor->process($tree->buildTree(), array($providerConfig));
+            $config = $processor->process($tree->buildTree(), array($clientConfig));
 
             $configurator = $this->getConfigurator($type);
 
@@ -102,6 +102,7 @@ class KnpUOAuth2ClientExtension extends Extension
      * @param string $redirectRoute Route name for the redirect URL
      * @param array $redirectParams Route params for the redirect URL
      * @param bool $useState
+     * @return string The client service id
      */
     private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState)
     {

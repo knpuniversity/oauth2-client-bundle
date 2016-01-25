@@ -26,7 +26,7 @@ class ClientRegistry
     {
         if (!isset($this->serviceMap[$key])) {
             throw new \InvalidArgumentException(sprintf(
-                'There is no OAuth2 provider "%s". Available are: %s',
+                'There is no OAuth2 client called "%s". Available are: %s',
                 $key,
                 implode(', ', array_keys($this->serviceMap))
             ));

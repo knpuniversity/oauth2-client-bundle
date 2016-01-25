@@ -42,7 +42,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $tests[] = array(
             array(),
-            array('providers' => array())
+            array('clients' => array())
         );
 
         $fbConfig = array(
@@ -54,12 +54,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'redirect_params' => array('foo' => 'bars')
         );
         $tests[] = array(
-            array('providers' => array('facebook1' => $fbConfig)),
-            array('providers' => array('facebook1' => $fbConfig)),
+            array('clients' => array('facebook1' => $fbConfig)),
+            array('clients' => array('facebook1' => $fbConfig)),
         );
 
         $tests[] = array(
-            array('providers' => array('facebook2' => 'some_string')),
+            array('clients' => array('facebook2' => 'some_string')),
             false
         );
 
