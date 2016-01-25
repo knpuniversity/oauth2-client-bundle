@@ -114,9 +114,6 @@ $readmeContents = file_get_contents(__DIR__.'/../README.md');
 $installTemplateText = <<<EOF
 <a name="client-downloader-table"></a>
 
-Choose the one you want from this list and install it
-via Composer:
-
 %INSTALL_TABLE%
 
 <span name="end-client-downloader-table"></span>

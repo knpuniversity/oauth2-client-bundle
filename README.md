@@ -47,9 +47,6 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-Choose the one you want from this list and install it
-via Composer:
-
 | OAuth2 Provider                                              | Install                                  |
 | ------------------------------------------------------------ | ---------------------------------------- |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook  |
