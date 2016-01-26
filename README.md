@@ -51,7 +51,8 @@ via Composer:
 | ------------------------------------------------------------ | ---------------------------------------- |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook  |
 | [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github    |
-| [GitHub](https://github.com/thephpleague/oauth2-linkedin)      | composer require league/oauth2-linkedin    |
+| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)  | composer require league/oauth2-linkedin  |
+
 <span name="end-client-downloader-table"></span>
 
 ### Step 2) Configure the provider
@@ -206,15 +207,21 @@ knpu_oauth2_client:
             
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
-    linkedin_main:
-            # this will be one of the supported types
+
+        # will create service: "knpu.oauth2.client.linkedin"
+        # composer require league/oauth2-linkedin
+        linkedin:
+            # must be "linkedin" - it activates that type!
             type: linkedin
+            # add and configure client_id and client_secret in parameters.yml
             client_id: %linkedin_client_id%
             client_secret: %linkedin_client_secret%
-            # the route that you're redirected to after
-            # see the controller example below
+            # a route name you'll create
             redirect_route: connect_linkedin_check
             redirect_params: {}
+            
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
 ```
 
 ## Contributing
