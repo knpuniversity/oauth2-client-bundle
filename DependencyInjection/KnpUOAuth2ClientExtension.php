@@ -25,6 +25,7 @@ class KnpUOAuth2ClientExtension extends Extension
     static private $supportedProviderTypes = array(
         'facebook' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator',
         'github' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator',
+        'linkedin' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator',
     );
 
     public function __construct($checkExternalClassExistence = true)
