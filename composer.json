@@ -22,6 +22,7 @@
         "psr-4": { "KnpU\\OAuth2ClientBundle\\": "" }
     },
     "require-dev": {
-        "league/oauth2-facebook": "^1.1"
+        "league/oauth2-facebook": "^1.1",
+        "phpunit/phpunit": "5.1.*"
     }
 }
