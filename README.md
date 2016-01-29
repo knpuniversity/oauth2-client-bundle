@@ -123,7 +123,7 @@ class FacebookController extends Controller
      *
      * @Route("/connect/facebook/check", name="connect_facebook_check")
      */
-    public function connectAction(Request $request)
+    public function connectCheckAction(Request $request)
     {
         /** @var \KnpU\OAuth2ClientBundle\Client\OAuth2Client $client */
         $client = $this->get('oauth2.registry')
