@@ -7,8 +7,15 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 class GoogleProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)
-    {
-        // no custom options
+    {    
+       $node
+            ->scalarNode('access_type')
+                ->defaultValue('online')
+            ->end()
+            ->scalarNode('hosted_domain')
+                ->defaultValue('')
+            ->end()
+        ;
     }
 
     public function getProviderClass()
@@ -21,6 +28,8 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
         return array(
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
+            'accessType' => $config['access_type'],
+            'hostedDomain' => $config['hosted_domain']
         );
     }
 
