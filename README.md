@@ -53,6 +53,7 @@ via Composer:
 | [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github    |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)  | composer require league/oauth2-linkedin  |
 | [Google](https://github.com/thephpleague/oauth2-google)      | composer require league/oauth2-google    |
+| [VK](https://github.com/j4k/oauth2-vkontakte)                | composer require j4k/oauth2-vkontakte    |
 
 <span name="end-client-downloader-table"></span>
 
@@ -239,6 +240,21 @@ knpu_oauth2_client:
             # access_type: ''
             # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline
             # hosted_domain: ''
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.vk"
+        # composer require j4k/oauth2-vkontakte
+        vk:
+            # must be "vk" - it activates that type!
+            type: vk
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %vk_client_id%
+            client_secret: %vk_client_secret%
+            # a route name you'll create
+            redirect_route: connect_vk_check
+            redirect_params: {}
+            
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```

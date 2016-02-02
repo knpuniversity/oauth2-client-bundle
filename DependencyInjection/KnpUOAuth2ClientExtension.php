@@ -27,6 +27,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'github' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator',
         'linkedin' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator',
         'google' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator',
+        'vk' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VkProviderConfigurator',
     );
 
     public function __construct($checkExternalClassExistence = true)
