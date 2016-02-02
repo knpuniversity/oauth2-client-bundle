@@ -235,8 +235,8 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_google_check
             redirect_params: {}
-            access_type: ''
-            hosted_domain: ''
+            # access_type: ''
+            # hosted_domain: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
