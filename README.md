@@ -52,7 +52,8 @@ via Composer:
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook  |
 | [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github    |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)  | composer require league/oauth2-linkedin  |
-| [Google](https://github.com/thephpleague/oauth2-google)  | composer require league/oauth2-google  |
+| [Google](https://github.com/thephpleague/oauth2-google)      | composer require league/oauth2-google    |
+
 <span name="end-client-downloader-table"></span>
 
 ### Step 2) Configure the provider
@@ -222,6 +223,7 @@ knpu_oauth2_client:
             
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
+
         # will create service: "knpu.oauth2.client.google"
         # composer require league/oauth2-google
         google:
@@ -233,11 +235,8 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_google_check
             redirect_params: {}
-            #Optional value for sending hd parameter. More detail: https://developers.google.com/accounts/docs/OAuth2Login#hd-param
-            hosted_domain: http://www.example.com 
-            #Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline
-            access_type: online
-            
+            access_type: ''
+            hosted_domain: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
