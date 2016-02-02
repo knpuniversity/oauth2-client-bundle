@@ -92,6 +92,10 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
                 : "''";
         }
 
+        if ($child->getInfo()) {
+            $customKeys[] = '# '.$child->getInfo();
+        }
+
         // if not required, comment out, it's extra
         $keyString = $child->isRequired() ? '' : '# ';
         $customKeys[] = $keyString . sprintf(

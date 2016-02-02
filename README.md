@@ -235,7 +235,9 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_google_check
             redirect_params: {}
+            # Optional value for sending hd parameter. More detail: https://developers.google.com/accounts/docs/OAuth2Login#hd-param
             # access_type: ''
+            # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline
             # hosted_domain: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
