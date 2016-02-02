@@ -9,12 +9,8 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
     public function buildConfiguration(NodeBuilder $node)
     {    
        $node
-            ->scalarNode('access_type')
-                ->defaultValue('online')
-            ->end()
-            ->scalarNode('hosted_domain')
-                ->defaultValue('')
-            ->end()
+            ->scalarNode('access_type')->end()
+            ->scalarNode('hosted_domain')->end()
         ;
     }
 
