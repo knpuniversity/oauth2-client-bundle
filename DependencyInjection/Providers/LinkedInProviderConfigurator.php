@@ -38,4 +38,9 @@ class LinkedInProviderConfigurator implements ProviderConfiguratorInterface
     {
         return 'LinkedIn';
     }
+
+    public function getCustomClientClass()
+    {
+        return;
+    }
 }

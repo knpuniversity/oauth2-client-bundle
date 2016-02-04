@@ -17,7 +17,7 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase
 
         /** @var \KnpU\OAuth2ClientBundle\Client\OAuth2Client $client */
         $client = $container->get('knpu.oauth2.client.my_facebook');
-        $this->assertInstanceOf('KnpU\OAuth2ClientBundle\Client\OAuth2Client', $client);
+        $this->assertInstanceOf('KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient', $client);
         $this->assertInstanceOf('League\OAuth2\Client\Provider\Facebook', $client->getOAuth2Provider());
 
         $client2 = $container->get('knpu.oauth2.registry')

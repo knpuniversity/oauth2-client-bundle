@@ -44,4 +44,9 @@ class FacebookProviderConfigurator implements ProviderConfiguratorInterface
     {
         return 'Facebook';
     }
+
+    public function getCustomClientClass()
+    {
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient';
+    }
 }

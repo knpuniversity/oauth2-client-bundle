@@ -48,4 +48,9 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
     {
         return 'Google';
     }
+
+    public function getCustomClientClass()
+    {
+        return;
+    }
 }

@@ -38,4 +38,9 @@ class GithubProviderConfigurator implements ProviderConfiguratorInterface
     {
         return 'GitHub';
     }
+
+    public function getCustomClientClass()
+    {
+        return;
+    }
 }

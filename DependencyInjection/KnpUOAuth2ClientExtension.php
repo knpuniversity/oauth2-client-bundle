@@ -81,6 +81,7 @@ class KnpUOAuth2ClientExtension extends Extension
                 $type,
                 $key,
                 $configurator->getProviderClass(),
+                $configurator->getCustomClientClass() ? $configurator->getCustomClientClass() : 'KnpU\OAuth2ClientBundle\Client\OAuth2Client',
                 $configurator->getPackagistName(),
                 $configurator->getProviderOptions($config),
                 $config['redirect_route'],
@@ -100,6 +101,7 @@ class KnpUOAuth2ClientExtension extends Extension
      * @param string $providerType  The "type" used in the config - e.g. "facebook"
      * @param string $providerKey   The config key used for this - e.g. "facebook_client", "my_facebook"
      * @param string $providerClass Provider class
+     * @param string $clientClass   Class to use for the Client
      * @param string $packageName   Packagist package name required
      * @param array $options        Options passed to when constructing the provider
      * @param string $redirectRoute Route name for the redirect URL
@@ -107,7 +109,7 @@ class KnpUOAuth2ClientExtension extends Extension
      * @param bool $useState
      * @return string The client service id
      */
-    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState)
+    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState)
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
             throw new \LogicException(sprintf(
@@ -140,7 +142,7 @@ class KnpUOAuth2ClientExtension extends Extension
         $clientServiceKey = sprintf('knpu.oauth2.client.%s', $providerKey);
         $clientDefinition = $container->register(
             $clientServiceKey,
-            'KnpU\OAuth2ClientBundle\Client\OAuth2Client'
+            $clientClass
         );
         $clientDefinition->setArguments(array(
             new Reference($providerServiceKey),
