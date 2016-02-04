@@ -1,0 +1,214 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * Run this script to automatically update the Configuratio section
+ * of the README.md file.
+ */
+
+require __DIR__.'/../vendor/autoload.php';
+
+use KnpU\OAuth2ClientBundle\DependencyInjection\KnpUOAuth2ClientExtension;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ArrayNode;
+use Symfony\Component\Config\Definition\NodeInterface;
+
+function replaceInString($startTextMarker, $endTextMarker, $fullText, $replacementText)
+{
+    $startPos = strpos($fullText, $startTextMarker);
+    $endPos = strpos($fullText, $endTextMarker);
+
+    if ($startPos === false || $endPos === false) {
+        throw new \Exception('Could not find start or end text! '.$startTextMarker.' '.$endTextMarker);
+    }
+
+    $originalContents = $fullText;
+    $newContents = substr($originalContents, 0, $startPos);
+    $newContents .= $replacementText;
+    $newContents .= substr($originalContents, $endPos+strlen($endTextMarker));
+
+    return $newContents;
+}
+
+$sectionTemplate = <<<EOF
+        # will create service: "knpu.oauth2.client.%PROVIDER_NAME%"
+        # composer require %PACKAGE_NAME%
+        %PROVIDER_NAME%:
+            # must be "%PROVIDER_NAME%" - it activates that type!
+            type: %PROVIDER_NAME%
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %%PROVIDER_NAME%_client_id%
+            client_secret: %%PROVIDER_NAME%_client_secret%
+            # a route name you'll create
+            redirect_route: connect_%PROVIDER_NAME%_check
+            redirect_params: {}
+            %ADDITIONAL_CONFIG%
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+EOF;
+
+$extension = new KnpUOAuth2ClientExtension();
+$configSections = [];
+$installTreeDetails = [
+    'longest_name_and_url' => 0,
+    'longest_package_name' => 0,
+    'types' => []
+];
+foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
+    $tree = new TreeBuilder();
+    $configNode = $tree->root('generating_readme');
+    $configurator = $extension->getConfigurator($type);
+    $configurator->buildConfiguration($configNode->children());
+
+    /** @var ArrayNode $arrayNode */
+    $arrayNode = $tree->buildTree();
+    $customKeys = array();
+
+    $installTreeDetails['types'][$type] = [
+        'package' => $configurator->getPackagistName(),
+        'provider_name' => $configurator->getProviderDisplayName(),
+        'homepage' => $configurator->getLibraryHomepage(),
+    ];
+    if (strlen($configurator->getPackagistName()) > $installTreeDetails['longest_package_name']) {
+        $installTreeDetails['longest_package_name'] = strlen($configurator->getPackagistName());
+    }
+
+    $nameAndUrlLength = strlen($configurator->getProviderDisplayName().$configurator->getLibraryHomepage());
+    if ($nameAndUrlLength > $installTreeDetails['longest_name_and_url']) {
+        $installTreeDetails['longest_name_and_url'] = $nameAndUrlLength;
+    }
+
+    foreach ($arrayNode->getChildren() as $child) {
+        /** @var NodeInterface $child */
+
+        if ($child instanceof ArrayNode) {
+            $defaultValue = $child->getDefaultValue()
+                // *should* ? come out looking like valid-ish YAML
+                ? json_encode($child->getDefaultValue())
+                : '{}';
+        } else {
+            $defaultValue = $child->getDefaultValue()
+                ? $child->getDefaultValue()
+                : "''";
+        }
+
+        if ($child->getInfo()) {
+            $customKeys[] = '# '.$child->getInfo();
+        }
+
+        // if not required, comment out, it's extra
+        $keyString = $child->isRequired() ? '' : '# ';
+        $customKeys[] = $keyString . sprintf(
+            '%s: %s', $child->getName(), $defaultValue
+        );
+    }
+
+    $newSection = str_replace('%PROVIDER_NAME%', $type, $sectionTemplate);
+    $newSection = str_replace('%PACKAGE_NAME%', $configurator->getPackagistName(), $newSection);
+    $newSection = str_replace(
+        '%ADDITIONAL_CONFIG%',
+        implode("\n            ", $customKeys),
+        $newSection
+    );
+    $configSections[] = $newSection;
+}
+
+$readmeContents = file_get_contents(__DIR__.'/../README.md');
+
+/*
+ * START UPDATE INSTALL TREE
+ */
+
+$installTemplateText = <<<EOF
+<a name="client-downloader-table"></a>
+
+%INSTALL_TABLE%
+
+<span name="end-client-downloader-table"></span>
+EOF;
+
+
+$longestNameAndUrl = $installTreeDetails['longest_name_and_url'];
+$longestPackageName = $installTreeDetails['longest_package_name'];
+
+// setup the header line
+$installTable = '| OAuth2 Provider';
+$neededSpaces = $longestNameAndUrl - 9;
+$installTable .= str_repeat(' ', $neededSpaces);
+$installTable .= '| Install';
+$neededSpaces = $longestPackageName + 12;
+$installTable .= str_repeat(' ', $neededSpaces);
+$installTable .= '|';
+// adding the next line, with | ---- | ---- |
+$installTable .= "\n";
+$installTable .= '| '.str_repeat('-', $longestNameAndUrl+5).' | ';
+$installTable .= str_repeat('-', $longestNameAndUrl-15).' |';
+
+$lines = [];
+foreach ($installTreeDetails['types'] as $typeConfig) {
+    $line = sprintf(
+        '| [%s](%s) _SPACES1_ | composer require %s _SPACES2_ |',
+        $typeConfig['provider_name'],
+        $typeConfig['homepage'],
+        $typeConfig['package']
+    );
+
+    $spaces1 = $longestNameAndUrl - strlen($typeConfig['provider_name'].$typeConfig['homepage']);
+    $spaces2 = $longestPackageName - strlen($typeConfig['package']);
+
+    $line = str_replace('_SPACES1_', str_repeat(' ', $spaces1), $line);
+    $line = str_replace('_SPACES2_', str_repeat(' ', $spaces2), $line);
+
+    $lines[] = $line;
+}
+$installTable .= "\n".implode("\n", $lines);
+$finalInstallText = str_replace(
+    '%INSTALL_TABLE%',
+    $installTable,
+    $installTemplateText
+);
+
+$readmeContents = replaceInString(
+    '<a name="client-downloader-table"></a>',
+    '<span name="end-client-downloader-table"></span>',
+    $readmeContents,
+    $finalInstallText
+);
+
+
+
+/*
+ * START UPDATE CONFIGURATION
+ */
+$configurationText = <<<EOF
+## Configuration
+
+```yml
+# app/config/config.yml
+knpu_oauth2_client:
+    clients:
+%PROVIDERS_ENTRIES%
+```
+
+## Contributing
+EOF;
+
+$finalConfigurationText = str_replace(
+    '%PROVIDERS_ENTRIES%',
+    implode("\n\n", $configSections),
+    $configurationText
+);
+
+$readmeContents = replaceInString(
+    '## Configuration',
+    '## Contributing',
+    $readmeContents,
+    $finalConfigurationText
+);
+
+/*
+ * END UPDATE CONFIGURATION
+ */
+
+file_put_contents(__DIR__.'/../README.md', $readmeContents);
+echo "\n\n    README.md Updated!\n\n";
