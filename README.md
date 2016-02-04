@@ -65,7 +65,7 @@ this will look something like this.
 ```yml
 # app/config/config.yml
 knpu_oauth2_client:
-    providers:
+    clients:
         # the key "facebook_main" can be anything, it
         # will create a service: "knpu.oauth2.client.facebook_main"
         facebook_main:
