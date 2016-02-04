@@ -76,7 +76,8 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension(false);
-        $config = array('providers' => array('google' => array(
+        $config = array('clients' => array('google' => array(
+            'type' => 'google',
             'client_id' => 'CLIENT_ID',
             'client_secret' => 'SECRET',
             'redirect_route' => 'the_route_name',
@@ -86,11 +87,11 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         )));
         $loader->load(array($config), $this->configuration);
 
-        $definition = $this->configuration->getDefinition('knpu.oauth.google_provider');
+        $definition = $this->configuration->getDefinition('knpu.oauth2.provider.google');
         $factory = $definition->getFactory();
         // make sure the factory is correct
         $this->assertEquals(
-            array(new Reference('knpu.oauth.provider_factory'), 'createProvider'),
+            array(new Reference('knpu.oauth2.provider_factory'), 'createProvider'),
             $factory
         );
 
@@ -101,7 +102,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
                     'clientId' => 'CLIENT_ID',
                     'clientSecret' => 'SECRET',
                     'hostedDomain' => 'fakedomain.com',
-                    'access_type' => 'offline'
+                    'accessType' => 'offline'
                 ),
                 'the_route_name',
                 array('route_params' => 'foo')
