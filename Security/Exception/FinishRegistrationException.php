@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle\Exception;
+namespace KnpU\OAuth2ClientBundle\Security\Exception;
 
 use Exception;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

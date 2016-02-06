@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle\Extension;
+namespace KnpU\OAuth2ClientBundle\Exception;
 
 /**
  * Thrown if the "state" is invalid after the auth code redirect

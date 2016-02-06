@@ -1,12 +1,12 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle\Authenticator;
+namespace KnpU\OAuth2ClientBundle\Security\Authenticator;
 
-use KnpU\OAuth2ClientBundle\Exception\NoAuthCodeAuthenticationException;
-use KnpU\OAuth2ClientBundle\Extension\MissingAuthorizationCodeException;
-use KnpU\OAuth2ClientBundle\Helper\FinishRegistrationBehavior;
-use KnpU\OAuth2ClientBundle\Helper\PreviousUrlHelper;
-use KnpU\OAuth2ClientBundle\Helper\SaveAuthFailureMessage;
+use KnpU\OAuth2ClientBundle\Security\Exception\NoAuthCodeAuthenticationException;
+use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
+use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
+use KnpU\OAuth2ClientBundle\Security\Helper\PreviousUrlHelper;
+use KnpU\OAuth2ClientBundle\Security\Helper\SaveAuthFailureMessage;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;

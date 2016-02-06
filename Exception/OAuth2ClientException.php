@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle\Extension;
+namespace KnpU\OAuth2ClientBundle\Exception;
 
 /**
  * Generic exception interface for this library

@@ -4,33 +4,41 @@ namespace KnpU\OAuth2ClientBundle\Tests\DependencyInjection;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
 {
+    private $requestStack;
+    /** @var Request */
+    private $request;
+    private $session;
+    private $provider;
+
+    public function setup()
+    {
+        $this->requestStack = new RequestStack();
+        $this->session = $this->prophesize('Symfony\Component\HttpFoundation\Session\SessionInterface');
+        $this->provider = $this->prophesize('League\OAuth2\Client\Provider\AbstractProvider');
+
+        $this->request = new Request();
+        $this->request->setSession($this->session->reveal());
+
+        $this->requestStack->push($this->request);
+    }
+
     public function testRedirectWithState()
     {
-        $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
-        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
-        $session = $this->prophesize('Symfony\Component\HttpFoundation\Session\SessionInterface');
-
-        $requestStack->getCurrentRequest()
-            ->willReturn($request->reveal());
-
-        $request->getSession()
-            ->willReturn($session->reveal());
-
-        $provider = $this->prophesize('League\OAuth2\Client\Provider\AbstractProvider');
-        $provider->getAuthorizationUrl(['scopes' => ['scope1', 'scope2']])
+        $this->provider->getAuthorizationUrl(['scopes' => ['scope1', 'scope2']])
             ->willReturn('http://coolOAuthServer.com/authorize');
-        $provider->getState()
+        $this->provider->getState()
             ->willReturn('SOME_RANDOM_STATE');
 
-        $session->set(OAuth2Client::OAUTH2_SESSION_STATE_KEY, 'SOME_RANDOM_STATE')
+        $this->session->set(OAuth2Client::OAUTH2_SESSION_STATE_KEY, 'SOME_RANDOM_STATE')
             ->shouldBeCalled();
 
         $client = new OAuth2Client(
-            $provider->reveal(),
-            $requestStack->reveal()
+            $this->provider->reveal(),
+            $this->requestStack
         );
 
         $response = $client->redirect(['scope1', 'scope2']);
@@ -51,12 +59,11 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
         $requestStack->getCurrentRequest()
             ->shouldNotBeCalled();
 
-        $provider = $this->prophesize('League\OAuth2\Client\Provider\AbstractProvider');
-        $provider->getAuthorizationUrl([])
+        $this->provider->getAuthorizationUrl([])
             ->willReturn('http://example.com');
 
         $client = new OAuth2Client(
-            $provider->reveal(),
+            $this->provider->reveal(),
             $requestStack->reveal()
         );
         $client->setAsStateless();
@@ -72,30 +79,54 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAccessToken()
     {
-        $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
-        $session = $this->prophesize('Symfony\Component\HttpFoundation\Session\SessionInterface');
+        $this->request->query->set('state', 'THE_STATE');
+        $this->request->query->set('code', 'CODE_ABC');
 
-        $request = new Request();
-        $request->query->set('state', 'THE_STATE');
-        $request->query->set('code', 'CODE_ABC');
-        $request->setSession($session->reveal());
-
-        $requestStack->getCurrentRequest()
-            ->willReturn($request);
-
-        $session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
             ->willReturn('THE_STATE');
 
         $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $provider = $this->prophesize('League\OAuth2\Client\Provider\AbstractProvider');
-        $provider->getAccessToken('authorization_code', array('code' => 'CODE_ABC'))
+        $this->provider->getAccessToken('authorization_code', array('code' => 'CODE_ABC'))
             ->willReturn($expectedToken->reveal());
 
         $client = new OAuth2Client(
-            $provider->reveal(),
-            $requestStack->reveal()
+            $this->provider->reveal(),
+            $this->requestStack
         );
         $actualToken = $client->getAccessToken();
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
+
+    /**
+     * @expectedException \KnpU\OAuth2ClientBundle\Exception\InvalidStateException
+     */
+    public function testGetAccessTokenThrowsInvalidStateException()
+    {
+        $this->request->query->set('state', 'ACTUAL_STATE');
+        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+            ->willReturn('OTHER_STATE');
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+        $client->getAccessToken();
+    }
+
+    /**
+    * @expectedException \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
+    */
+   public function testGetAccessTokenThrowsMissingAuthCodeException()
+   {
+       $this->request->query->set('state', 'ACTUAL_STATE');
+       $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+           ->willReturn('ACTUAL_STATE');
+
+       // don't set a code query parameter
+       $client = new OAuth2Client(
+           $this->provider->reveal(),
+           $this->requestStack
+       );
+       $client->getAccessToken();
+   }
 }

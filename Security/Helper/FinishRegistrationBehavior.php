@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\OAuth2ClientBundle\Helper;
+namespace KnpU\OAuth2ClientBundle\Security\Helper;
 
 use KnpU\OAuth2ClientBundle\Exception\FinishRegistrationException;
 use Symfony\Component\HttpFoundation\RedirectResponse;

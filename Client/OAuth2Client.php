@@ -2,8 +2,8 @@
 
 namespace KnpU\OAuth2ClientBundle\Client;
 
-use KnpU\OAuth2ClientBundle\Extension\InvalidStateException;
-use KnpU\OAuth2ClientBundle\Extension\MissingAuthorizationCodeException;
+use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
+use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
