@@ -81,7 +81,7 @@ class KnpUOAuth2ClientExtension extends Extension
                 $type,
                 $key,
                 $configurator->getProviderClass(),
-                $configurator->getCustomClientClass() ? $configurator->getCustomClientClass() : 'KnpU\OAuth2ClientBundle\Client\OAuth2Client',
+                $configurator->getClientClass(),
                 $configurator->getPackagistName(),
                 $configurator->getProviderOptions($config),
                 $config['redirect_route'],

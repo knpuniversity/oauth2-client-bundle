@@ -49,8 +49,8 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
         return 'Google';
     }
 
-    public function getCustomClientClass()
+    public function getClientClass()
     {
-        return;
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient';
     }
 }

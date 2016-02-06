@@ -32,6 +32,7 @@ function replaceInString($startTextMarker, $endTextMarker, $fullText, $replaceme
 
 $sectionTemplate = <<<EOF
         # will create service: "knpu.oauth2.client.%PROVIDER_NAME%"
+        # an instance of: %CLIENT_CLASS%
         # composer require %PACKAGE_NAME%
         %PROVIDER_NAME%:
             # must be "%PROVIDER_NAME%" - it activates that type!
@@ -104,6 +105,7 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
     }
 
     $newSection = str_replace('%PROVIDER_NAME%', $type, $sectionTemplate);
+    $newSection = str_replace('%CLIENT_CLASS%', $configurator->getClientClass(), $newSection);
     $newSection = str_replace('%PACKAGE_NAME%', $configurator->getPackagistName(), $newSection);
     $newSection = str_replace(
         '%ADDITIONAL_CONFIG%',

@@ -39,8 +39,8 @@ class LinkedInProviderConfigurator implements ProviderConfiguratorInterface
         return 'LinkedIn';
     }
 
-    public function getCustomClientClass()
+    public function getClientClass()
     {
-        return;
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\LinkedInClient';
     }
 }

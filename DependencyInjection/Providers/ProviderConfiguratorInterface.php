@@ -20,14 +20,14 @@ interface ProviderConfiguratorInterface
     public function getProviderClass();
 
     /**
-     * An optional custom client class that can be used instead
-     * of OAuth2Client.
+     * The client class to be used.
      *
-     * If empty, the default OAuth2Client will be used.
+     * Each provider should have their own, but you could
+     * default to OAuth2Client.
      *
      * @return string
      */
-    public function getCustomClientClass();
+    public function getClientClass();
 
     /**
      * @param array $configuration

@@ -266,6 +266,7 @@ to your `security.yml`.
 knpu_oauth2_client:
     clients:
         # will create service: "knpu.oauth2.client.facebook"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient
         # composer require league/oauth2-facebook
         facebook:
             # must be "facebook" - it activates that type!
@@ -281,6 +282,7 @@ knpu_oauth2_client:
             # use_state: true
 
         # will create service: "knpu.oauth2.client.github"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GithubClient
         # composer require league/oauth2-github
         github:
             # must be "github" - it activates that type!
@@ -296,6 +298,7 @@ knpu_oauth2_client:
             # use_state: true
 
         # will create service: "knpu.oauth2.client.linkedin"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\LinkedInClient
         # composer require league/oauth2-linkedin
         linkedin:
             # must be "linkedin" - it activates that type!
@@ -311,6 +314,7 @@ knpu_oauth2_client:
             # use_state: true
 
         # will create service: "knpu.oauth2.client.google"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient
         # composer require league/oauth2-google
         google:
             # must be "google" - it activates that type!
@@ -329,6 +333,7 @@ knpu_oauth2_client:
             # use_state: true
 
         # will create service: "knpu.oauth2.client.vk"
+        # an instance of: 
         # composer require j4k/oauth2-vkontakte
         vk:
             # must be "vk" - it activates that type!

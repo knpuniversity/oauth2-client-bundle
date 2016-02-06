@@ -39,8 +39,8 @@ class GithubProviderConfigurator implements ProviderConfiguratorInterface
         return 'GitHub';
     }
 
-    public function getCustomClientClass()
+    public function getClientClass()
     {
-        return;
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\GithubClient';
     }
 }

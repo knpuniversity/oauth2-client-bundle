@@ -39,7 +39,7 @@ class VkProviderConfigurator implements ProviderConfiguratorInterface
         return 'VK';
     }
 
-    public function getCustomClientClass()
+    public function getClientClass()
     {
         return;
     }
