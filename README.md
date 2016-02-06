@@ -48,12 +48,13 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-| OAuth2 Provider                                              | Install                                  |
+| OAuth2 Provider                                              | Install                                    |
 | ------------------------------------------------------------ | ---------------------------------------- |
-| [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook  |
-| [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github    |
-| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)  | composer require league/oauth2-linkedin  |
-| [Google](https://github.com/thephpleague/oauth2-google)      | composer require league/oauth2-google    |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook    |
+| [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github      |
+| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)  | composer require league/oauth2-linkedin    |
+| [Google](https://github.com/thephpleague/oauth2-google)      | composer require league/oauth2-google      |
+| [Eve Online](https://github.com/evelabs/oauth2-eveonline)    | composer require evelabs/oauth2-eveonline  |
 
 <span name="end-client-downloader-table"></span>
 
@@ -328,6 +329,22 @@ knpu_oauth2_client:
             # access_type: ''
             # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline
             # hosted_domain: ''
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.eve_online"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient
+        # composer require evelabs/oauth2-eveonline
+        eve_online:
+            # must be "eve_online" - it activates that type!
+            type: eve_online
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %eve_online_client_id%
+            client_secret: %eve_online_client_secret%
+            # a route name you'll create
+            redirect_route: connect_eve_online_check
+            redirect_params: {}
+            
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
