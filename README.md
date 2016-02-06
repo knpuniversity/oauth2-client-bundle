@@ -5,6 +5,7 @@ Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 * "Social" authentication / login
 * "Connect with Facebook" type of functionality
 * Fetching access keys via OAuth2 to be used with an API
+* Doing OAuth2 authentication with [Guard](https://knpuniversity.com/screencast/guard)
 
 This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/).
 
@@ -127,6 +128,10 @@ class FacebookController extends Controller
      */
     public function connectCheckAction(Request $request)
     {
+        // ** if you want to *authenticate* the user, then
+        // leave this method blank and create a Guard authenticator
+        // (read below)
+
         /** @var \KnpU\OAuth2ClientBundle\Client\OAuth2Client $client */
         $client = $this->get('oauth2.registry')
             ->getClient('facebook_main');
@@ -173,6 +178,86 @@ $provider = $client->getOAuth2Provider();
 // if you're using Facebook, then this works:
 $longLivedToken = $provider->getLongLivedAccessToken($accessToken);
 ```
+
+## Authenticating with Guard
+
+At this point, you now have a nice service that allows you to
+redirect your user to an OAuth server (e.g. Facebook) and fetch
+their access token and user information.
+
+But often, you will want to actually authenticate that user: log
+them into your system. In that case, instead of putting all of
+the logic in `connectCheckAction` as shown above, you'll leave that
+blank and create a [Guard authenticator](knpuniversity.com/screencast/guard),
+which will hold similar logic.
+
+A `SocialAuthenticator` base class exists to help with a few things:
+
+```php
+namespace AppBundle\Security;
+
+use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Routing\RouterInterface;
+use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
+
+class MyFacebookAuthenticator extends SocialAuthenticator
+{
+    private $facebookClient;
+    private $em;
+    private $router;
+
+    public function __construct(FacebookClient $facebookClient, EntityManager $em, RouterInterface $router)
+    {
+        $this->facebookClient = $facebookClient;
+        $this->em = $em;
+        $this->router = $router;
+    }
+
+    public function getCredentials(Request $request)
+    {
+        if ($request->getPathInfo() != '/connect/facebook-check') {
+            // don't auth
+            return;
+        }
+
+        return $this->fetchAccessToken($this->facebookClient);
+    }
+
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        /** @var FacebookUser $facebookUser */
+        $facebookUser = $this->facebookClient
+            ->fetchUserFromToken($credentials);
+
+        $email = $facebookUser->getEmail();
+
+        // 1) have they logged in with Facebook before? Easy!
+        $existingUser = $this->em->getRepository('AppBundle:User')
+            ->findOneBy(array('facebookId' => $facebookUser->getId()));
+        if ($existingUser) {
+            return $existingUser;
+        }
+
+        // 2) do we have a matching user by email?
+        $user = $this->em->getRepository('AppBundle:User')
+                    ->findOneBy(array('email' => $email));
+
+        // 3) Maybe you just want to "register" them by creating
+        // a User object
+        $user->setFacebookId($facebookUser->getId());
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
+    }
+
+    // ...
+}
+```
+
+Make sure this class is registered as a service and added
+to your `security.yml`.
 
 ## Configuration
 
