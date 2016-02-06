@@ -11,7 +11,7 @@ class GithubProviderConfigurator implements ProviderConfiguratorInterface
         // no custom options
     }
 
-    public function getProviderClass()
+    public function getProviderClass(array $config)
     {
         return 'League\OAuth2\Client\Provider\Github';
     }
@@ -39,7 +39,7 @@ class GithubProviderConfigurator implements ProviderConfiguratorInterface
         return 'GitHub';
     }
 
-    public function getClientClass()
+    public function getClientClass(array $config)
     {
         return 'KnpU\OAuth2ClientBundle\Client\Provider\GithubClient';
     }

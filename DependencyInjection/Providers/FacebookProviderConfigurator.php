@@ -16,7 +16,7 @@ class FacebookProviderConfigurator implements ProviderConfiguratorInterface
         ;
     }
 
-    public function getProviderClass()
+    public function getProviderClass(array $config)
     {
         return 'League\OAuth2\Client\Provider\Facebook';
     }
@@ -45,7 +45,7 @@ class FacebookProviderConfigurator implements ProviderConfiguratorInterface
         return 'Facebook';
     }
 
-    public function getClientClass()
+    public function getClientClass(array $config)
     {
         return 'KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient';
     }

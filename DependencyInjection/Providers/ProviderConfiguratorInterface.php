@@ -15,9 +15,10 @@ interface ProviderConfiguratorInterface
     public function buildConfiguration(NodeBuilder $node);
 
     /**
+     * @param array $configuration
      * @return string
      */
-    public function getProviderClass();
+    public function getProviderClass(array $configuration);
 
     /**
      * The client class to be used.
@@ -25,9 +26,10 @@ interface ProviderConfiguratorInterface
      * Each provider should have their own, but you could
      * default to OAuth2Client.
      *
+     * @param array $config
      * @return string
      */
-    public function getClientClass();
+    public function getClientClass(array $config);
 
     /**
      * @param array $configuration

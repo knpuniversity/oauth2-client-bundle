@@ -55,6 +55,7 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
                 'the_route_name',
                 array('route_params' => 'foo')
             ),
+            // these arguments will be passed to the factory's method
             $providerDefinition->getArguments()
         );
 
@@ -122,6 +123,61 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
         }
 
         return $tests;
+    }
+
+    public function testGenericProvider()
+    {
+        $clientConfig = [
+            'type' => 'generic',
+            'client_id' => 'abc',
+            'client_secret' => '123',
+            'redirect_route' => 'foo_bar_route',
+            'redirect_params' => array(),
+            'provider_class' => 'Foo\Bar\Provider',
+            'client_class' => 'Foo\Bar\Client',
+            'provider_options' => [
+                'foo' => true,
+                'bar' => 'baz',
+                'cool_stuff' => ['pizza', 'popcorn'],
+            ]
+        ];
+
+        $this->configuration = new ContainerBuilder();
+        $loader = new KnpUOAuth2ClientExtension(false);
+        $config = array('clients' => [
+            'custom_provider' => $clientConfig
+        ]);
+        $loader->load(array($config), $this->configuration);
+
+        $providerDefinition = $this->configuration->getDefinition('knpu.oauth2.provider.custom_provider');
+        $this->assertEquals(
+            'Foo\Bar\Provider',
+            $providerDefinition->getClass()
+        );
+
+        $this->assertEquals(
+            array(
+                'Foo\Bar\Provider',
+                array(
+                    'clientId' => 'abc',
+                    'clientSecret' => '123',
+                    'foo' => true,
+                    'bar' => 'baz',
+                    'cool_stuff' => ['pizza', 'popcorn'],
+                ),
+                'foo_bar_route',
+                array()
+            ),
+            // these arguments will be passed to the factory's method
+            $providerDefinition->getArguments()
+        );
+
+        // the custom class is used
+        $clientDefinition = $this->configuration->getDefinition('knpu.oauth2.client.custom_provider');
+        $this->assertEquals(
+            'Foo\Bar\Client',
+            $clientDefinition->getClass()
+        );
     }
 
     /**

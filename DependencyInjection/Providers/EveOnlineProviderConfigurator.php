@@ -11,7 +11,7 @@ class EveOnlineProviderConfigurator implements ProviderConfiguratorInterface
         // no custom options
     }
 
-    public function getProviderClass()
+    public function getProviderClass(array $config)
     {
         return 'Evelabs\OAuth2\Client\Provider\EveOnline';
     }
@@ -39,7 +39,7 @@ class EveOnlineProviderConfigurator implements ProviderConfiguratorInterface
         return 'Eve Online';
     }
 
-    public function getClientClass()
+    public function getClientClass(array $config)
     {
         return 'KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient';
     }

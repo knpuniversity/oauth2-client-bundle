@@ -56,6 +56,11 @@ $installTreeDetails = [
     'types' => []
 ];
 foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
+    // we don't document the "generic" type in this way
+    if ($type == 'generic') {
+        continue;
+    }
+
     $tree = new TreeBuilder();
     $configNode = $tree->root('generating_readme');
     $configurator = $extension->getConfigurator($type);
@@ -105,7 +110,7 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
     }
 
     $newSection = str_replace('%PROVIDER_NAME%', $type, $sectionTemplate);
-    $newSection = str_replace('%CLIENT_CLASS%', $configurator->getClientClass(), $newSection);
+    $newSection = str_replace('%CLIENT_CLASS%', $configurator->getClientClass(array()), $newSection);
     $newSection = str_replace('%PACKAGE_NAME%', $configurator->getPackagistName(), $newSection);
     $newSection = str_replace(
         '%ADDITIONAL_CONFIG%',
@@ -144,7 +149,7 @@ $installTable .= '|';
 // adding the next line, with | ---- | ---- |
 $installTable .= "\n";
 $installTable .= '| '.str_repeat('-', $longestNameAndUrl+5).' | ';
-$installTable .= str_repeat('-', $longestNameAndUrl-15).' |';
+$installTable .= str_repeat('-', $longestNameAndUrl-13).' |';
 
 $lines = [];
 foreach ($installTreeDetails['types'] as $typeConfig) {
@@ -163,6 +168,14 @@ foreach ($installTreeDetails['types'] as $typeConfig) {
 
     $lines[] = $line;
 }
+
+// add generic
+$lines[] = sprintf(
+    '| generic %s | configure any unsupported provider %s |',
+    str_repeat(' ', $longestNameAndUrl - 3),
+    str_repeat(' ', $longestPackageName - 17)
+);
+
 $installTable .= "\n".implode("\n", $lines);
 $finalInstallText = str_replace(
     '%INSTALL_TABLE%',
@@ -185,6 +198,10 @@ $readmeContents = replaceInString(
 $configurationText = <<<EOF
 ## Configuration
 
+Below is the configuration for *all* of the supported OAuth2 providers.
+**Don't see the one you need?** Use the `generic` provider to configure
+any provider.
+
 ```yml
 # app/config/config.yml
 knpu_oauth2_client:
@@ -192,7 +209,7 @@ knpu_oauth2_client:
 %PROVIDERS_ENTRIES%
 ```
 
-## Contributing
+## Configuring a Generic Provider
 EOF;
 
 $finalConfigurationText = str_replace(

@@ -28,6 +28,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'linkedin' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator',
         'google' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator',
         'eve_online' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator',
+        'generic' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator'
     );
 
     public function __construct($checkExternalClassExistence = true)
@@ -80,8 +81,8 @@ class KnpUOAuth2ClientExtension extends Extension
                 $container,
                 $type,
                 $key,
-                $configurator->getProviderClass(),
-                $configurator->getClientClass(),
+                $configurator->getProviderClass($config),
+                $configurator->getClientClass($config),
                 $configurator->getPackagistName(),
                 $configurator->getProviderOptions($config),
                 $config['redirect_route'],

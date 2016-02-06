@@ -49,12 +49,13 @@ via Composer:
 <a name="client-downloader-table"></a>
 
 | OAuth2 Provider                                              | Install                                    |
-| ------------------------------------------------------------ | ---------------------------------------- |
+| ------------------------------------------------------------ | ------------------------------------------ |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook    |
 | [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github      |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)  | composer require league/oauth2-linkedin    |
 | [Google](https://github.com/thephpleague/oauth2-google)      | composer require league/oauth2-google      |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)    | composer require evelabs/oauth2-eveonline  |
+| generic                                                      | configure any unsupported provider         |
 
 <span name="end-client-downloader-table"></span>
 
@@ -261,6 +262,10 @@ to your `security.yml`.
 
 ## Configuration
 
+Below is the configuration for *all* of the supported OAuth2 providers.
+**Don't see the one you need?** Use the `generic` provider to configure
+any provider.
+
 ```yml
 # app/config/config.yml
 knpu_oauth2_client:
@@ -349,7 +354,7 @@ knpu_oauth2_client:
             # use_state: true
 ```
 
-## Contributing
+## Configuring a Generic Provider
 
 Of course, open source is fueled by everyone's ability to give just a little
 bit of their time for the greater good. If you'd like to see a feature, you

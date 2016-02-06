@@ -19,7 +19,7 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
         ;
     }
 
-    public function getProviderClass()
+    public function getProviderClass(array $config)
     {
         return 'League\OAuth2\Client\Provider\Google';
     }
@@ -49,7 +49,7 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
         return 'Google';
     }
 
-    public function getClientClass()
+    public function getClientClass(array $config)
     {
         return 'KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient';
     }
