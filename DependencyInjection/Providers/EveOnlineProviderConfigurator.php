@@ -38,4 +38,9 @@ class EveOnlineProviderConfigurator implements ProviderConfiguratorInterface
     {
         return 'Eve Online';
     }
+
+    public function getClientClass()
+    {
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient';
+    }
 }
