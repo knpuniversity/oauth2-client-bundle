@@ -9,6 +9,8 @@ Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 
 This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/).
 
+<img src="https://travis-ci.org/knpuniversity/oauth2-client-bundle.svg" />
+
 ## Installation
 
 Install the library via [Composer](https://getcomposer.org/) by
