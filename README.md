@@ -356,6 +356,55 @@ knpu_oauth2_client:
 
 ## Configuring a Generic Provider
 
+Is the OAuth server you want to connect with not here? No worries!
+You can configure a custom "provider" using the `generic` type.
+
+### 1) Find / Create your Provider Library
+
+First, see if your OAuth server already has a "provider library"
+that you can use: See [https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDERS.md](Provider Client Libraries).
+
+If you found one there, awesome! Install it. If not, you'll need
+to create your own Provider class. See the
+[https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDER-GUIDE.md](Provider Guide)
+about this.
+
+Either way, after this step, you *should* have a provider "class"
+(e.g. a class that extends `AbstractProvider`) that's ready to use!
+
+### 2) Configuration
+
+Now, just configure your provider like any other provider, but
+using the `generic` type:
+
+```yml
+# app/config/config.yml
+knpu_oauth2_client:
+    clients:
+        # will create service: "knpu.oauth2.client.foo_bar_oauth"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\OAuth2Client
+        foo_bar_oauth:
+            type: generic
+            provider_class: Some\Class\FooBarProvider
+
+            # optional: a class that extends OAuth2Client
+            # client_class: Some\Custom\Client
+
+            # optional: if your provider has custom constructor options
+            # provider_options: {}
+
+            # now, all the normal options!
+            client_id: %foo_bar_client_id%
+            client_secret: %foo_bar_client_secret%
+            redirect_route: connect_facebook_check
+            redirect_params: {}
+```
+
+That's it! Now you'll have a `knpu.oauth2.client.foo_bar_oauth` service
+you can use.
+
+## Contributing
+
 Of course, open source is fueled by everyone's ability to give just a little
 bit of their time for the greater good. If you'd like to see a feature, you
 can request it - but creating a pull request is an even better way to get
