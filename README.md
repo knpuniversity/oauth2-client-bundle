@@ -135,7 +135,7 @@ class FacebookController extends Controller
         // leave this method blank and create a Guard authenticator
         // (read below)
 
-        /** @var \KnpU\OAuth2ClientBundle\Client\OAuth2Client $client */
+        /** @var \KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient $client */
         $client = $this->get('oauth2.registry')
             ->getClient('facebook_main');
 
