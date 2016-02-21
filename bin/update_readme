@@ -220,7 +220,7 @@ $finalConfigurationText = str_replace(
 
 $readmeContents = replaceInString(
     '## Configuration',
-    '## Contributing',
+    '## Configuring a Generic Provider',
     $readmeContents,
     $finalConfigurationText
 );
