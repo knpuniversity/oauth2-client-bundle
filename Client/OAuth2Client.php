@@ -45,7 +45,7 @@ class OAuth2Client
     {
         $options = array();
         if (!empty($scopes)) {
-            $options['scopes'] = $scopes;
+            $options['scope'] = $scopes;
         }
 
         $url = $this->provider->getAuthorizationUrl($options);
