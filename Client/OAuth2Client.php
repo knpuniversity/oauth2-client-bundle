@@ -80,10 +80,10 @@ class OAuth2Client
             }
         }
 
-        $code = $this->getCurrentRequest()->query->get('code');
+        $code = $this->getCurrentRequest()->get('code');
 
         if (!$code) {
-            throw new MissingAuthorizationCodeException('No "code" query parameter was found!');
+            throw new MissingAuthorizationCodeException('No "code" parameter was found (usually this is a query parameter)!');
         }
 
         return $this->provider->getAccessToken('authorization_code', array(

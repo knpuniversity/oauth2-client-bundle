@@ -97,6 +97,23 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 
+    public function testGetAccessTokenFromPOST()
+    {
+        $this->request->request->set('code', 'CODE_ABC');
+
+        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $this->provider->getAccessToken('authorization_code', array('code' => 'CODE_ABC'))
+            ->willReturn($expectedToken->reveal());
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+        $client->setAsStateless();
+        $actualToken = $client->getAccessToken();
+        $this->assertSame($expectedToken->reveal(), $actualToken);
+    }
+
     /**
      * @expectedException \KnpU\OAuth2ClientBundle\Exception\InvalidStateException
      */
