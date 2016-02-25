@@ -28,7 +28,7 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testRedirectWithState()
     {
-        $this->provider->getAuthorizationUrl(['scopes' => ['scope1', 'scope2']])
+        $this->provider->getAuthorizationUrl(['scope' => ['scope1', 'scope2']])
             ->willReturn('http://coolOAuthServer.com/authorize');
         $this->provider->getState()
             ->willReturn('SOME_RANDOM_STATE');
