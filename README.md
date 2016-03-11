@@ -262,7 +262,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
     private function getFacebookClient()
     {
         return $this->clientRegistry
-            // "my_facebook_client" is whatever key you used when configuring this client
+            // "facebook_main" is the key used in config.yml
             ->getClient('facebook_main');
     }
 
