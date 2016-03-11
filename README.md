@@ -203,16 +203,17 @@ use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\RouterInterface;
 use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 
 class MyFacebookAuthenticator extends SocialAuthenticator
 {
-    private $facebookClient;
+    private $clientRegistry;
     private $em;
     private $router;
 
-    public function __construct(FacebookClient $facebookClient, EntityManager $em, RouterInterface $router)
+    public function __construct(ClientRegistry $clientRegistry, EntityManager $em, RouterInterface $router)
     {
-        $this->facebookClient = $facebookClient;
+        $this->clientRegistry = $clientRegistry;
         $this->em = $em;
         $this->router = $router;
     }
@@ -224,13 +225,13 @@ class MyFacebookAuthenticator extends SocialAuthenticator
             return;
         }
 
-        return $this->fetchAccessToken($this->facebookClient);
+        return $this->fetchAccessToken($this->getFacebookClient());
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         /** @var FacebookUser $facebookUser */
-        $facebookUser = $this->facebookClient
+        $facebookUser = $this->getFacebookClient()
             ->fetchUserFromToken($credentials);
 
         $email = $facebookUser->getEmail();
@@ -254,13 +255,44 @@ class MyFacebookAuthenticator extends SocialAuthenticator
 
         return $user;
     }
+    
+    /**
+     * @return FacebookClient
+     */
+    private function getFacebookClient()
+    {
+        return $this->clientRegistry
+            // "my_facebook_client" is whatever key you used when configuring this client
+            ->getClient('facebook_main');
+    }
 
     // ...
 }
 ```
 
-Make sure this class is registered as a service and added
-to your `security.yml`.
+Next, register your authenticator as a service:
+
+```yml
+# app/config/services.yml
+services:
+    my_facebook_authenticator:
+        class: AppBundle\Security\MyFacebookAuthenticator
+        autowire: true
+        # use autowiring, OR you can specify the argument manually
+        # arguments:
+        #     - '@oauth2.registry'
+        #     - '@doctrine.orm.entity_manager'
+        #     - '@router'
+```
+
+Finally, setup this service in `security.yml` under the `guard` section. For more
+details: see http://symfony.com/doc/current/cookbook/security/guard-authentication.html#step-2-configure-the-authenticator.
+
+**CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
+into your authenticator instead of the `ClientRegistry`. However, this may cause
+ciricular reference issues and degrades performance (because autheticators are instantiated
+on every request, even though you *rarely* need the `FacebookClient` to be created).
+The `ClientRegistry` lazily creates the client objects.
 
 ## Configuration
 
