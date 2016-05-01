@@ -123,7 +123,7 @@ class FacebookController extends Controller
     }
 
     /**
-     * After going to Facebook, you're redirect back here
+     * After going to Facebook, you're redirected back here
      * because this is the "redirect_route" you configured
      * in config.yml
      *
