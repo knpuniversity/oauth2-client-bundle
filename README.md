@@ -396,11 +396,11 @@ You can configure a custom "provider" using the `generic` type.
 ### 1) Find / Create your Provider Library
 
 First, see if your OAuth server already has a "provider library"
-that you can use: See [https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDERS.md](Provider Client Libraries).
+that you can use: See [Provider Client Libraries](https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDERS.md).
 
 If you found one there, awesome! Install it. If not, you'll need
 to create your own Provider class. See the
-[https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDER-GUIDE.md](Provider Guide)
+[Provider Guide](https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDER-GUIDE.md)
 about this.
 
 Either way, after this step, you *should* have a provider "class"
