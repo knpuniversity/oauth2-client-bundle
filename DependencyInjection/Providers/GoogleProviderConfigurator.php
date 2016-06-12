@@ -16,6 +16,10 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
             ->scalarNode('hosted_domain')
                 ->info('Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline')
             ->end()
+            ->arrayNode('user_fields')
+                ->prototype('scalar')->end()
+                ->info('Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people')
+            ->end()
         ;
     }
 
@@ -30,7 +34,8 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
             'accessType' => $config['access_type'],
-            'hostedDomain' => $config['hosted_domain']
+            'hostedDomain' => $config['hosted_domain'],
+            'userFields' => $config['user_fields']
         );
     }
 
