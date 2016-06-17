@@ -368,6 +368,8 @@ knpu_oauth2_client:
             # access_type: ''
             # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline
             # hosted_domain: ''
+            # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
+            # user_fields: {}
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
