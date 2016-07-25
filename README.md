@@ -11,6 +11,10 @@ This bundle integrates with [league/oauth2-client](http://oauth2-client.thephple
 
 [![Build Status](https://travis-ci.org/knpuniversity/oauth2-client-bundle.svg)](http://travis-ci.org/knpuniversity/oauth2-client-bundle)
 
+## Requirements
+
+* PHP 5.5.0 or higher
+
 ## Installation
 
 Install the library via [Composer](https://getcomposer.org/) by
