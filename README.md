@@ -50,14 +50,15 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-| OAuth2 Provider                                              | Install                                    |
-| ------------------------------------------------------------ | ------------------------------------------ |
-| [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook    |
-| [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github      |
-| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)  | composer require league/oauth2-linkedin    |
-| [Google](https://github.com/thephpleague/oauth2-google)      | composer require league/oauth2-google      |
-| [Eve Online](https://github.com/evelabs/oauth2-eveonline)    | composer require evelabs/oauth2-eveonline  |
-| generic                                                      | configure any unsupported provider         |
+| OAuth2 Provider                                                | Install                                    |
+| -------------------------------------------------------------- | ------------------------------------------ |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)    | composer require league/oauth2-facebook    |
+| [GitHub](https://github.com/thephpleague/oauth2-github)        | composer require league/oauth2-github      |
+| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)    | composer require league/oauth2-linkedin    |
+| [Google](https://github.com/thephpleague/oauth2-google)        | composer require league/oauth2-google      |
+| [Eve Online](https://github.com/evelabs/oauth2-eveonline)      | composer require evelabs/oauth2-eveonline  |
+| [Instagram](https://github.com/thephpleague/oauth2-instagram)  | composer require league/oauth2-instagram   |
+| generic                                                        | configure any unsupported provider         |
 
 <span name="end-client-downloader-table"></span>
 
@@ -384,6 +385,22 @@ knpu_oauth2_client:
             client_secret: %eve_online_client_secret%
             # a route name you'll create
             redirect_route: connect_eve_online_check
+            redirect_params: {}
+            
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.instagram"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\InstagramClient
+        # composer require league/oauth2-instagram
+        instagram:
+            # must be "instagram" - it activates that type!
+            type: instagram
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %instagram_client_id%
+            client_secret: %instagram_client_secret%
+            # a route name you'll create
+            redirect_route: connect_instagram_check
             redirect_params: {}
             
             # whether to check OAuth2 "state": defaults to true
