@@ -28,6 +28,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'linkedin' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator',
         'google' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator',
         'eve_online' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator',
+        'instagram' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator',
         'generic' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator'
     );
 
