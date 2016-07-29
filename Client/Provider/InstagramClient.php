@@ -4,7 +4,6 @@ namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Provider\InstagramResourceOwner;
-use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 
 class InstagramClient extends OAuth2Client
@@ -19,7 +18,7 @@ class InstagramClient extends OAuth2Client
     }
 
     /**
-     * @return InstagramResourceOwner|ResourceOwnerInterface
+     * @return InstagramResourceOwner
      */
     public function fetchUser()
     {
