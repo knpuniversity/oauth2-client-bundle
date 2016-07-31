@@ -21,8 +21,8 @@ class InstagramProviderConfigurator implements ProviderConfiguratorInterface
     public function getProviderOptions(array $config)
     {
         return array(
-            'clientId' => $config['clientId'],
-            'clientSecret' => $config['clientSecret'],
+            'clientId' => $config['client_id'],
+            'clientSecret' => $config['client_secret'],
         );
     }
 
