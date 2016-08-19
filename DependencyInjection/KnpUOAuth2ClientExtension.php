@@ -10,6 +10,14 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -31,14 +39,14 @@ class KnpUOAuth2ClientExtension extends Extension
     private $configurators = [];
 
     private static $supportedProviderTypes = [
-        'facebook' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator',
-        'github' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator',
-        'gitlab' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator',
-        'linkedin' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator',
-        'google' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator',
-        'eve_online' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator',
-        'instagram' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator',
-        'generic' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator',
+        'facebook' => FacebookProviderConfigurator::class,
+        'github' => GithubProviderConfigurator::class,
+        'gitlab' => GitlabProviderConfigurator::class,
+        'linkedin' => LinkedInProviderConfigurator::class,
+        'google' => GoogleProviderConfigurator::class,
+        'eve_online' => EveOnlineProviderConfigurator::class,
+        'instagram' => InstagramProviderConfigurator::class,
+        'generic' => GenericProviderConfigurator::class,
     ];
 
     public function __construct($checkExternalClassExistence = true)
