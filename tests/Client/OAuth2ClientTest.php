@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\Tests\DependencyInjection;
+namespace KnpU\OAuth2ClientBundle\Tests\Client;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use Symfony\Component\HttpFoundation\Request;

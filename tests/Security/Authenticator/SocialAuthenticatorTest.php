@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\Tests;
+namespace KnpU\OAuth2ClientBundle\Tests\Security\Authenticator;
 
 use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
