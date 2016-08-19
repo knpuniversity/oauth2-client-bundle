@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * OAuth2 Client Bundle
+ * Copyright (c) KnpUniversity <http://knpuniversity.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
-use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -21,9 +28,9 @@ class KnpUOAuth2ClientExtension extends Extension
      */
     private $checkExternalClassExistence;
 
-    private $configurators = array();
+    private $configurators = [];
 
-    static private $supportedProviderTypes = array(
+    private static $supportedProviderTypes = [
         'facebook' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator',
         'github' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator',
         'gitlab' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator',
@@ -31,8 +38,8 @@ class KnpUOAuth2ClientExtension extends Extension
         'google' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator',
         'eve_online' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator',
         'instagram' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator',
-        'generic' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator'
-    );
+        'generic' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator',
+    ];
 
     public function __construct($checkExternalClassExistence = true)
     {
@@ -45,12 +52,12 @@ class KnpUOAuth2ClientExtension extends Extension
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
         $clientConfigurations = $config['clients'];
 
-        $clientServiceKeys = array();
+        $clientServiceKeys = [];
         foreach ($clientConfigurations as $key => $clientConfig) {
             // manually make sure "type" is there
             if (!isset($clientConfig['type'])) {
@@ -72,10 +79,10 @@ class KnpUOAuth2ClientExtension extends Extension
 
             // process the configuration
             $tree = new TreeBuilder();
-            $node = $tree->root('knpu_oauth2_client/clients/'.$key);
+            $node = $tree->root('knpu_oauth2_client/clients/' . $key);
             $this->buildConfigurationForType($node, $type);
             $processor = new Processor();
-            $config = $processor->process($tree->buildTree(), array($clientConfig));
+            $config = $processor->process($tree->buildTree(), [$clientConfig]);
 
             $configurator = $this->getConfigurator($type);
 
@@ -131,27 +138,27 @@ class KnpUOAuth2ClientExtension extends Extension
         );
         $providerDefinition->setPublic(false);
 
-        $providerDefinition->setFactory(array(
+        $providerDefinition->setFactory([
             new Reference('knpu.oauth2.provider_factory'),
-            'createProvider'
-        ));
+            'createProvider',
+        ]);
 
-        $providerDefinition->setArguments(array(
+        $providerDefinition->setArguments([
             $providerClass,
             $options,
             $redirectRoute,
-            $redirectParams
-        ));
+            $redirectParams,
+        ]);
 
         $clientServiceKey = sprintf('knpu.oauth2.client.%s', $providerKey);
         $clientDefinition = $container->register(
             $clientServiceKey,
             $clientClass
         );
-        $clientDefinition->setArguments(array(
+        $clientDefinition->setArguments([
             new Reference($providerServiceKey),
-            new Reference('request_stack')
-        ));
+            new Reference('request_stack'),
+        ]);
 
         // if stateless, do it!
         if (!$useState) {
@@ -166,7 +173,7 @@ class KnpUOAuth2ClientExtension extends Extension
         return array_keys(self::$supportedProviderTypes);
     }
 
-    /**
+   /**
     * @param string $type
     * @return ProviderConfiguratorInterface
     */
@@ -182,7 +189,7 @@ class KnpUOAuth2ClientExtension extends Extension
    }
 
     /**
-     * Overridden so the alias isn't "knp_uo_auth2_client"
+     * Overridden so the alias isn't "knp_uo_auth2_client".
      *
      * @return string
      */

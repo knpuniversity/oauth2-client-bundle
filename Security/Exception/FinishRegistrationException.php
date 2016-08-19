@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * OAuth2 Client Bundle
+ * Copyright (c) KnpUniversity <http://knpuniversity.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace KnpU\OAuth2ClientBundle\Security\Exception;
 
 use Exception;
@@ -15,10 +23,10 @@ class FinishRegistrationException extends AuthenticationException
     /**
      * @param mixed         $userInfo Any info to be used to help registration
      * @param string        $message
-     * @param integer       $code
+     * @param int       $code
      * @param \Exception    $previous
      */
-    public function __construct($userInfo, $message = "", $code = 0, Exception $previous = null)
+    public function __construct($userInfo, $message = '', $code = 0, Exception $previous = null)
     {
         $this->userInformation = $userInfo;
 

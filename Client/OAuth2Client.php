@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * OAuth2 Client Bundle
+ * Copyright (c) KnpUniversity <http://knpuniversity.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace KnpU\OAuth2ClientBundle\Client;
 
 use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
@@ -27,7 +35,7 @@ class OAuth2Client
     }
 
     /**
-     * Call this to avoid using and checking "state"
+     * Call this to avoid using and checking "state".
      */
     public function setAsStateless()
     {
@@ -36,14 +44,14 @@ class OAuth2Client
 
     /**
      * Creates a RedirectResponse that will send the user to the
-     * OAuth2 server (e.g. send them to Facebook)
+     * OAuth2 server (e.g. send them to Facebook).
      *
      * @param array $scopes The scopes you want (leave empty to use default)
      * @return RedirectResponse
      */
-    public function redirect(array $scopes = array())
+    public function redirect(array $scopes = [])
     {
-        $options = array();
+        $options = [];
         if (!empty($scopes)) {
             $options['scope'] = $scopes;
         }
@@ -86,9 +94,9 @@ class OAuth2Client
             throw new MissingAuthorizationCodeException('No "code" parameter was found (usually this is a query parameter)!');
         }
 
-        return $this->provider->getAccessToken('authorization_code', array(
-            'code' => $code
-        ));
+        return $this->provider->getAccessToken('authorization_code', [
+            'code' => $code,
+        ]);
     }
 
     /**
@@ -118,7 +126,7 @@ class OAuth2Client
     }
 
     /**
-     * Returns the underlying OAuth2 provider
+     * Returns the underlying OAuth2 provider.
      *
      * @return AbstractProvider
      */

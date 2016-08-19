@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * OAuth2 Client Bundle
+ * Copyright (c) KnpUniversity <http://knpuniversity.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
@@ -31,10 +39,10 @@ class GenericProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderOptions(array $config)
     {
-        return array_merge(array(
+        return array_merge([
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-        ), $config['provider_options']);
+        ], $config['provider_options']);
     }
 
     public function getPackagistName()
