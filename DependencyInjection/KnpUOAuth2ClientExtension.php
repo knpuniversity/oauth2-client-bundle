@@ -2,6 +2,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -25,6 +26,7 @@ class KnpUOAuth2ClientExtension extends Extension
     static private $supportedProviderTypes = array(
         'facebook' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator',
         'github' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator',
+        'gitlab' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator',
         'linkedin' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator',
         'google' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator',
         'eve_online' => 'KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator',
