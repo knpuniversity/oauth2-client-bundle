@@ -13,7 +13,7 @@ This bundle integrates with [league/oauth2-client](http://oauth2-client.thephple
 
 ## Requirements
 
-* PHP 5.5.0 or higher
+* PHP 5.5.9 or higher
 
 ## Installation
 
