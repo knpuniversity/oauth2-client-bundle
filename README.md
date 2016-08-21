@@ -32,11 +32,11 @@ Next, enable the bundle in your `app/AppKernel.php` file:
 
 public function registerBundles()
 {
-    $bundles = array(
+    $bundles = [
         // ...
         new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
         // ...
-    );
+    ];
 }
 ```
 
