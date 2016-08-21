@@ -20,7 +20,10 @@
         "league/oauth2-client": "^1.0"
     },
     "autoload": {
-        "psr-4": { "KnpU\\OAuth2ClientBundle\\": "" }
+        "psr-4": { "KnpU\\OAuth2ClientBundle\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "KnpU\\OAuth2ClientBundle\\Tests\\": "tests/" }
     },
     "require-dev": {
         "league/oauth2-facebook": "^1.1",
