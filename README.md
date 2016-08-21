@@ -244,14 +244,14 @@ class MyFacebookAuthenticator extends SocialAuthenticator
 
         // 1) have they logged in with Facebook before? Easy!
         $existingUser = $this->em->getRepository('AppBundle:User')
-            ->findOneBy(array('facebookId' => $facebookUser->getId()));
+            ->findOneBy(['facebookId' => $facebookUser->getId()]);
         if ($existingUser) {
             return $existingUser;
         }
 
         // 2) do we have a matching user by email?
         $user = $this->em->getRepository('AppBundle:User')
-                    ->findOneBy(array('email' => $email));
+                    ->findOneBy(['email' => $email]);
 
         // 3) Maybe you just want to "register" them by creating
         // a User object
