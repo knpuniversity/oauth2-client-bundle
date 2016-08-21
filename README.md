@@ -55,14 +55,14 @@ via Composer:
 <a name="client-downloader-table"></a>
 
 | OAuth2 Provider                                                | Install                                    |
-| -------------------------------------------------------------- | ------------------------------------------ |
+| -------------------------------------------------------------- | -------------------------------------------- |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)    | composer require league/oauth2-facebook    |
 | [GitHub](https://github.com/thephpleague/oauth2-github)        | composer require league/oauth2-github      |
+| [GitLab](https://github.com/omines/oauth2-gitlab)              | composer require omines/oauth2-gitlab      |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)    | composer require league/oauth2-linkedin    |
 | [Google](https://github.com/thephpleague/oauth2-google)        | composer require league/oauth2-google      |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)      | composer require evelabs/oauth2-eveonline  |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)  | composer require league/oauth2-instagram   |
-| [GitLab](https://github.com/omines/oauth2-gitlab)              | composer require omines/oauth2-gitlab      |
 | generic                                                        | configure any unsupported provider         |
 
 <span name="end-client-downloader-table"></span>
@@ -342,6 +342,23 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.gitlab"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GitlabClient
+        # composer require omines/oauth2-gitlab
+        gitlab:
+            # must be "gitlab" - it activates that type!
+            type: gitlab
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %gitlab_client_id%
+            client_secret: %gitlab_client_secret%
+            # a route name you'll create
+            redirect_route: connect_gitlab_check
+            redirect_params: {}
+            # Base installation URL, modify this for self-hosted instances
+            # domain: https://gitlab.com
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.linkedin"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\LinkedInClient
         # composer require league/oauth2-linkedin
@@ -408,24 +425,6 @@ knpu_oauth2_client:
             redirect_route: connect_instagram_check
             redirect_params: {}
             
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.gitlab"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GitlabClient
-        # composer require league/oauth2-github
-        gitlab:
-            # must be "gitlab" - it activates that type!
-            type: gitlab
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %github_client_id%
-            client_secret: %github_client_secret%
-            # a route name you'll create
-            redirect_route: connect_github_check
-            redirect_params: {}
-            # for self-hosted instances you can override the default domain
-            domain: https://gitlab.com
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
