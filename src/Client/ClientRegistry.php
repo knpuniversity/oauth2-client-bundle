@@ -10,13 +10,12 @@
 
 namespace KnpU\OAuth2ClientBundle\Client;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ClientRegistry implements ContainerAwareInterface
+class ClientRegistry
 {
-    use ContainerAwareTrait;
+    /** @var ContainerInterface */
+    private $container;
 
     /** @var array */
     private $serviceMap;
@@ -29,7 +28,7 @@ class ClientRegistry implements ContainerAwareInterface
      */
     public function __construct(ContainerInterface $container, array $serviceMap)
     {
-        $this->setContainer($container);
+        $this->container = $container;
         $this->serviceMap = $serviceMap;
     }
 

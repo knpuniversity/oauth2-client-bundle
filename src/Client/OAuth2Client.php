@@ -145,17 +145,9 @@ class OAuth2Client
     }
 
     /**
-     * @return bool
-     */
-    public function isStateless()
-    {
-        return $this->isStateless;
-    }
-
-    /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getCurrentRequest()
+    private function getCurrentRequest()
     {
         $request = $this->requestStack->getCurrentRequest();
 
@@ -169,7 +161,7 @@ class OAuth2Client
     /**
      * @return null|\Symfony\Component\HttpFoundation\Session\SessionInterface
      */
-    protected function getSession()
+    private function getSession()
     {
         $session = $this->getCurrentRequest()->getSession();
 
