@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ProviderFactory
 {
     /** @var UrlGeneratorInterface */
-    protected $generator;
+    private $generator;
 
     /**
      * ProviderFactory constructor.
