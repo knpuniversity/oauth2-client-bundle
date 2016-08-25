@@ -19,13 +19,28 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class ProviderFactory
 {
-    private $generator;
+    /** @var UrlGeneratorInterface */
+    protected $generator;
 
+    /**
+     * ProviderFactory constructor.
+     *
+     * @param UrlGeneratorInterface $generator
+     */
     public function __construct(UrlGeneratorInterface $generator)
     {
         $this->generator = $generator;
     }
 
+    /**
+     * Creates a provider of the given class.
+     *
+     * @param string $class
+     * @param array $options
+     * @param string $redirectUri
+     * @param array $redirectParams
+     * @return mixed
+     */
     public function createProvider($class, array $options, $redirectUri, array $redirectParams = [])
     {
         $redirectUri = $this->generator

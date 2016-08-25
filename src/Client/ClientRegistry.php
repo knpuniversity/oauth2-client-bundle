@@ -14,10 +14,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ClientRegistry
 {
+    /** @var ContainerInterface */
     private $container;
 
+    /** @var array */
     private $serviceMap;
 
+    /**
+     * ClientRegistry constructor.
+     *
+     * @param ContainerInterface $container
+     * @param array $serviceMap
+     */
     public function __construct(ContainerInterface $container, array $serviceMap)
     {
         $this->container = $container;

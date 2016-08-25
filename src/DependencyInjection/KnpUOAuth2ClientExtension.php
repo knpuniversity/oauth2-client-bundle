@@ -31,13 +31,13 @@ use Symfony\Component\Config\FileLocator;
 
 class KnpUOAuth2ClientExtension extends Extension
 {
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $checkExternalClassExistence;
 
+    /** @var array */
     private $configurators = [];
 
+    /** @var array */
     private static $supportedProviderTypes = [
         'facebook' => FacebookProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
@@ -49,11 +49,22 @@ class KnpUOAuth2ClientExtension extends Extension
         'generic' => GenericProviderConfigurator::class,
     ];
 
+    /**
+     * KnpUOAuth2ClientExtension constructor.
+     *
+     * @param bool $checkExternalClassExistence
+     */
     public function __construct($checkExternalClassExistence = true)
     {
         $this->checkExternalClassExistence = $checkExternalClassExistence;
     }
 
+    /**
+     * Load the bundle configuration.
+     *
+     * @param array $configs
+     * @param ContainerBuilder $container
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $processor = new Processor();

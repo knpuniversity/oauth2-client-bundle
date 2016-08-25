@@ -11,6 +11,7 @@
 namespace KnpU\OAuth2ClientBundle\Tests\DependencyInjection;
 
 use KnpU\OAuth2ClientBundle\DependencyInjection\KnpUOAuth2ClientExtension;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use Symfony\Component\Config\Definition\ArrayNode;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\NodeInterface;
@@ -79,6 +80,29 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
             ],
             $clientDefinition->getArguments()
         );
+    }
+
+    /**
+     * @dataProvider getAllProviderConfigurators
+     */
+    public function testProviderConfiguratorsAreFullyImplemented(ProviderConfiguratorInterface $providerConfigurator)
+    {
+        $this->assertRegexp('#^[ \w]+$#', $providerConfigurator->getProviderDisplayName());
+        if ('Generic' !== $providerConfigurator->getProviderDisplayName()) {
+            $this->assertRegexp('#^[\w-]+/[\w-]+$#', $providerConfigurator->getPackagistName());
+            $this->assertNotFalse(filter_var($providerConfigurator->getLibraryHomepage(), FILTER_VALIDATE_URL));
+            $this->assertTrue(class_exists($providerConfigurator->getClientClass([])));
+        }
+    }
+
+    public function getAllProviderConfigurators()
+    {
+        $extension = new KnpUOAuth2ClientExtension();
+        $configurators = [];
+        foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
+            $configurators[$type] = [$extension->getConfigurator($type)];
+        }
+        return $configurators;
     }
 
     /**

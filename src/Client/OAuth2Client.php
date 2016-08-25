@@ -20,14 +20,23 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class OAuth2Client
 {
-    private $provider;
-
-    private $requestStack;
-
-    private $isStateless = false;
-
     const OAUTH2_SESSION_STATE_KEY = 'knpu.oauth2_client_state';
 
+    /** @var AbstractProvider */
+    private $provider;
+
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var bool */
+    private $isStateless = false;
+
+    /**
+     * OAuth2Client constructor.
+     *
+     * @param AbstractProvider $provider
+     * @param RequestStack $requestStack
+     */
     public function __construct(AbstractProvider $provider, RequestStack $requestStack)
     {
         $this->provider = $provider;
