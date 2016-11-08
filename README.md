@@ -437,7 +437,7 @@ You can configure a custom "provider" using the `generic` type.
 ### 1) Find / Create your Provider Library
 
 First, see if your OAuth server already has a "provider library"
-that you can use: See [Provider Client Libraries](https://github.com/thephpleague/oauth2-client/tree/master/docs/providers).
+that you can use: See [Provider Client Libraries](http://oauth2-client.thephpleague.com/providers/league/).
 
 If you found one there, awesome! Install it. If not, you'll need
 to create your own Provider class. See the
