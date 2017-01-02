@@ -85,6 +85,34 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testRedirectWithOptions()
+    {
+        $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
+
+        $this->provider->getAuthorizationUrl([
+            'scope' => ['scopeA'],
+            'optionA' => 'FOO'
+        ])
+            ->willReturn('http://example.com');
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $requestStack->reveal()
+        );
+        $client->setAsStateless();
+
+        $response = $client->redirect(
+            ['scopeA'],
+            ['optionA' => 'FOO']
+        );
+        // don't need other checks - the assertion above when
+        // mocking getAuthorizationUrl is enough
+        $this->assertInstanceOf(
+            'Symfony\Component\HttpFoundation\RedirectResponse',
+            $response
+        );
+    }
+
     public function testGetAccessToken()
     {
         $this->request->query->set('state', 'THE_STATE');

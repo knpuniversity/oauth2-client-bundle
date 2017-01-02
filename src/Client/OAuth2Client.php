@@ -55,12 +55,12 @@ class OAuth2Client
      * Creates a RedirectResponse that will send the user to the
      * OAuth2 server (e.g. send them to Facebook).
      *
-     * @param array $scopes The scopes you want (leave empty to use default)
+     * @param array $scopes  The scopes you want (leave empty to use default)
+     * @param array $options Extra options to pass to the "Provider" class
      * @return RedirectResponse
      */
-    public function redirect(array $scopes = [])
+    public function redirect(array $scopes = [], array $options = [])
     {
-        $options = [];
         if (!empty($scopes)) {
             $options['scope'] = $scopes;
         }
