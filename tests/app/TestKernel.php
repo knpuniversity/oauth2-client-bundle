@@ -34,6 +34,8 @@ class TestKernel extends Kernel
                 'router' => [
                     'resource' => __DIR__ . '/routing.yml',
                 ],
+                // turn this off - otherwise we need doctrine/annotation
+                'annotations' => false,
             ]);
 
             $container->loadFromExtension('knpu_oauth2_client', [
