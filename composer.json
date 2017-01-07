@@ -17,7 +17,8 @@
         "symfony/dependency-injection": "^2.8|^3.0",
         "symfony/routing": "^2.7|^3.0",
         "symfony/http-foundation": "^2.7|^3.0",
-        "league/oauth2-client": "^1.0"
+        "league/oauth2-client": "^1.0",
+        "stevenmaguire/oauth2-bitbucket": "^0.1.2"
     },
     "autoload": {
         "psr-4": { "KnpU\\OAuth2ClientBundle\\": "src/" }

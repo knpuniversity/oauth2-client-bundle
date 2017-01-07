@@ -427,6 +427,24 @@ knpu_oauth2_client:
             
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
+            
+        # will create service: "knpu.oauth2.client.bitbucket"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient
+        # composer require stevenmaguire/oauth2-bitbucket
+        instagram:
+            # must be "bitbucket" - it activates that type!
+            type: bitbucket
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %bitbucket_client_id%
+            client_secret: %bitbucket_client_secret%
+            # a route name you'll create
+            redirect_route: connect_bitbucket_check
+            redirect_params: {}
+            
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+            
+            
 ```
 
 ## Configuring a Generic Provider

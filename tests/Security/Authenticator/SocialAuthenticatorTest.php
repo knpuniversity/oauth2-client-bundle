@@ -16,6 +16,7 @@ use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class SocialAuthenticatorTest extends \PHPUnit_Framework_TestCase
@@ -43,6 +44,19 @@ class SocialAuthenticatorTest extends \PHPUnit_Framework_TestCase
 
         $authenticator->doFetchAccessToken($client->reveal());
     }
+
+    public function testCheckCredentials()
+    {
+        $authenticator = new StubSocialAuthenticator();
+        $user = new SomeUser();
+        $this->assertEquals(true, $authenticator->checkCredentials('', $user));
+    }
+
+    public function testSupportsRememberMe()
+    {
+        $authenticator = new StubSocialAuthenticator();
+        $this->assertEquals(true, $authenticator->supportsRememberMe());
+    }
 }
 
 class StubSocialAuthenticator extends SocialAuthenticator
@@ -65,6 +79,29 @@ class StubSocialAuthenticator extends SocialAuthenticator
     {
     }
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
+    }
+}
+
+class SomeUser implements UserInterface
+{
+    public function getRoles()
+    {
+    }
+
+    public function getPassword()
+    {
+    }
+
+    public function getSalt()
+    {
+    }
+
+    public function getUsername()
+    {
+    }
+
+    public function eraseCredentials()
     {
     }
 }
