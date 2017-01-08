@@ -11,6 +11,7 @@
 namespace KnpU\OAuth2ClientBundle\Tests\Client;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
+use League\OAuth2\Client\Provider\FacebookUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -166,20 +167,51 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
         $client->getAccessToken();
     }
 
-   /**
-    * @expectedException \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
+    /**
+     * @expectedException \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
     */
-   public function testGetAccessTokenThrowsMissingAuthCodeException()
-   {
-       $this->request->query->set('state', 'ACTUAL_STATE');
-       $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+    public function testGetAccessTokenThrowsMissingAuthCodeException()
+    {
+        $this->request->query->set('state', 'ACTUAL_STATE');
+        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
            ->willReturn('ACTUAL_STATE');
 
-       // don't set a code query parameter
-       $client = new OAuth2Client(
-           $this->provider->reveal(),
-           $this->requestStack
-       );
-       $client->getAccessToken();
-   }
+        // don't set a code query parameter
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+        $client->getAccessToken();
+    }
+
+    public function testFetchUser()
+    {
+        $this->request->request->set('code', 'CODE_ABC');
+
+        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $this->provider->getAccessToken('authorization_code', ['code' => 'CODE_ABC'])
+            ->willReturn($expectedToken->reveal());
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+
+        $client->setAsStateless();
+        $actualToken = $client->getAccessToken();
+
+        $resourceOwner = new FacebookUser([
+            'id' => '1',
+            'name' => 'testUser',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'john@doe.com'
+        ]);
+
+        $this->provider->getResourceOwner($actualToken)->willReturn($resourceOwner);
+        $user = $client->fetchUser($actualToken);
+
+        $this->assertInstanceOf('League\OAuth2\Client\Provider\FacebookUser', $user);
+        $this->assertEquals('testUser', $user->getName());
+    }
 }

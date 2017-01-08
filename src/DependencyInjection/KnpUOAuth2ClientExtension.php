@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BitbucketProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
@@ -46,6 +47,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'google' => GoogleProviderConfigurator::class,
         'eve_online' => EveOnlineProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
+        'bitbucket' => BitbucketProviderConfigurator::class,
         'generic' => GenericProviderConfigurator::class,
     ];
 
