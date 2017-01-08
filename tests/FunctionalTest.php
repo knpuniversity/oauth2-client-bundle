@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\Tests;
+namespace KnpU\OAuth2ClientBundle\tests;
 
 use KnpU\OAuth2ClientBundle\Tests\app\TestKernel;
 

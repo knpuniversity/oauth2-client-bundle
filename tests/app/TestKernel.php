@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\Tests\app;
+namespace KnpU\OAuth2ClientBundle\tests\app;
 
 use KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;

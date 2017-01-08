@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\Tests\Client;
+namespace KnpU\OAuth2ClientBundle\tests\Client;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Provider\FacebookUser;
@@ -92,7 +92,7 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
 
         $this->provider->getAuthorizationUrl([
             'scope' => ['scopeA'],
-            'optionA' => 'FOO'
+            'optionA' => 'FOO',
         ])
             ->willReturn('http://example.com');
 
@@ -169,7 +169,7 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
-    */
+     */
     public function testGetAccessTokenThrowsMissingAuthCodeException()
     {
         $this->request->query->set('state', 'ACTUAL_STATE');
@@ -205,7 +205,7 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
             'name' => 'testUser',
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'email' => 'john@doe.com'
+            'email' => 'john@doe.com',
         ]);
 
         $this->provider->getResourceOwner($actualToken)->willReturn($resourceOwner);
