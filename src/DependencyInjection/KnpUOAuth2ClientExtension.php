@@ -20,6 +20,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VkontakteProviderConfigurator;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -48,6 +49,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'eve_online' => EveOnlineProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
         'bitbucket' => BitbucketProviderConfigurator::class,
+        'vkontakte' => VkontakteProviderConfigurator::class,
         'generic' => GenericProviderConfigurator::class,
     ];
 
