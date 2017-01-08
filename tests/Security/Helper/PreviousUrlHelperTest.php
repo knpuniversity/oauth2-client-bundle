@@ -1,16 +1,12 @@
 <?php
-/**
- * @author Serghei Luchianenco (s@luchianenco.com)
- * Date: 07/01/2017
- * Time: 23:59
- */
 
 namespace KnpU\OAuth2ClientBundle\Tests\Security\Helper;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 
-use KnpU\OAuth2ClientBundle\Security\Helper\PreviousUrlHelper;
-
-
+/**
+ * @author Serghei Luchianenco (s@luchianenco.com)
+ */
 class PreviousUrlHelperTest extends \PHPUnit_Framework_TestCase
 {
     private $traitObject;
@@ -24,9 +20,16 @@ class PreviousUrlHelperTest extends \PHPUnit_Framework_TestCase
     public function testGetPreviousUrl()
     {
         $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
-        $request->getSession()->willReturn(new StubSession());
-        $res = $this->traitObject->getPreviousUrl($request->reveal(), '');
+        $session = $this->prophesize(Session::class);
+        $session->get('_security.some_firewall_name.target_path')
+            ->willReturn('/some/url');
 
-        $this->assertEquals($res, true);
+        $request->getSession()->willReturn($session->reveal());
+        $previousUrl = $this->traitObject->getPreviousUrl(
+            $request->reveal(),
+            'some_firewall_name'
+        );
+
+        $this->assertEquals($previousUrl, '/some/url');
     }
 }

@@ -1,15 +1,12 @@
 <?php
-/**
- * @author Serghei Luchianenco (s@luchianenco.com)
- * Date: 07/01/2017
- * Time: 23:29
- */
 
 namespace KnpU\OAuth2ClientBundle\Tests\Security\Helper;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 
-use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
-
+/**
+ * @author Serghei Luchianenco (s@luchianenco.com)
+ */
 class FinishRegistrationBehaviorTest extends \PHPUnit_Framework_TestCase
 {
     private $traitObject;
@@ -23,18 +20,12 @@ class FinishRegistrationBehaviorTest extends \PHPUnit_Framework_TestCase
     public function testGetUserInfoFromSession()
     {
         $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
-        $request->getSession()->willReturn(new StubSession());
-        $res = $this->traitObject->getUserInfoFromSession($request->reveal());
+        $session = $this->prophesize(Session::class);
+        $session->get('guard.finish_registration.user_information')
+            ->willReturn(['username' => 'some_user_info']);
+        $request->getSession()->willReturn($session->reveal());
+        $userInfo = $this->traitObject->getUserInfoFromSession($request->reveal());
 
-        $this->assertEquals($res, true);
-    }
-
-}
-
-class StubSession
-{
-    public function get()
-    {
-        return true;
+        $this->assertEquals($userInfo, ['username' => 'some_user_info']);
     }
 }

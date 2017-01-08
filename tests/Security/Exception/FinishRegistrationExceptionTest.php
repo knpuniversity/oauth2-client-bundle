@@ -1,15 +1,12 @@
 <?php
-/**
- * @author Serghei Luchianenco (s@luchianenco.com)
- * Date: 07/01/2017
- * Time: 23:21
- */
 
 namespace KnpU\OAuth2ClientBundle\Tests\Security\Exception;
 
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 
-
+/**
+ * @author Serghei Luchianenco (s@luchianenco.com)
+ */
 class FinishRegistrationExceptionTest extends \PHPUnit_Framework_TestCase
 {
     public function testException()
