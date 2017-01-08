@@ -54,17 +54,17 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-| OAuth2 Provider                                                | Install                                           |
-| -------------------------------------------------------------- | ------------------------------------------------- |
-| [Facebook](https://github.com/thephpleague/oauth2-facebook)    | composer require league/oauth2-facebook           |
-| [GitHub](https://github.com/thephpleague/oauth2-github)        | composer require league/oauth2-github             |
-| [GitLab](https://github.com/omines/oauth2-gitlab)              | composer require omines/oauth2-gitlab             |
-| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)    | composer require league/oauth2-linkedin           |
-| [Google](https://github.com/thephpleague/oauth2-google)        | composer require league/oauth2-google             |
-| [Eve Online](https://github.com/evelabs/oauth2-eveonline)      | composer require evelabs/oauth2-eveonline         |
-| [Instagram](https://github.com/thephpleague/oauth2-instagram)  | composer require league/oauth2-instagram          |
-| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket) | composer require stevenmaguire/oauth2-bitbucket   |
-| generic                                                        | configure any unsupported provider                |
+| OAuth2 Provider                                                 | Install                                          |
+| --------------------------------------------------------------- | ------------------------------------------------ |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)     | composer require league/oauth2-facebook          |
+| [GitHub](https://github.com/thephpleague/oauth2-github)         | composer require league/oauth2-github            |
+| [GitLab](https://github.com/omines/oauth2-gitlab)               | composer require omines/oauth2-gitlab            |
+| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)     | composer require league/oauth2-linkedin          |
+| [Google](https://github.com/thephpleague/oauth2-google)         | composer require league/oauth2-google            |
+| [Eve Online](https://github.com/evelabs/oauth2-eveonline)       | composer require evelabs/oauth2-eveonline        |
+| [Instagram](https://github.com/thephpleague/oauth2-instagram)   | composer require league/oauth2-instagram         |
+| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)  | composer require stevenmaguire/oauth2-bitbucket  |
+| generic                                                         | configure any unsupported provider               |
 
 <span name="end-client-downloader-table"></span>
 
@@ -428,7 +428,7 @@ knpu_oauth2_client:
             
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
-            
+
         # will create service: "knpu.oauth2.client.bitbucket"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient
         # composer require stevenmaguire/oauth2-bitbucket
@@ -444,8 +444,6 @@ knpu_oauth2_client:
             
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
-            
-            
 ```
 
 ## Configuring a Generic Provider
