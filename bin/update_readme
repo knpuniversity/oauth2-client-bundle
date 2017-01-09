@@ -2,7 +2,7 @@
 <?php
 
 /*
- * Run this script to automatically update the Configuratio section
+ * Run this script to automatically update the Configuration section
  * of the README.md file.
  */
 
@@ -112,11 +112,21 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
     $newSection = str_replace('%PROVIDER_NAME%', $type, $sectionTemplate);
     $newSection = str_replace('%CLIENT_CLASS%', $configurator->getClientClass(array()), $newSection);
     $newSection = str_replace('%PACKAGE_NAME%', $configurator->getPackagistName(), $newSection);
-    $newSection = str_replace(
-        '%ADDITIONAL_CONFIG%',
-        implode("\n            ", $customKeys),
-        $newSection
-    );
+
+    if (empty($customKeys)) {
+        $newSection = str_replace(
+            '            %ADDITIONAL_CONFIG%',
+            '',
+            $newSection
+        );
+    } else {
+        $newSection = str_replace(
+            '%ADDITIONAL_CONFIG%',
+            implode("\n            ", $customKeys),
+            $newSection
+        );
+    }
+
     $configSections[] = $newSection;
 }
 

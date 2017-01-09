@@ -340,7 +340,7 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_github_check
             redirect_params: {}
-            
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -373,7 +373,7 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_linkedin_check
             redirect_params: {}
-            
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -410,7 +410,7 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_eve_online_check
             redirect_params: {}
-            
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -458,7 +458,7 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_bitbucket_check
             redirect_params: {}
-            
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
