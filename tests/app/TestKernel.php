@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\Tests\app;
+namespace KnpU\OAuth2ClientBundle\tests\app;
 
 use KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -34,6 +34,9 @@ class TestKernel extends Kernel
                 'router' => [
                     'resource' => __DIR__ . '/routing.yml',
                 ],
+                // turn this off - otherwise we need doctrine/annotation
+                // the change that required this was in Symfony 3.2.0
+                'annotations' => Kernel::VERSION_ID >= 30200 ? false : [],
             ]);
 
             $container->loadFromExtension('knpu_oauth2_client', [

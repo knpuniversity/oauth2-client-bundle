@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\Tests\DependencyInjection;
+namespace KnpU\OAuth2ClientBundle\tests\DependencyInjection;
 
 use KnpU\OAuth2ClientBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Processor;

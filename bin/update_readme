@@ -149,7 +149,7 @@ $installTable .= '|';
 // adding the next line, with | ---- | ---- |
 $installTable .= "\n";
 $installTable .= '| '.str_repeat('-', $longestNameAndUrl+5).' | ';
-$installTable .= str_repeat('-', $longestNameAndUrl-13).' |';
+$installTable .= str_repeat('-', $longestNameAndUrl-10).' |';
 
 $lines = [];
 foreach ($installTreeDetails['types'] as $typeConfig) {
