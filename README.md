@@ -65,6 +65,11 @@ via Composer:
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)   | composer require league/oauth2-instagram         |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)            | composer require j4k/oauth2-vkontakte            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)  | composer require stevenmaguire/oauth2-bitbucket  |
+| [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki) | composer require aego/oauth2-odnoklassniki       |
+| [Slack](https://github.com/adam-paterson/oauth2-slack)          | composer require adam-paterson/oauth2-slack      |
+| [Vimeo](https://github.com/saf33r/oauth2-vimeo)                 | composer require saf33r/oauth2-vimeo             |
+| [Yahoo](https://github.com/hayageek/oauth2-yahoo)               | composer require hayageek/oauth2-yahoo           |
+| [Yandex](https://github.com/rakeev/oauth2-yandex)               | composer require aego/oauth2-yandex              |
 | generic                                                         | configure any unsupported provider               |
 
 <span name="end-client-downloader-table"></span>
@@ -461,6 +466,86 @@ knpu_oauth2_client:
 
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
+
+        # will create service: "knpu.oauth2.client.odnoklassniki"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\OdnoklassnikiClient
+        # composer require aego/oauth2-odnoklassniki
+        odnoklassniki:
+            # must be "odnoklassniki" - it activates that type!
+            type: odnoklassniki
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %odnoklassniki_client_id%
+            client_secret: %odnoklassniki_client_secret%
+            # a route name you'll create
+            redirect_route: connect_odnoklassniki_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+            
+        # will create service: "knpu.oauth2.client.slack"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\SlackClient
+        # composer require adam-paterson/oauth2-slack
+        slack:
+            # must be "slack" - it activates that type!
+            type: slack
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %slack_client_id%
+            client_secret: %slack_client_secret%
+            # a route name you'll create
+            redirect_route: connect_slack_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+            
+        # will create service: "knpu.oauth2.client.vimeo"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\VimeoClient
+        # composer require saf33r/oauth2-vimeo
+        vimeo:
+            # must be "vimeo" - it activates that type!
+            type: vimeo
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %vimeo_client_id%
+            client_secret: %vimeo_client_secret%
+            # a route name you'll create
+            redirect_route: connect_vimeo_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+            
+        # will create service: "knpu.oauth2.client.yahoo"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\YahooClient
+        # composer require hayageek/oauth2-yahoo
+        yahoo:
+            # must be "yahoo" - it activates that type!
+            type: yahoo
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %yahoo_client_id%
+            client_secret: %yahoo_client_secret%
+            # a route name you'll create
+            redirect_route: connect_yahoo_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true            
+            
+        # will create service: "knpu.oauth2.client.yandex"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\YandexClient
+        # composer require aego/oauth2-yandex
+        yandex:
+            # must be "yandex" - it activates that type!
+            type: yandex
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %yandex_client_id%
+            client_secret: %yandex_client_secret%
+            # a route name you'll create
+            redirect_route: connect_yandex_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true            
 ```
 
 ## Configuring a Generic Provider
