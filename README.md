@@ -63,6 +63,7 @@ via Composer:
 | [Google](https://github.com/thephpleague/oauth2-google)         | composer require league/oauth2-google            |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)       | composer require evelabs/oauth2-eveonline        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)   | composer require league/oauth2-instagram         |
+| [VKontakte](https://github.com/j4k/oauth2-vkontakte)            | composer require j4k/oauth2-vkontakte            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)  | composer require stevenmaguire/oauth2-bitbucket  |
 | generic                                                         | configure any unsupported provider               |
 
@@ -425,7 +426,23 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_instagram_check
             redirect_params: {}
-            
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.vkontakte"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\VKontakteClient
+        # composer require j4k/oauth2-vkontakte
+        vkontakte:
+            # must be "vkontakte" - it activates that type!
+            type: vkontakte
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %vkontakte_client_id%
+            client_secret: %vkontakte_client_secret%
+            # a route name you'll create
+            redirect_route: connect_vkontakte_check
+            redirect_params: {}
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
