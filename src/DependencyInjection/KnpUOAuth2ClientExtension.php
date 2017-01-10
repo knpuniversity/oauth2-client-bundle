@@ -19,8 +19,13 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VKontakteProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YahooProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YandexProviderConfigurator;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -50,6 +55,11 @@ class KnpUOAuth2ClientExtension extends Extension
         'instagram' => InstagramProviderConfigurator::class,
         'vkontakte' => VKontakteProviderConfigurator::class,
         'bitbucket' => BitbucketProviderConfigurator::class,
+        'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
+        'slack' => SlackProviderConfigurator::class,
+        'yandex' => YandexProviderConfigurator::class,
+        'vimeo' => VimeoProviderConfigurator::class,
+        'yahoo' => YahooProviderConfigurator::class,
         'generic' => GenericProviderConfigurator::class,
     ];
 
