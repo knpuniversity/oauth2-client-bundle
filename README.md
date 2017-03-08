@@ -93,6 +93,7 @@ knpu_oauth2_client:
             # the route that you're redirected to after
             # see the controller example below
             redirect_route: connect_facebook_check
+            # route parameters to pass to your route, if needed
             redirect_params: {}
             graph_api_version: v2.3
 ```
