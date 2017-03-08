@@ -17,7 +17,7 @@
         "symfony/dependency-injection": "^2.8|^3.0",
         "symfony/routing": "^2.7|^3.0",
         "symfony/http-foundation": "^2.7|^3.0",
-        "league/oauth2-client": "^1.0"
+        "league/oauth2-client": "^1.0|^2.0"
     },
     "autoload": {
         "psr-4": { "KnpU\\OAuth2ClientBundle\\": "src/" }
@@ -26,7 +26,7 @@
         "psr-4": { "KnpU\\OAuth2ClientBundle\\Tests\\": "tests/" }
     },
     "require-dev": {
-        "league/oauth2-facebook": "^1.1",
+        "league/oauth2-facebook": "^1.1|^2.0",
         "symfony/security-guard": "^2.8|^3.0",
         "phpunit/phpunit": "^4.8"
     },
