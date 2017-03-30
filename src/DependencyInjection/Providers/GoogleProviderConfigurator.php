@@ -19,9 +19,11 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
         // todo - add the comments as help text, and render in README
         $node
             ->scalarNode('access_type')
+                ->defaultValue('')
                 ->info('Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters')
             ->end()
             ->scalarNode('hosted_domain')
+                ->defaultValue('')
                 ->info('Optional value for sending hd parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#hd-param')
             ->end()
             ->arrayNode('user_fields')
