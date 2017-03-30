@@ -16,14 +16,13 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)
     {
-        // todo - add the comments as help text, and render in README
         $node
             ->scalarNode('access_type')
-                ->defaultValue('')
+                ->defaultNull()
                 ->info('Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters')
             ->end()
             ->scalarNode('hosted_domain')
-                ->defaultValue('')
+                ->defaultNull()
                 ->info('Optional value for sending hd parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#hd-param')
             ->end()
             ->arrayNode('user_fields')
@@ -40,13 +39,24 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderOptions(array $config)
     {
-        return [
+        $options = [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-            'accessType' => $config['access_type'],
-            'hostedDomain' => $config['hosted_domain'],
-            'userFields' => $config['user_fields'],
         ];
+
+        if ($config['access_type']) {
+            $options['accessType'] = $config['access_type'];
+        }
+
+        if ($config['hosted_domain']) {
+            $options['hostedDomain'] = $config['hosted_domain'];
+        }
+
+        if (!empty($config['user_fields'])) {
+            $options['userFields'] = $config['user_fields'];
+        }
+
+        return $options;
     }
 
     public function getPackagistName()
