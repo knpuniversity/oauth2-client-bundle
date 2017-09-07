@@ -63,6 +63,7 @@ via Composer:
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
+| [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
@@ -433,6 +434,23 @@ knpu_oauth2_client:
             redirect_route: connect_facebook_check
             redirect_params: {}
             graph_api_version: v2.5
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.headhunter"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HeadHunterClient
+        # composer require alexmasterov/oauth2-headhunter
+        headhunter:
+            # must be "headhunter" - it activates that type!
+            type: headhunter
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %headhunter_client_id%
+            client_secret: %headhunter_client_secret%
+            # a route name you'll create
+            redirect_route: connect_headhunter_check
+            redirect_params: {}
+            # Optional value for CSRF Protection. https://github.com/hhru/api/blob/master/docs_eng/authorization.md
+            # state: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
