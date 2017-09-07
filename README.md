@@ -59,6 +59,7 @@ via Composer:
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
+| [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
@@ -354,7 +355,7 @@ knpu_oauth2_client:
             # use_state: true
 
         # will create service: "knpu.oauth2.client.digital_ocean"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DigitalOceanClient
         # composer require chrishemmings/oauth2-digitalocean
         digital_ocean:
             # must be "digital_ocean" - it activates that type!
@@ -364,6 +365,22 @@ knpu_oauth2_client:
             client_secret: %digital_ocean_client_secret%
             # a route name you'll create
             redirect_route: connect_digital_ocean_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.dribbble"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DribbbleClient
+        # composer require crewlabs/oauth2-dribbble
+        dribbble:
+            # must be "dribbble" - it activates that type!
+            type: dribbble
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %dribbble_client_id%
+            client_secret: %dribbble_client_secret%
+            # a route name you'll create
+            redirect_route: connect_dribbble_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
