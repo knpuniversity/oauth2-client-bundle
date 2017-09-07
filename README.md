@@ -54,25 +54,26 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-| OAuth2 Provider                                                  | Install                                          |
-| ---------------------------------------------------------------- | ------------------------------------------------- |
-| [Auth0](https://github.com/RiskioFr/oauth2-auth0)                | composer require riskio/oauth2-auth0             |
-| [Azure](https://github.com/thenetworg/oauth2-azure)              | composer require thenetworg/oauth2-azure         |
-| [Facebook](https://github.com/thephpleague/oauth2-facebook)      | composer require league/oauth2-facebook          |
-| [GitHub](https://github.com/thephpleague/oauth2-github)          | composer require league/oauth2-github            |
-| [GitLab](https://github.com/omines/oauth2-gitlab)                | composer require omines/oauth2-gitlab            |
-| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)      | composer require league/oauth2-linkedin          |
-| [Google](https://github.com/thephpleague/oauth2-google)          | composer require league/oauth2-google            |
-| [Eve Online](https://github.com/evelabs/oauth2-eveonline)        | composer require evelabs/oauth2-eveonline        |
-| [Instagram](https://github.com/thephpleague/oauth2-instagram)    | composer require league/oauth2-instagram         |
-| [VKontakte](https://github.com/j4k/oauth2-vkontakte)             | composer require j4k/oauth2-vkontakte            |
-| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)   | composer require stevenmaguire/oauth2-bitbucket  |
-| [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)  | composer require aego/oauth2-odnoklassniki       |
-| [Slack](https://github.com/adam-paterson/oauth2-slack)           | composer require adam-paterson/oauth2-slack      |
-| [Yandex](https://github.com/rakeev/oauth2-yandex)                | composer require aego/oauth2-yandex              |
-| [Vimeo](https://github.com/saf33r/oauth2-vimeo)                  | composer require saf33r/oauth2-vimeo             |
-| [Yahoo](https://github.com/hayageek/oauth2-yahoo)                | composer require hayageek/oauth2-yahoo           |
-| generic                                                          | configure any unsupported provider               |
+| OAuth2 Provider                                                       | Install                                             |
+| --------------------------------------------------------------------- | ------------------------------------------------------ |
+| [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
+| [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
+| [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
+| [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
+| [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
+| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
+| [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
+| [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
+| [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
+| [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
+| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
+| [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
+| [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
+| [Yandex](https://github.com/rakeev/oauth2-yandex)                     | composer require aego/oauth2-yandex                 |
+| [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
+| [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
+| generic                                                               | configure any unsupported provider                  |
 
 <span name="end-client-downloader-table"></span>
 
@@ -347,6 +348,22 @@ knpu_oauth2_client:
             client_secret: %azure_client_secret%
             # a route name you'll create
             redirect_route: connect_azure_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.digital_ocean"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client
+        # composer require chrishemmings/oauth2-digitalocean
+        digital_ocean:
+            # must be "digital_ocean" - it activates that type!
+            type: digital_ocean
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %digital_ocean_client_id%
+            client_secret: %digital_ocean_client_secret%
+            # a route name you'll create
+            redirect_route: connect_digital_ocean_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
