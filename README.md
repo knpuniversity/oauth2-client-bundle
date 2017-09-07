@@ -56,6 +56,7 @@ via Composer:
 
 | OAuth2 Provider                                                  | Install                                          |
 | ---------------------------------------------------------------- | ------------------------------------------------- |
+| [Amazon](https://github.com/lemonstand/oauth2-amazon/)           | composer require lemonstand/oauth2-amazon        |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)      | composer require league/oauth2-facebook          |
 | [GitHub](https://github.com/thephpleague/oauth2-github)          | composer require league/oauth2-github            |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                | composer require omines/oauth2-gitlab            |
@@ -318,6 +319,22 @@ any provider.
 # app/config/config.yml
 knpu_oauth2_client:
     clients:
+        # will create service: "knpu.oauth2.client.amazon"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AmazonClient
+        # composer require lemonstand/oauth2-amazon
+        amazon:
+            # must be "amazon" - it activates that type!
+            type: amazon
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %amazon_client_id%
+            client_secret: %amazon_client_secret%
+            # a route name you'll create
+            redirect_route: connect_amazon_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.facebook"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient
         # composer require league/oauth2-facebook
@@ -395,9 +412,9 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_google_check
             redirect_params: {}
-            # Optional value for sending hd parameter. More detail: https://developers.google.com/accounts/docs/OAuth2Login#hd-param
+            # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters
             # access_type: ''
-            # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline
+            # Optional value for sending hd parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#hd-param
             # hosted_domain: ''
             # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
             # user_fields: {}
