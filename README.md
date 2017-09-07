@@ -57,6 +57,7 @@ via Composer:
 | OAuth2 Provider                                                  | Install                                          |
 | ---------------------------------------------------------------- | ------------------------------------------------- |
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                | composer require riskio/oauth2-auth0             |
+| [Azure](https://github.com/thenetworg/oauth2-azure)              | composer require thenetworg/oauth2-azure         |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)      | composer require league/oauth2-facebook          |
 | [GitHub](https://github.com/thephpleague/oauth2-github)          | composer require league/oauth2-github            |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                | composer require omines/oauth2-gitlab            |
@@ -330,6 +331,22 @@ knpu_oauth2_client:
             client_secret: %auth0_client_secret%
             # a route name you'll create
             redirect_route: connect_auth0_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.azure"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AzureClient
+        # composer require thenetworg/oauth2-azure
+        azure:
+            # must be "azure" - it activates that type!
+            type: azure
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %azure_client_id%
+            client_secret: %azure_client_secret%
+            # a route name you'll create
+            redirect_route: connect_azure_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
