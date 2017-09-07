@@ -49,6 +49,6 @@ class DigitalOceanProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client';
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\DigitalOceanClient';
     }
 }
