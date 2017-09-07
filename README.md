@@ -61,6 +61,7 @@ via Composer:
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
+| [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
@@ -398,6 +399,22 @@ knpu_oauth2_client:
             client_secret: %dropbox_client_secret%
             # a route name you'll create
             redirect_route: connect_dropbox_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.drupal"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DrupalClient
+        # composer require chrishemmings/oauth2-drupal
+        drupal:
+            # must be "drupal" - it activates that type!
+            type: drupal
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %drupal_client_id%
+            client_secret: %drupal_client_secret%
+            # a route name you'll create
+            redirect_route: connect_drupal_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true

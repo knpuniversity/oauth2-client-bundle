@@ -16,6 +16,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BitbucketProviderConfi
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DigitalOceanProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DribbbleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DropboxProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DrupalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
@@ -56,6 +57,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'digital_ocean' => DigitalOceanProviderConfigurator::class,
         'dribbble' => DribbbleProviderConfigurator::class,
         'dropbox' => DropboxProviderConfigurator::class,
+        'drupal' => DrupalProviderConfigurator::class,
         'facebook' => FacebookProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
