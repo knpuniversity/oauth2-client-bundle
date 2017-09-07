@@ -60,6 +60,7 @@ via Composer:
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
+| [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
@@ -381,6 +382,22 @@ knpu_oauth2_client:
             client_secret: %dribbble_client_secret%
             # a route name you'll create
             redirect_route: connect_dribbble_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.dropbox"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DropboxClient
+        # composer require stevenmaguire/oauth2-dropbox
+        dropbox:
+            # must be "dropbox" - it activates that type!
+            type: dropbox
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %dropbox_client_id%
+            client_secret: %dropbox_client_secret%
+            # a route name you'll create
+            redirect_route: connect_dropbox_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
