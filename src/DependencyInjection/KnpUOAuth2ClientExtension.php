@@ -26,6 +26,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HeadHunterProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
@@ -55,25 +56,26 @@ class KnpUOAuth2ClientExtension extends Extension
     private static $supportedProviderTypes = [
         'auth0' => Auth0ProviderConfigurator::class,
         'azure' => AzureProviderConfigurator::class,
+        'bitbucket' => BitbucketProviderConfigurator::class,
         'digital_ocean' => DigitalOceanProviderConfigurator::class,
         'dribbble' => DribbbleProviderConfigurator::class,
         'dropbox' => DropboxProviderConfigurator::class,
         'drupal' => DrupalProviderConfigurator::class,
+        'eve_online' => EveOnlineProviderConfigurator::class,
         'facebook' => FacebookProviderConfigurator::class,
         'headhunter' => HeadHunterProviderConfigurator::class,
+        'instagram' => InstagramProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
-        'linkedin' => LinkedInProviderConfigurator::class,
         'google' => GoogleProviderConfigurator::class,
-        'eve_online' => EveOnlineProviderConfigurator::class,
-        'instagram' => InstagramProviderConfigurator::class,
-        'vkontakte' => VKontakteProviderConfigurator::class,
-        'bitbucket' => BitbucketProviderConfigurator::class,
+        'linkedin' => LinkedInProviderConfigurator::class,
+        'microsoft' => MicrosoftProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
         'slack' => SlackProviderConfigurator::class,
-        'yandex' => YandexProviderConfigurator::class,
         'vimeo' => VimeoProviderConfigurator::class,
+        'vkontakte' => VKontakteProviderConfigurator::class,
         'yahoo' => YahooProviderConfigurator::class,
+        'yandex' => YandexProviderConfigurator::class,
         'generic' => GenericProviderConfigurator::class,
     ];
 
