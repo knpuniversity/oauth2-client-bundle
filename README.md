@@ -54,23 +54,31 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-| OAuth2 Provider                                                  | Install                                          |
-| ---------------------------------------------------------------- | ------------------------------------------------- |
-| [Facebook](https://github.com/thephpleague/oauth2-facebook)      | composer require league/oauth2-facebook          |
-| [GitHub](https://github.com/thephpleague/oauth2-github)          | composer require league/oauth2-github            |
-| [GitLab](https://github.com/omines/oauth2-gitlab)                | composer require omines/oauth2-gitlab            |
-| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)      | composer require league/oauth2-linkedin          |
-| [Google](https://github.com/thephpleague/oauth2-google)          | composer require league/oauth2-google            |
-| [Eve Online](https://github.com/evelabs/oauth2-eveonline)        | composer require evelabs/oauth2-eveonline        |
-| [Instagram](https://github.com/thephpleague/oauth2-instagram)    | composer require league/oauth2-instagram         |
-| [VKontakte](https://github.com/j4k/oauth2-vkontakte)             | composer require j4k/oauth2-vkontakte            |
-| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)   | composer require stevenmaguire/oauth2-bitbucket  |
-| [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)  | composer require aego/oauth2-odnoklassniki       |
-| [Slack](https://github.com/adam-paterson/oauth2-slack)           | composer require adam-paterson/oauth2-slack      |
-| [Yandex](https://github.com/rakeev/oauth2-yandex)                | composer require aego/oauth2-yandex              |
-| [Vimeo](https://github.com/saf33r/oauth2-vimeo)                  | composer require saf33r/oauth2-vimeo             |
-| [Yahoo](https://github.com/hayageek/oauth2-yahoo)                | composer require hayageek/oauth2-yahoo           |
-| generic                                                          | configure any unsupported provider               |
+| OAuth2 Provider                                                       | Install                                             |
+| --------------------------------------------------------------------- | ------------------------------------------------------ |
+| [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
+| [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
+| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
+| [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
+| [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
+| [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
+| [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
+| [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
+| [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
+| [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
+| [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
+| [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
+| [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
+| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
+| [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
+| [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
+| [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
+| [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
+| [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
+| [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
+| [Yandex](https://github.com/rakeev/oauth2-yandex)                     | composer require aego/oauth2-yandex                 |
+| generic                                                               | configure any unsupported provider                  |
 
 <span name="end-client-downloader-table"></span>
 
@@ -318,6 +326,134 @@ any provider.
 # app/config/config.yml
 knpu_oauth2_client:
     clients:
+        # will create service: "knpu.oauth2.client.auth0"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client
+        # composer require riskio/oauth2-auth0
+        auth0:
+            # must be "auth0" - it activates that type!
+            type: auth0
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %auth0_client_id%
+            client_secret: %auth0_client_secret%
+            # a route name you'll create
+            redirect_route: connect_auth0_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.azure"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AzureClient
+        # composer require thenetworg/oauth2-azure
+        azure:
+            # must be "azure" - it activates that type!
+            type: azure
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %azure_client_id%
+            client_secret: %azure_client_secret%
+            # a route name you'll create
+            redirect_route: connect_azure_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.bitbucket"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient
+        # composer require stevenmaguire/oauth2-bitbucket
+        bitbucket:
+            # must be "bitbucket" - it activates that type!
+            type: bitbucket
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %bitbucket_client_id%
+            client_secret: %bitbucket_client_secret%
+            # a route name you'll create
+            redirect_route: connect_bitbucket_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.digital_ocean"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DigitalOceanClient
+        # composer require chrishemmings/oauth2-digitalocean
+        digital_ocean:
+            # must be "digital_ocean" - it activates that type!
+            type: digital_ocean
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %digital_ocean_client_id%
+            client_secret: %digital_ocean_client_secret%
+            # a route name you'll create
+            redirect_route: connect_digital_ocean_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.dribbble"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DribbbleClient
+        # composer require crewlabs/oauth2-dribbble
+        dribbble:
+            # must be "dribbble" - it activates that type!
+            type: dribbble
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %dribbble_client_id%
+            client_secret: %dribbble_client_secret%
+            # a route name you'll create
+            redirect_route: connect_dribbble_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.dropbox"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DropboxClient
+        # composer require stevenmaguire/oauth2-dropbox
+        dropbox:
+            # must be "dropbox" - it activates that type!
+            type: dropbox
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %dropbox_client_id%
+            client_secret: %dropbox_client_secret%
+            # a route name you'll create
+            redirect_route: connect_dropbox_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.drupal"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DrupalClient
+        # composer require chrishemmings/oauth2-drupal
+        drupal:
+            # must be "drupal" - it activates that type!
+            type: drupal
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %drupal_client_id%
+            client_secret: %drupal_client_secret%
+            # a route name you'll create
+            redirect_route: connect_drupal_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.eve_online"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient
+        # composer require evelabs/oauth2-eveonline
+        eve_online:
+            # must be "eve_online" - it activates that type!
+            type: eve_online
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %eve_online_client_id%
+            client_secret: %eve_online_client_secret%
+            # a route name you'll create
+            redirect_route: connect_eve_online_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.facebook"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient
         # composer require league/oauth2-facebook
@@ -331,6 +467,38 @@ knpu_oauth2_client:
             redirect_route: connect_facebook_check
             redirect_params: {}
             graph_api_version: v2.5
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.headhunter"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HeadHunterClient
+        # composer require alexmasterov/oauth2-headhunter
+        headhunter:
+            # must be "headhunter" - it activates that type!
+            type: headhunter
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %headhunter_client_id%
+            client_secret: %headhunter_client_secret%
+            # a route name you'll create
+            redirect_route: connect_headhunter_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.instagram"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\InstagramClient
+        # composer require league/oauth2-instagram
+        instagram:
+            # must be "instagram" - it activates that type!
+            type: instagram
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %instagram_client_id%
+            client_secret: %instagram_client_secret%
+            # a route name you'll create
+            redirect_route: connect_instagram_check
+            redirect_params: {}
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -367,6 +535,27 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.google"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient
+        # composer require league/oauth2-google
+        google:
+            # must be "google" - it activates that type!
+            type: google
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %google_client_id%
+            client_secret: %google_client_secret%
+            # a route name you'll create
+            redirect_route: connect_google_check
+            redirect_params: {}
+            # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters
+            # access_type: ''
+            # Optional value for sending hd parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#hd-param
+            # hosted_domain: ''
+            # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
+            # user_fields: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.linkedin"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\LinkedInClient
         # composer require league/oauth2-linkedin
@@ -383,88 +572,24 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
-        # will create service: "knpu.oauth2.client.google"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient
-        # composer require league/oauth2-google
-        google:
-            # must be "google" - it activates that type!
-            type: google
+        # will create service: "knpu.oauth2.client.microsoft"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\MicrosoftClient
+        # composer require stevenmaguire/oauth2-microsoft
+        microsoft:
+            # must be "microsoft" - it activates that type!
+            type: microsoft
             # add and configure client_id and client_secret in parameters.yml
-            client_id: %google_client_id%
-            client_secret: %google_client_secret%
+            client_id: %microsoft_client_id%
+            client_secret: %microsoft_client_secret%
             # a route name you'll create
-            redirect_route: connect_google_check
+            redirect_route: connect_microsoft_check
             redirect_params: {}
-            # Optional value for sending hd parameter. More detail: https://developers.google.com/accounts/docs/OAuth2Login#hd-param
-            # access_type: ''
-            # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OAuth2WebServer#offline
-            # hosted_domain: ''
-            # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
-            # user_fields: {}
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.eve_online"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient
-        # composer require evelabs/oauth2-eveonline
-        eve_online:
-            # must be "eve_online" - it activates that type!
-            type: eve_online
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %eve_online_client_id%
-            client_secret: %eve_online_client_secret%
-            # a route name you'll create
-            redirect_route: connect_eve_online_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.instagram"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\InstagramClient
-        # composer require league/oauth2-instagram
-        instagram:
-            # must be "instagram" - it activates that type!
-            type: instagram
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %instagram_client_id%
-            client_secret: %instagram_client_secret%
-            # a route name you'll create
-            redirect_route: connect_instagram_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.vkontakte"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\VKontakteClient
-        # composer require j4k/oauth2-vkontakte
-        vkontakte:
-            # must be "vkontakte" - it activates that type!
-            type: vkontakte
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %vkontakte_client_id%
-            client_secret: %vkontakte_client_secret%
-            # a route name you'll create
-            redirect_route: connect_vkontakte_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.bitbucket"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient
-        # composer require stevenmaguire/oauth2-bitbucket
-        bitbucket:
-            # must be "bitbucket" - it activates that type!
-            type: bitbucket
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %bitbucket_client_id%
-            client_secret: %bitbucket_client_secret%
-            # a route name you'll create
-            redirect_route: connect_bitbucket_check
-            redirect_params: {}
-
+            # Optional value for URL Authorize
+            # url_authorize: ''
+            # Optional value for URL Access Token
+            # url_access_token: ''
+            # Optional value for URL Resource Owner Details
+            # url_resource_owner_details: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -500,22 +625,6 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
-        # will create service: "knpu.oauth2.client.yandex"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\YandexClient
-        # composer require aego/oauth2-yandex
-        yandex:
-            # must be "yandex" - it activates that type!
-            type: yandex
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %yandex_client_id%
-            client_secret: %yandex_client_secret%
-            # a route name you'll create
-            redirect_route: connect_yandex_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
         # will create service: "knpu.oauth2.client.vimeo"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\VimeoClient
         # composer require saf33r/oauth2-vimeo
@@ -532,6 +641,22 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.vkontakte"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\VKontakteClient
+        # composer require j4k/oauth2-vkontakte
+        vkontakte:
+            # must be "vkontakte" - it activates that type!
+            type: vkontakte
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %vkontakte_client_id%
+            client_secret: %vkontakte_client_secret%
+            # a route name you'll create
+            redirect_route: connect_vkontakte_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.yahoo"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\YahooClient
         # composer require hayageek/oauth2-yahoo
@@ -543,6 +668,22 @@ knpu_oauth2_client:
             client_secret: %yahoo_client_secret%
             # a route name you'll create
             redirect_route: connect_yahoo_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.yandex"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\YandexClient
+        # composer require aego/oauth2-yandex
+        yandex:
+            # must be "yandex" - it activates that type!
+            type: yandex
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %yandex_client_id%
+            client_secret: %yandex_client_secret%
+            # a route name you'll create
+            redirect_route: connect_yandex_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
