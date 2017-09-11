@@ -16,12 +16,7 @@ class HeadHunterProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)
     {
-        $node
-            ->scalarNode('state')
-                ->defaultNull()
-                ->info('Optional value for CSRF Protection. https://github.com/hhru/api/blob/master/docs_eng/authorization.md')
-            ->end()
-        ;
+        // no custom options
     }
 
     public function getProviderClass(array $config)
@@ -31,16 +26,10 @@ class HeadHunterProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderOptions(array $config)
     {
-        $options = [
+        return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret']
         ];
-
-        if ($config['state']) {
-            $options['state'] = $config['state'];
-        }
-
-        return $options;
     }
 
     public function getPackagistName()
