@@ -56,6 +56,7 @@ via Composer:
 
 | OAuth2 Provider                                                       | Install                                             |
 | --------------------------------------------------------------------- | ------------------------------------------------------ |
+| [Amazon](https://github.com/luchianenco/oauth2-amazon)                | composer require luchianenco/oauth2-amazon          |
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
@@ -326,6 +327,22 @@ any provider.
 # app/config/config.yml
 knpu_oauth2_client:
     clients:
+        # will create service: "knpu.oauth2.client.amazon"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AmazonClient
+        # composer require luchianenco/oauth2-amazon
+        amazon:
+            # must be "amazon" - it activates that type!
+            type: amazon
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %amazon_client_id%
+            client_secret: %amazon_client_secret%
+            # a route name you'll create
+            redirect_route: connect_amazon_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.auth0"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client
         # composer require riskio/oauth2-auth0

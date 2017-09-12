@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AmazonProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\Auth0ProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AzureProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BitbucketProviderConfigurator;
@@ -54,6 +55,7 @@ class KnpUOAuth2ClientExtension extends Extension
 
     /** @var array */
     private static $supportedProviderTypes = [
+        'amazon' => AmazonProviderConfigurator::class,
         'auth0' => Auth0ProviderConfigurator::class,
         'azure' => AzureProviderConfigurator::class,
         'bitbucket' => BitbucketProviderConfigurator::class,
