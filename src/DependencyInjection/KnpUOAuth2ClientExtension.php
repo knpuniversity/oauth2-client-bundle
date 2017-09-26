@@ -214,6 +214,8 @@ class KnpUOAuth2ClientExtension extends Extension
             $clientDefinition->addMethodCall('setAsStateless');
         }
 
+        $container->setAlias($clientClass, $clientServiceKey);
+
         return $clientServiceKey;
     }
 
