@@ -38,6 +38,7 @@ use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -51,6 +52,9 @@ class KnpUOAuth2ClientExtension extends Extension
 
     /** @var array */
     private $configurators = [];
+
+    /** @var array */
+    private $duplicateProviderTypes = [];
 
     /** @var array */
     private static $supportedProviderTypes = [
@@ -214,7 +218,16 @@ class KnpUOAuth2ClientExtension extends Extension
             $clientDefinition->addMethodCall('setAsStateless');
         }
 
-        $container->setAlias($clientClass, $clientServiceKey);
+        // add an alias, but only if a provider type is used only 1 time
+        if (!in_array($providerType, $this->duplicateProviderTypes)) {
+            // alias already exists? This is a duplicate type, record it
+            if ($container->getAlias($clientClass)) {
+                $this->duplicateProviderTypes[] = $providerType;
+            } else {
+                // all good, add the alias
+                $container->setAlias($clientClass, new Alias($clientServiceKey, false));
+            }
+        }
 
         return $clientServiceKey;
     }
