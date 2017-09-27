@@ -221,7 +221,7 @@ class KnpUOAuth2ClientExtension extends Extension
         // add an alias, but only if a provider type is used only 1 time
         if (!in_array($providerType, $this->duplicateProviderTypes)) {
             // alias already exists? This is a duplicate type, record it
-            if ($container->getAlias($clientClass)) {
+            if ($container->hasAlias($clientClass)) {
                 $this->duplicateProviderTypes[] = $providerType;
             } else {
                 // all good, add the alias
