@@ -78,6 +78,7 @@ via Composer:
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
 | [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
+| [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
@@ -689,6 +690,22 @@ knpu_oauth2_client:
             client_secret: %slack_client_secret%
             # a route name you'll create
             redirect_route: connect_slack_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.stripe"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\StripeClient
+        # composer require adam-paterson/oauth2-stripe
+        stripe:
+            # must be "stripe" - it activates that type!
+            type: stripe
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %stripe_client_id%
+            client_secret: %stripe_client_secret%
+            # a route name you'll create
+            redirect_route: connect_stripe_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
