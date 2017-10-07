@@ -31,6 +31,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfi
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
@@ -81,6 +82,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'linkedin' => LinkedInProviderConfigurator::class,
         'microsoft' => MicrosoftProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
+        'paypal' => PaypalProviderConfigurator::class,
         'slack' => SlackProviderConfigurator::class,
         'vimeo' => VimeoProviderConfigurator::class,
         'vkontakte' => VKontakteProviderConfigurator::class,

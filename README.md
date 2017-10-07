@@ -76,6 +76,7 @@ via Composer:
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
+| [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
@@ -657,6 +658,23 @@ knpu_oauth2_client:
             redirect_route: connect_odnoklassniki_check
             redirect_params: {}
 
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.paypal"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\PaypalClient
+        # composer require stevenmaguire/oauth2-paypal
+        paypal:
+            # must be "paypal" - it activates that type!
+            type: paypal
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %paypal_client_id%
+            client_secret: %paypal_client_secret%
+            # a route name you'll create
+            redirect_route: connect_paypal_check
+            redirect_params: {}
+            # When true, client uses Paypal Sandbox urls.
+            # is_sandbox: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
