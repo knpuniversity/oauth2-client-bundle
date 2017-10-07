@@ -64,6 +64,7 @@ via Composer:
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
+| [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
@@ -450,6 +451,22 @@ knpu_oauth2_client:
             client_secret: %drupal_client_secret%
             # a route name you'll create
             redirect_route: connect_drupal_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.fitbit"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FitbitClient
+        # composer require djchen/oauth2-fitbit
+        fitbit:
+            # must be "fitbit" - it activates that type!
+            type: fitbit
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %fitbit_client_id%
+            client_secret: %fitbit_client_secret%
+            # a route name you'll create
+            redirect_route: connect_fitbit_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
