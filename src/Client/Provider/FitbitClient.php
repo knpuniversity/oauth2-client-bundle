@@ -17,7 +17,7 @@ class FitbitClient extends OAuth2Client
 {
     /**
     * @param AccessToken $accessToken
-    * @return AmazonResourceOwner
+    * @return FitbitUser
     */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
