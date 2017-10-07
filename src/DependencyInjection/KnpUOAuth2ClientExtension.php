@@ -26,6 +26,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HeadHunterProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
@@ -68,10 +69,11 @@ class KnpUOAuth2ClientExtension extends Extension
         'dribbble' => DribbbleProviderConfigurator::class,
         'dropbox' => DropboxProviderConfigurator::class,
         'drupal' => DrupalProviderConfigurator::class,
-        'fitbit' => FitbitProviderConfigurator::class,
         'eve_online' => EveOnlineProviderConfigurator::class,
         'facebook' => FacebookProviderConfigurator::class,
+        'fitbit' => FitbitProviderConfigurator::class,
         'headhunter' => HeadHunterProviderConfigurator::class,
+        'heroku' => HerokuProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,

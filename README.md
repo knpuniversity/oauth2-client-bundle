@@ -64,10 +64,11 @@ via Composer:
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
-| [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
+| [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
+| [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
@@ -456,22 +457,6 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
-        # will create service: "knpu.oauth2.client.fitbit"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FitbitClient
-        # composer require djchen/oauth2-fitbit
-        fitbit:
-            # must be "fitbit" - it activates that type!
-            type: fitbit
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %fitbit_client_id%
-            client_secret: %fitbit_client_secret%
-            # a route name you'll create
-            redirect_route: connect_fitbit_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
         # will create service: "knpu.oauth2.client.eve_online"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient
         # composer require evelabs/oauth2-eveonline
@@ -504,6 +489,22 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.fitbit"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FitbitClient
+        # composer require djchen/oauth2-fitbit
+        fitbit:
+            # must be "fitbit" - it activates that type!
+            type: fitbit
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %fitbit_client_id%
+            client_secret: %fitbit_client_secret%
+            # a route name you'll create
+            redirect_route: connect_fitbit_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.headhunter"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HeadHunterClient
         # composer require alexmasterov/oauth2-headhunter
@@ -515,6 +516,22 @@ knpu_oauth2_client:
             client_secret: %headhunter_client_secret%
             # a route name you'll create
             redirect_route: connect_headhunter_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.heroku"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HerokuClient
+        # composer require stevenmaguire/oauth2-heroku
+        heroku:
+            # must be "heroku" - it activates that type!
+            type: heroku
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %heroku_client_id%
+            client_secret: %heroku_client_secret%
+            # a route name you'll create
+            redirect_route: connect_heroku_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
