@@ -80,6 +80,12 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
             ],
             $clientDefinition->getArguments()
         );
+
+        // the client service has an alias
+        $this->assertTrue(
+            $this->configuration->hasAlias('KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient'),
+            'FacebookClient service is missing an alias'
+        );
     }
 
     /**
