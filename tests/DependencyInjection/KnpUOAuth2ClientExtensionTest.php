@@ -13,6 +13,7 @@ namespace KnpU\OAuth2ClientBundle\tests\DependencyInjection;
 use KnpU\OAuth2ClientBundle\DependencyInjection\KnpUOAuth2ClientExtension;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use Symfony\Component\Config\Definition\ArrayNode;
+use Symfony\Component\Config\Definition\BooleanNode;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -151,6 +152,8 @@ class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
                 /** @var NodeInterface $child */
                 if ($child instanceof ArrayNode) {
                     $config[$child->getName()] = [];
+                } elseif ($child instanceof BooleanNode) {
+                    $config[$child->getName()] = (bool) rand(0, 1);
                 } else {
                     $config[$child->getName()] = rand();
                 }
