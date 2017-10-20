@@ -21,7 +21,7 @@ class StripeProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderClass(array $config)
     {
-        return '\AdamPaterson\OAuth2\Client\Provider\Stripe';
+        return 'AdamPaterson\OAuth2\Client\Provider\Stripe';
     }
 
     public function getProviderOptions(array $config)
