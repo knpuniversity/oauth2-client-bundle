@@ -96,7 +96,7 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
 
         } elseif ($child instanceof BooleanNode) {
             $defaultValue = $child->getDefaultValue()
-                ? $child->getDefaultValue()
+                ? 'true'
                 : 'false';
         } else {
             $defaultValue = $child->getDefaultValue()
