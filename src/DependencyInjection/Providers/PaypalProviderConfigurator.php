@@ -17,9 +17,9 @@ class PaypalProviderConfigurator implements ProviderConfiguratorInterface
     public function buildConfiguration(NodeBuilder $node)
     {
         $node
-            ->scalarNode('is_sandbox')
+            ->booleanNode('is_sandbox')
                 ->defaultFalse()
-                ->info('When true, client uses Paypal Sandbox urls.')
+                ->info('When true, client uses Paypal Sandbox URLs.')
             ->end()
         ;
     }
