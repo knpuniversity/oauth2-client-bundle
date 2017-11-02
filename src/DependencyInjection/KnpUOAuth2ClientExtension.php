@@ -38,6 +38,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigura
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StravaProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StripeProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\UberProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\UnsplashProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VKontakteProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YahooProviderConfigurator;
@@ -93,6 +94,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'stripe' => StripeProviderConfigurator::class,
         'strava' => StravaProviderConfigurator::class,
         'uber' => UberProviderConfigurator::class,
+        'unsplash' => UnsplashProviderConfigurator::class,
         'vimeo' => VimeoProviderConfigurator::class,
         'vkontakte' => VKontakteProviderConfigurator::class,
         'yahoo' => YahooProviderConfigurator::class,
