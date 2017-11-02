@@ -35,6 +35,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SalesforceProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StravaProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StripeProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VKontakteProviderConfigurator;
@@ -86,9 +87,10 @@ class KnpUOAuth2ClientExtension extends Extension
         'microsoft' => MicrosoftProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
         'paypal' => PaypalProviderConfigurator::class,
+        'salesforce' => SalesforceProviderConfigurator::class,
         'slack' => SlackProviderConfigurator::class,
         'stripe' => StripeProviderConfigurator::class,
-        'salesforce' => SalesforceProviderConfigurator::class,
+        'strava' => StravaProviderConfigurator::class,
         'vimeo' => VimeoProviderConfigurator::class,
         'vkontakte' => VKontakteProviderConfigurator::class,
         'yahoo' => YahooProviderConfigurator::class,
