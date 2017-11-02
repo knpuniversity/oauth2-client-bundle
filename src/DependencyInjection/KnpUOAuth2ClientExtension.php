@@ -30,6 +30,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MollieProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
@@ -88,6 +89,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'google' => GoogleProviderConfigurator::class,
         'linkedin' => LinkedInProviderConfigurator::class,
         'microsoft' => MicrosoftProviderConfigurator::class,
+        'mollie' => MollieProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
         'paypal' => PaypalProviderConfigurator::class,
         'psn' => PsnProviderConfigurator::class,

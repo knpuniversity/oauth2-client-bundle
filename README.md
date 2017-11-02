@@ -75,6 +75,7 @@ via Composer:
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
+| [Mollie](https://github.com/mollie/oauth2-mollie-php)                 | composer require mollie/oauth2-mollie-php           |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
 | [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
 | [PSN](https://github.com/larabros/oauth2-psn)                         | composer require larabros/oauth2-psn                |
@@ -649,6 +650,22 @@ knpu_oauth2_client:
             # url_access_token: ''
             # Optional value for URL Resource Owner Details
             # url_resource_owner_details: ''
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.mollie"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\MollieClient
+        # composer require mollie/oauth2-mollie-php
+        mollie:
+            # must be "mollie" - it activates that type!
+            type: mollie
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %mollie_client_id%
+            client_secret: %mollie_client_secret%
+            # a route name you'll create
+            redirect_route: connect_mollie_check
+            redirect_params: {}
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
