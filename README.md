@@ -79,6 +79,7 @@ via Composer:
 | [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
 | [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
+| [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)      | composer require stevenmaguire/oauth2-salesforce    |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
@@ -708,6 +709,23 @@ knpu_oauth2_client:
             redirect_route: connect_stripe_check
             redirect_params: {}
 
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.salesforce"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\SalesforceClient
+        # composer require stevenmaguire/oauth2-salesforce
+        salesforce:
+            # must be "salesforce" - it activates that type!
+            type: salesforce
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %salesforce_client_id%
+            client_secret: %salesforce_client_secret%
+            # a route name you'll create
+            redirect_route: connect_salesforce_check
+            redirect_params: {}
+            # Custom Salesforce domain. Default domain is https://login.salesforce.com
+            # domain: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
