@@ -40,6 +40,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigura
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VKontakteProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YahooProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YandexProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ZendeskProviderConfigurator;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -92,6 +93,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'vkontakte' => VKontakteProviderConfigurator::class,
         'yahoo' => YahooProviderConfigurator::class,
         'yandex' => YandexProviderConfigurator::class,
+        'zendesk' => ZendeskProviderConfigurator::class,
         'generic' => GenericProviderConfigurator::class,
     ];
 

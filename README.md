@@ -84,6 +84,7 @@ via Composer:
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
 | [Yandex](https://github.com/rakeev/oauth2-yandex)                     | composer require aego/oauth2-yandex                 |
+| [Zendesk](https://github.com/stevenmaguire/oauth2-zendesk)            | composer require stevenmaguire/oauth2-zendesk       |
 | generic                                                               | configure any unsupported provider                  |
 
 <span name="end-client-downloader-table"></span>
@@ -790,6 +791,23 @@ knpu_oauth2_client:
             redirect_route: connect_yandex_check
             redirect_params: {}
 
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.zendesk"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\ZendeskClient
+        # composer require stevenmaguire/oauth2-zendesk
+        zendesk:
+            # must be "zendesk" - it activates that type!
+            type: zendesk
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %zendesk_client_id%
+            client_secret: %zendesk_client_secret%
+            # a route name you'll create
+            redirect_route: connect_zendesk_check
+            redirect_params: {}
+            # Your Zendesk subdomain
+            subdomain: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
