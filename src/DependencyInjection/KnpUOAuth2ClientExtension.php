@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AmazonProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\Auth0ProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AzureProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BitbucketProviderConfigurator;
@@ -19,17 +20,21 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DropboxProviderConfigu
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DrupalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FitbitProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HeadHunterProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StripeProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VKontakteProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YahooProviderConfigurator;
@@ -58,6 +63,7 @@ class KnpUOAuth2ClientExtension extends Extension
 
     /** @var array */
     private static $supportedProviderTypes = [
+        'amazon' => AmazonProviderConfigurator::class,
         'auth0' => Auth0ProviderConfigurator::class,
         'azure' => AzureProviderConfigurator::class,
         'bitbucket' => BitbucketProviderConfigurator::class,
@@ -67,7 +73,9 @@ class KnpUOAuth2ClientExtension extends Extension
         'drupal' => DrupalProviderConfigurator::class,
         'eve_online' => EveOnlineProviderConfigurator::class,
         'facebook' => FacebookProviderConfigurator::class,
+        'fitbit' => FitbitProviderConfigurator::class,
         'headhunter' => HeadHunterProviderConfigurator::class,
+        'heroku' => HerokuProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
@@ -75,7 +83,9 @@ class KnpUOAuth2ClientExtension extends Extension
         'linkedin' => LinkedInProviderConfigurator::class,
         'microsoft' => MicrosoftProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
+        'paypal' => PaypalProviderConfigurator::class,
         'slack' => SlackProviderConfigurator::class,
+        'stripe' => StripeProviderConfigurator::class,
         'vimeo' => VimeoProviderConfigurator::class,
         'vkontakte' => VKontakteProviderConfigurator::class,
         'yahoo' => YahooProviderConfigurator::class,

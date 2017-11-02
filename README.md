@@ -56,6 +56,7 @@ via Composer:
 
 | OAuth2 Provider                                                       | Install                                             |
 | --------------------------------------------------------------------- | ------------------------------------------------------ |
+| [Amazon](https://github.com/luchianenco/oauth2-amazon)                | composer require luchianenco/oauth2-amazon          |
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
@@ -65,7 +66,9 @@ via Composer:
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
+| [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
+| [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
@@ -73,7 +76,9 @@ via Composer:
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
+| [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
+| [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
@@ -326,6 +331,22 @@ any provider.
 # app/config/config.yml
 knpu_oauth2_client:
     clients:
+        # will create service: "knpu.oauth2.client.amazon"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AmazonClient
+        # composer require luchianenco/oauth2-amazon
+        amazon:
+            # must be "amazon" - it activates that type!
+            type: amazon
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %amazon_client_id%
+            client_secret: %amazon_client_secret%
+            # a route name you'll create
+            redirect_route: connect_amazon_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.auth0"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client
         # composer require riskio/oauth2-auth0
@@ -470,6 +491,22 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.fitbit"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FitbitClient
+        # composer require djchen/oauth2-fitbit
+        fitbit:
+            # must be "fitbit" - it activates that type!
+            type: fitbit
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %fitbit_client_id%
+            client_secret: %fitbit_client_secret%
+            # a route name you'll create
+            redirect_route: connect_fitbit_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.headhunter"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HeadHunterClient
         # composer require alexmasterov/oauth2-headhunter
@@ -481,6 +518,22 @@ knpu_oauth2_client:
             client_secret: %headhunter_client_secret%
             # a route name you'll create
             redirect_route: connect_headhunter_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.heroku"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HerokuClient
+        # composer require stevenmaguire/oauth2-heroku
+        heroku:
+            # must be "heroku" - it activates that type!
+            type: heroku
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %heroku_client_id%
+            client_secret: %heroku_client_secret%
+            # a route name you'll create
+            redirect_route: connect_heroku_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
@@ -609,6 +662,23 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.paypal"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\PaypalClient
+        # composer require stevenmaguire/oauth2-paypal
+        paypal:
+            # must be "paypal" - it activates that type!
+            type: paypal
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %paypal_client_id%
+            client_secret: %paypal_client_secret%
+            # a route name you'll create
+            redirect_route: connect_paypal_check
+            redirect_params: {}
+            # When true, client uses Paypal Sandbox URLs.
+            # is_sandbox: false
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.slack"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\SlackClient
         # composer require adam-paterson/oauth2-slack
@@ -620,6 +690,22 @@ knpu_oauth2_client:
             client_secret: %slack_client_secret%
             # a route name you'll create
             redirect_route: connect_slack_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.stripe"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\StripeClient
+        # composer require adam-paterson/oauth2-stripe
+        stripe:
+            # must be "stripe" - it activates that type!
+            type: stripe
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %stripe_client_id%
+            client_secret: %stripe_client_secret%
+            # a route name you'll create
+            redirect_route: connect_stripe_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
