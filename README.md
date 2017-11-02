@@ -81,6 +81,7 @@ via Composer:
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
 | [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
 | [Strava](https://github.com/Edwin-Luijten/oauth2-strava)              | composer require edwin-luijten/oauth2-strava        |
+| [Uber](https://github.com/stevenmaguire/oauth2-uber)                  | composer require stevenmaguire/oauth2-uber          |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
@@ -742,6 +743,22 @@ knpu_oauth2_client:
             client_secret: %strava_client_secret%
             # a route name you'll create
             redirect_route: connect_strava_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.uber"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\UberClient
+        # composer require stevenmaguire/oauth2-uber
+        uber:
+            # must be "uber" - it activates that type!
+            type: uber
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %uber_client_id%
+            client_secret: %uber_client_secret%
+            # a route name you'll create
+            redirect_route: connect_uber_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
