@@ -77,6 +77,7 @@ via Composer:
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
 | [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
+| [PSN](https://github.com/larabros/oauth2-psn)                         | composer require larabros/oauth2-psn                |
 | [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)      | composer require stevenmaguire/oauth2-salesforce    |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
 | [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
@@ -681,6 +682,22 @@ knpu_oauth2_client:
             redirect_params: {}
             # When true, client uses Paypal Sandbox URLs.
             # is_sandbox: false
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.psn"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\PsnClient
+        # composer require larabros/oauth2-psn
+        psn:
+            # must be "psn" - it activates that type!
+            type: psn
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %psn_client_id%
+            client_secret: %psn_client_secret%
+            # a route name you'll create
+            redirect_route: connect_psn_check
+            redirect_params: {}
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
