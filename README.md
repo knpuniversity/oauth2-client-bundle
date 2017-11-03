@@ -73,6 +73,7 @@ via Composer:
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
+| [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak      |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
 | [Mollie](https://github.com/mollie/oauth2-mollie-php)                 | composer require mollie/oauth2-mollie-php           |
@@ -613,6 +614,31 @@ knpu_oauth2_client:
             # hosted_domain: ''
             # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
             # user_fields: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.keycloak"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\KeycloakClient
+        # composer require stevenmaguire/oauth2-keycloak
+        keycloak:
+            # must be "keycloak" - it activates that type!
+            type: keycloak
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %keycloak_client_id%
+            client_secret: %keycloak_client_secret%
+            # a route name you'll create
+            redirect_route: connect_keycloak_check
+            redirect_params: {}
+            # Keycloak server URL
+            auth_server_url: ''
+            # Keycloak realm
+            realm: ''
+            # Optional: Encryption algorith, i.e. RS256
+            # encryption_algorithm: ''
+            # Optional: Encryption key path, i.e. ../key.pem
+            # encryption_key_path: ''
+            # Optional: Encryption key, i.e. contents of key or certificate
+            # encryption_key: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
