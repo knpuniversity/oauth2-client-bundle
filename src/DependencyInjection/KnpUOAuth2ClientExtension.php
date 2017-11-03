@@ -28,17 +28,25 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HeadHunterProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\KeycloakProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MollieProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PsnProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SalesforceProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StravaProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StripeProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\UberProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\UnsplashProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VKontakteProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YahooProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YandexProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ZendeskProviderConfigurator;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -80,16 +88,24 @@ class KnpUOAuth2ClientExtension extends Extension
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
         'google' => GoogleProviderConfigurator::class,
+        'keycloak' => KeycloakProviderConfigurator::class,
         'linkedin' => LinkedInProviderConfigurator::class,
         'microsoft' => MicrosoftProviderConfigurator::class,
+        'mollie' => MollieProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
         'paypal' => PaypalProviderConfigurator::class,
+        'psn' => PsnProviderConfigurator::class,
+        'salesforce' => SalesforceProviderConfigurator::class,
         'slack' => SlackProviderConfigurator::class,
         'stripe' => StripeProviderConfigurator::class,
+        'strava' => StravaProviderConfigurator::class,
+        'uber' => UberProviderConfigurator::class,
+        'unsplash' => UnsplashProviderConfigurator::class,
         'vimeo' => VimeoProviderConfigurator::class,
         'vkontakte' => VKontakteProviderConfigurator::class,
         'yahoo' => YahooProviderConfigurator::class,
         'yandex' => YandexProviderConfigurator::class,
+        'zendesk' => ZendeskProviderConfigurator::class,
         'generic' => GenericProviderConfigurator::class,
     ];
 

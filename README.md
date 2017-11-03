@@ -73,16 +73,24 @@ via Composer:
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
+| [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak      |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
+| [Mollie](https://github.com/mollie/oauth2-mollie-php)                 | composer require mollie/oauth2-mollie-php           |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
 | [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
+| [PSN](https://github.com/larabros/oauth2-psn)                         | composer require larabros/oauth2-psn                |
+| [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)      | composer require stevenmaguire/oauth2-salesforce    |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
 | [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
+| [Strava](https://github.com/Edwin-Luijten/oauth2-strava)              | composer require edwin-luijten/oauth2-strava        |
+| [Uber](https://github.com/stevenmaguire/oauth2-uber)                  | composer require stevenmaguire/oauth2-uber          |
+| [Unsplash](https://github.com/hughbertd/oauth2-unsplash)              | composer require hughbertd/oauth2-unsplash          |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
 | [Yandex](https://github.com/rakeev/oauth2-yandex)                     | composer require aego/oauth2-yandex                 |
+| [Zendesk](https://github.com/stevenmaguire/oauth2-zendesk)            | composer require stevenmaguire/oauth2-zendesk       |
 | generic                                                               | configure any unsupported provider                  |
 
 <span name="end-client-downloader-table"></span>
@@ -609,6 +617,31 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.keycloak"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\KeycloakClient
+        # composer require stevenmaguire/oauth2-keycloak
+        keycloak:
+            # must be "keycloak" - it activates that type!
+            type: keycloak
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %keycloak_client_id%
+            client_secret: %keycloak_client_secret%
+            # a route name you'll create
+            redirect_route: connect_keycloak_check
+            redirect_params: {}
+            # Keycloak server URL
+            auth_server_url: ''
+            # Keycloak realm
+            realm: ''
+            # Optional: Encryption algorith, i.e. RS256
+            # encryption_algorithm: ''
+            # Optional: Encryption key path, i.e. ../key.pem
+            # encryption_key_path: ''
+            # Optional: Encryption key, i.e. contents of key or certificate
+            # encryption_key: ''
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.linkedin"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\LinkedInClient
         # composer require league/oauth2-linkedin
@@ -646,6 +679,22 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.mollie"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\MollieClient
+        # composer require mollie/oauth2-mollie-php
+        mollie:
+            # must be "mollie" - it activates that type!
+            type: mollie
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %mollie_client_id%
+            client_secret: %mollie_client_secret%
+            # a route name you'll create
+            redirect_route: connect_mollie_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.odnoklassniki"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\OdnoklassnikiClient
         # composer require aego/oauth2-odnoklassniki
@@ -679,6 +728,39 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.psn"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\PsnClient
+        # composer require larabros/oauth2-psn
+        psn:
+            # must be "psn" - it activates that type!
+            type: psn
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %psn_client_id%
+            client_secret: %psn_client_secret%
+            # a route name you'll create
+            redirect_route: connect_psn_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.salesforce"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\SalesforceClient
+        # composer require stevenmaguire/oauth2-salesforce
+        salesforce:
+            # must be "salesforce" - it activates that type!
+            type: salesforce
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %salesforce_client_id%
+            client_secret: %salesforce_client_secret%
+            # a route name you'll create
+            redirect_route: connect_salesforce_check
+            redirect_params: {}
+            # Custom Salesforce domain. Default domain is https://login.salesforce.com
+            # domain: ''
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.slack"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\SlackClient
         # composer require adam-paterson/oauth2-slack
@@ -706,6 +788,54 @@ knpu_oauth2_client:
             client_secret: %stripe_client_secret%
             # a route name you'll create
             redirect_route: connect_stripe_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.strava"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\StravaClient
+        # composer require edwin-luijten/oauth2-strava
+        strava:
+            # must be "strava" - it activates that type!
+            type: strava
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %strava_client_id%
+            client_secret: %strava_client_secret%
+            # a route name you'll create
+            redirect_route: connect_strava_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.uber"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\UberClient
+        # composer require stevenmaguire/oauth2-uber
+        uber:
+            # must be "uber" - it activates that type!
+            type: uber
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %uber_client_id%
+            client_secret: %uber_client_secret%
+            # a route name you'll create
+            redirect_route: connect_uber_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.unsplash"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\UnsplashClient
+        # composer require hughbertd/oauth2-unsplash
+        unsplash:
+            # must be "unsplash" - it activates that type!
+            type: unsplash
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %unsplash_client_id%
+            client_secret: %unsplash_client_secret%
+            # a route name you'll create
+            redirect_route: connect_unsplash_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
@@ -772,6 +902,23 @@ knpu_oauth2_client:
             redirect_route: connect_yandex_check
             redirect_params: {}
 
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.zendesk"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\ZendeskClient
+        # composer require stevenmaguire/oauth2-zendesk
+        zendesk:
+            # must be "zendesk" - it activates that type!
+            type: zendesk
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %zendesk_client_id%
+            client_secret: %zendesk_client_secret%
+            # a route name you'll create
+            redirect_route: connect_zendesk_check
+            redirect_params: {}
+            # Your Zendesk subdomain
+            subdomain: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
