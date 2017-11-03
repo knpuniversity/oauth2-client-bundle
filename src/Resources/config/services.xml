@@ -9,7 +9,7 @@
             <argument type="service" id="router" />
         </service>
 
-        <service id="knpu.oauth2.registry" class="KnpU\OAuth2ClientBundle\Client\ClientRegistry">
+        <service id="knpu.oauth2.registry" class="KnpU\OAuth2ClientBundle\Client\ClientRegistry" public="true">
             <argument type="service" id="service_container" />
             <argument /> <!-- argument added dynamically -->
         </service>
@@ -18,6 +18,6 @@
 	<service id="KnpU\OAuth2ClientBundle\Client\ClientRegistry" alias="knpu.oauth2.registry" public="false" />
 
         <!-- Set an alias for easier use -->
-        <service id="oauth2.registry" alias="knpu.oauth2.registry" />
+        <service id="oauth2.registry" alias="knpu.oauth2.registry" public="true" />
     </services>
 </container>

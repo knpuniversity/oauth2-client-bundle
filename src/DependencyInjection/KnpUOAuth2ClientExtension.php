@@ -238,6 +238,7 @@ class KnpUOAuth2ClientExtension extends Extension
             new Reference($providerServiceKey),
             new Reference('request_stack'),
         ]);
+        $clientDefinition->setPublic(true);
 
         // if stateless, do it!
         if (!$useState) {
