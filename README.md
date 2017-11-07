@@ -72,6 +72,7 @@ via Composer:
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
 | [Elance](https://github.com/stevenmaguire/oauth2-elance)              | composer require stevenmaguire/oauth2-elance        |
+| [Eventbrite](https://github.com/stevenmaguire/oauth2-eventbrite)      | composer require stevenmaguire/oauth2-eventbrite    |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
@@ -600,6 +601,22 @@ knpu_oauth2_client:
             client_secret: %elance_client_secret%
             # a route name you'll create
             redirect_route: connect_elance_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.eventbrite"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EventbriteClient
+        # composer require stevenmaguire/oauth2-eventbrite
+        eventbrite:
+            # must be "eventbrite" - it activates that type!
+            type: eventbrite
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %eventbrite_client_id%
+            client_secret: %eventbrite_client_secret%
+            # a route name you'll create
+            redirect_route: connect_eventbrite_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
