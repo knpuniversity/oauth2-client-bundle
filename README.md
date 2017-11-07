@@ -63,6 +63,7 @@ via Composer:
 | [Box](https://github.com/stevenmaguire/oauth2-box)                    | composer require stevenmaguire/oauth2-box           |
 | [Buffer](https://github.com/tgallice/oauth2-buffer)                   | composer require tgallice/oauth2-buffer             |
 | [CanvasLMS](https://github.com/smtech/oauth2-canvaslms)               | composer require smtech/oauth2-canvaslms            |
+| [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever         |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
@@ -454,6 +455,22 @@ knpu_oauth2_client:
             canvas_instance_url: ''
             # This can be used to help the user identify which instance of an application this token is for. For example, a mobile device application could provide the name of the device.
             # purpose: ''
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.clever"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\CleverClient
+        # composer require schoolrunner/oauth2-clever
+        clever:
+            # must be "clever" - it activates that type!
+            type: clever
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %clever_client_id%
+            client_secret: %clever_client_secret%
+            # a route name you'll create
+            redirect_route: connect_clever_check
+            redirect_params: {}
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
