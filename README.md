@@ -66,6 +66,7 @@ via Composer:
 | [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever         |
 | [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)           | composer require seinopsys/oauth2-deviantart        |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
+| [Discord](https://github.com/teamreflex/oauth2-discord)               | composer require team-reflex/oauth2-discord         |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
@@ -502,6 +503,22 @@ knpu_oauth2_client:
             client_secret: %digital_ocean_client_secret%
             # a route name you'll create
             redirect_route: connect_digital_ocean_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.discord"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DiscordClient
+        # composer require team-reflex/oauth2-discord
+        discord:
+            # must be "discord" - it activates that type!
+            type: discord
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %discord_client_id%
+            client_secret: %discord_client_secret%
+            # a route name you'll create
+            redirect_route: connect_discord_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
