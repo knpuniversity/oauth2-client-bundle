@@ -84,6 +84,7 @@ via Composer:
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
 | [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak      |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
+| [MailRu](https://github.com/rakeev/oauth2-mailru)                     | composer require aego/oauth2-mailru                 |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
 | [Mollie](https://github.com/mollie/oauth2-mollie-php)                 | composer require mollie/oauth2-mollie-php           |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
@@ -809,6 +810,22 @@ knpu_oauth2_client:
             client_secret: %linkedin_client_secret%
             # a route name you'll create
             redirect_route: connect_linkedin_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.mail_ru"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\MailRuClient
+        # composer require aego/oauth2-mailru
+        mail_ru:
+            # must be "mail_ru" - it activates that type!
+            type: mail_ru
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %mail_ru_client_id%
+            client_secret: %mail_ru_client_secret%
+            # a route name you'll create
+            redirect_route: connect_mail_ru_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
