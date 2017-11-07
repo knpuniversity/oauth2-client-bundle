@@ -75,6 +75,7 @@ via Composer:
 | [Eventbrite](https://github.com/stevenmaguire/oauth2-eventbrite)      | composer require stevenmaguire/oauth2-eventbrite    |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
+| [Foursquare](https://github.com/stevenmaguire/oauth2-foursquare)      | composer require stevenmaguire/oauth2-foursquare    |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
 | [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
@@ -649,6 +650,22 @@ knpu_oauth2_client:
             client_secret: %fitbit_client_secret%
             # a route name you'll create
             redirect_route: connect_fitbit_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.four_square"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FoursquareClient
+        # composer require stevenmaguire/oauth2-foursquare
+        four_square:
+            # must be "four_square" - it activates that type!
+            type: four_square
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %four_square_client_id%
+            client_secret: %four_square_client_secret%
+            # a route name you'll create
+            redirect_route: connect_four_square_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
