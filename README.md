@@ -60,6 +60,7 @@ via Composer:
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
+| [Amazon](https://github.com/stevenmaguire/oauth2-box)                 | composer require stevenmaguire/oauth2-box           |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
@@ -398,6 +399,22 @@ knpu_oauth2_client:
             client_secret: %bitbucket_client_secret%
             # a route name you'll create
             redirect_route: connect_bitbucket_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.box"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BoxClient
+        # composer require stevenmaguire/oauth2-box
+        box:
+            # must be "box" - it activates that type!
+            type: box
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %box_client_id%
+            client_secret: %box_client_secret%
+            # a route name you'll create
+            redirect_route: connect_box_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
