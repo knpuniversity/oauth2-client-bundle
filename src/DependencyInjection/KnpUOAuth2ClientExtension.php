@@ -15,6 +15,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\Auth0ProviderConfigura
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AzureProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BitbucketProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BoxProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BufferProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DigitalOceanProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DribbbleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DropboxProviderConfigurator;
@@ -77,6 +78,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'azure' => AzureProviderConfigurator::class,
         'bitbucket' => BitbucketProviderConfigurator::class,
         'box' => BoxProviderConfigurator::class,
+        'buffer' => BufferProviderConfigurator::class,
         'digital_ocean' => DigitalOceanProviderConfigurator::class,
         'dribbble' => DribbbleProviderConfigurator::class,
         'dropbox' => DropboxProviderConfigurator::class,
