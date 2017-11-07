@@ -71,6 +71,7 @@ via Composer:
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
+| [Elance](https://github.com/stevenmaguire/oauth2-elance)              | composer require stevenmaguire/oauth2-elance        |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
@@ -583,6 +584,22 @@ knpu_oauth2_client:
             client_secret: %eve_online_client_secret%
             # a route name you'll create
             redirect_route: connect_eve_online_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.elance"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\ElanceClient
+        # composer require stevenmaguire/oauth2-elance
+        elance:
+            # must be "elance" - it activates that type!
+            type: elance
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %elance_client_id%
+            client_secret: %elance_client_secret%
+            # a route name you'll create
+            redirect_route: connect_elance_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true

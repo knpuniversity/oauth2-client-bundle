@@ -24,6 +24,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DiscordProviderConfigu
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DribbbleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DropboxProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DrupalProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ElanceProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FitbitProviderConfigurator;
@@ -92,6 +93,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'dropbox' => DropboxProviderConfigurator::class,
         'drupal' => DrupalProviderConfigurator::class,
         'eve_online' => EveOnlineProviderConfigurator::class,
+        'elance' => ElanceProviderConfigurator::class,
         'facebook' => FacebookProviderConfigurator::class,
         'fitbit' => FitbitProviderConfigurator::class,
         'headhunter' => HeadHunterProviderConfigurator::class,
