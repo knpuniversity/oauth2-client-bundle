@@ -18,6 +18,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BoxProviderConfigurato
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BufferProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\CanvasLMSProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\CleverProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DevianArtProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DigitalOceanProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DribbbleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DropboxProviderConfigurator;
@@ -83,6 +84,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'buffer' => BufferProviderConfigurator::class,
         'canvas_lms' => CanvasLMSProviderConfigurator::class,
         'clever' => CleverProviderConfigurator::class,
+        'devian_art' => DevianArtProviderConfigurator::class,
         'digital_ocean' => DigitalOceanProviderConfigurator::class,
         'dribbble' => DribbbleProviderConfigurator::class,
         'dropbox' => DropboxProviderConfigurator::class,

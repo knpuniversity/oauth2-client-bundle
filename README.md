@@ -64,6 +64,7 @@ via Composer:
 | [Buffer](https://github.com/tgallice/oauth2-buffer)                   | composer require tgallice/oauth2-buffer             |
 | [CanvasLMS](https://github.com/smtech/oauth2-canvaslms)               | composer require smtech/oauth2-canvaslms            |
 | [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever         |
+| [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)           | composer require seinopsys/oauth2-deviantart        |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
@@ -469,6 +470,22 @@ knpu_oauth2_client:
             client_secret: %clever_client_secret%
             # a route name you'll create
             redirect_route: connect_clever_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.devian_art"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DevianArtClient
+        # composer require seinopsys/oauth2-deviantart
+        devian_art:
+            # must be "devian_art" - it activates that type!
+            type: devian_art
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %devian_art_client_id%
+            client_secret: %devian_art_client_secret%
+            # a route name you'll create
+            redirect_route: connect_devian_art_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
