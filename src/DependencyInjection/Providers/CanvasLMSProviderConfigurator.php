@@ -42,6 +42,7 @@ class CanvasLMSProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
+            'purpose' => $config['purpose'],
             'canvasInstanceUrl' => $config['canvas_instance_url']
         ];
     }
