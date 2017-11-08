@@ -60,13 +60,22 @@ via Composer:
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
+| [Box](https://github.com/stevenmaguire/oauth2-box)                    | composer require stevenmaguire/oauth2-box           |
+| [Buffer](https://github.com/tgallice/oauth2-buffer)                   | composer require tgallice/oauth2-buffer             |
+| [CanvasLMS](https://github.com/smtech/oauth2-canvaslms)               | composer require smtech/oauth2-canvaslms            |
+| [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever         |
+| [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)           | composer require seinopsys/oauth2-deviantart        |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
+| [Discord](https://github.com/teamreflex/oauth2-discord)               | composer require team-reflex/oauth2-discord         |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
 | [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
+| [Elance](https://github.com/stevenmaguire/oauth2-elance)              | composer require stevenmaguire/oauth2-elance        |
+| [Eventbrite](https://github.com/stevenmaguire/oauth2-eventbrite)      | composer require stevenmaguire/oauth2-eventbrite    |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
+| [Foursquare](https://github.com/stevenmaguire/oauth2-foursquare)      | composer require stevenmaguire/oauth2-foursquare    |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
 | [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
@@ -75,6 +84,7 @@ via Composer:
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
 | [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak      |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
+| [MailRu](https://github.com/rakeev/oauth2-mailru)                     | composer require aego/oauth2-mailru                 |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
 | [Mollie](https://github.com/mollie/oauth2-mollie-php)                 | composer require mollie/oauth2-mollie-php           |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
@@ -403,6 +413,89 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.box"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BoxClient
+        # composer require stevenmaguire/oauth2-box
+        box:
+            # must be "box" - it activates that type!
+            type: box
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %box_client_id%
+            client_secret: %box_client_secret%
+            # a route name you'll create
+            redirect_route: connect_box_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.buffer"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BufferClient
+        # composer require tgallice/oauth2-buffer
+        buffer:
+            # must be "buffer" - it activates that type!
+            type: buffer
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %buffer_client_id%
+            client_secret: %buffer_client_secret%
+            # a route name you'll create
+            redirect_route: connect_buffer_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.canvas_lms"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\CanvasLMSClient
+        # composer require smtech/oauth2-canvaslms
+        canvas_lms:
+            # must be "canvas_lms" - it activates that type!
+            type: canvas_lms
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %canvas_lms_client_id%
+            client_secret: %canvas_lms_client_secret%
+            # a route name you'll create
+            redirect_route: connect_canvas_lms_check
+            redirect_params: {}
+            # URL of Canvas Instance (e.g. https://canvas.instructure.com)
+            canvas_instance_url: ''
+            # This can be used to help the user identify which instance of an application this token is for. For example, a mobile device application could provide the name of the device.
+            # purpose: ''
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.clever"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\CleverClient
+        # composer require schoolrunner/oauth2-clever
+        clever:
+            # must be "clever" - it activates that type!
+            type: clever
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %clever_client_id%
+            client_secret: %clever_client_secret%
+            # a route name you'll create
+            redirect_route: connect_clever_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.devian_art"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DevianArtClient
+        # composer require seinopsys/oauth2-deviantart
+        devian_art:
+            # must be "devian_art" - it activates that type!
+            type: devian_art
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %devian_art_client_id%
+            client_secret: %devian_art_client_secret%
+            # a route name you'll create
+            redirect_route: connect_devian_art_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.digital_ocean"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DigitalOceanClient
         # composer require chrishemmings/oauth2-digitalocean
@@ -414,6 +507,22 @@ knpu_oauth2_client:
             client_secret: %digital_ocean_client_secret%
             # a route name you'll create
             redirect_route: connect_digital_ocean_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.discord"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DiscordClient
+        # composer require team-reflex/oauth2-discord
+        discord:
+            # must be "discord" - it activates that type!
+            type: discord
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %discord_client_id%
+            client_secret: %discord_client_secret%
+            # a route name you'll create
+            redirect_route: connect_discord_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
@@ -483,6 +592,38 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.elance"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\ElanceClient
+        # composer require stevenmaguire/oauth2-elance
+        elance:
+            # must be "elance" - it activates that type!
+            type: elance
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %elance_client_id%
+            client_secret: %elance_client_secret%
+            # a route name you'll create
+            redirect_route: connect_elance_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.eventbrite"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EventbriteClient
+        # composer require stevenmaguire/oauth2-eventbrite
+        eventbrite:
+            # must be "eventbrite" - it activates that type!
+            type: eventbrite
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %eventbrite_client_id%
+            client_secret: %eventbrite_client_secret%
+            # a route name you'll create
+            redirect_route: connect_eventbrite_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.facebook"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient
         # composer require league/oauth2-facebook
@@ -510,6 +651,22 @@ knpu_oauth2_client:
             client_secret: %fitbit_client_secret%
             # a route name you'll create
             redirect_route: connect_fitbit_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.four_square"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FoursquareClient
+        # composer require stevenmaguire/oauth2-foursquare
+        four_square:
+            # must be "four_square" - it activates that type!
+            type: four_square
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %four_square_client_id%
+            client_secret: %four_square_client_secret%
+            # a route name you'll create
+            redirect_route: connect_four_square_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
@@ -653,6 +810,22 @@ knpu_oauth2_client:
             client_secret: %linkedin_client_secret%
             # a route name you'll create
             redirect_route: connect_linkedin_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.mail_ru"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\MailRuClient
+        # composer require aego/oauth2-mailru
+        mail_ru:
+            # must be "mail_ru" - it activates that type!
+            type: mail_ru
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: %mail_ru_client_id%
+            client_secret: %mail_ru_client_secret%
+            # a route name you'll create
+            redirect_route: connect_mail_ru_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true

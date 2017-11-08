@@ -14,13 +14,22 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AmazonProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\Auth0ProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AzureProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BitbucketProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BoxProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BufferProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\CanvasLMSProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\CleverProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DevianArtProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DigitalOceanProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DiscordProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DribbbleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DropboxProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DrupalProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ElanceProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EventbriteProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FitbitProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FoursquareProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator;
@@ -30,6 +39,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\KeycloakProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MailRuProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MollieProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
@@ -75,13 +85,22 @@ class KnpUOAuth2ClientExtension extends Extension
         'auth0' => Auth0ProviderConfigurator::class,
         'azure' => AzureProviderConfigurator::class,
         'bitbucket' => BitbucketProviderConfigurator::class,
+        'box' => BoxProviderConfigurator::class,
+        'buffer' => BufferProviderConfigurator::class,
+        'canvas_lms' => CanvasLMSProviderConfigurator::class,
+        'clever' => CleverProviderConfigurator::class,
+        'devian_art' => DevianArtProviderConfigurator::class,
         'digital_ocean' => DigitalOceanProviderConfigurator::class,
+        'discord' => DiscordProviderConfigurator::class,
         'dribbble' => DribbbleProviderConfigurator::class,
         'dropbox' => DropboxProviderConfigurator::class,
         'drupal' => DrupalProviderConfigurator::class,
         'eve_online' => EveOnlineProviderConfigurator::class,
+        'elance' => ElanceProviderConfigurator::class,
+        'eventbrite' => EventbriteProviderConfigurator::class,
         'facebook' => FacebookProviderConfigurator::class,
         'fitbit' => FitbitProviderConfigurator::class,
+        'four_square' => FoursquareProviderConfigurator::class,
         'headhunter' => HeadHunterProviderConfigurator::class,
         'heroku' => HerokuProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
@@ -90,6 +109,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'google' => GoogleProviderConfigurator::class,
         'keycloak' => KeycloakProviderConfigurator::class,
         'linkedin' => LinkedInProviderConfigurator::class,
+        'mail_ru' => MailRuProviderConfigurator::class,
         'microsoft' => MicrosoftProviderConfigurator::class,
         'mollie' => MollieProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
