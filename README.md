@@ -339,6 +339,28 @@ ciricular reference issues and degrades performance (because autheticators are i
 on every request, even though you *rarely* need the `FacebookClient` to be created).
 The `ClientRegistry` lazily creates the client objects.
 
+### Authenticating any OAuth user
+
+If you don't need to fetch/persist any information about the user, you can use the `OAuthUserProvider` service to quickly authenticate them into your application.
+
+Firstly define the user provider in your `security.yml` file:
+
+```yml
+security:
+    providers:
+        oauth:
+            id: knpu.oauth2.user_provider
+```
+
+Then in your Guard authenticator use the user provider to log the user in to your application:
+
+```php
+public function getUser($credentials, UserProviderInterface $userProvider) : UserInterface
+{
+    return $userProvider->loadUserByUsername($this->getClient()->fetchUserFromToken($credentials)->getId());
+}
+```
+
 ## Configuration
 
 Below is the configuration for *all* of the supported OAuth2 providers.
