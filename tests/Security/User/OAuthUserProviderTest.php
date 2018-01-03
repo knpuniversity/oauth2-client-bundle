@@ -13,6 +13,7 @@ namespace KnpU\OAuth2ClientBundle\Tests\Security\User;
 use KnpU\OAuth2ClientBundle\Security\User\OAuthUser;
 use KnpU\OAuth2ClientBundle\Security\User\OAuthUserProvider;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class OAuthUserProviderTest extends \PHPUnit_Framework_TestCase
@@ -42,7 +43,7 @@ class OAuthUserProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(UnsupportedUserException::class);
 
-        $userProvider->refreshUser(new SomeUser());
+        $userProvider->refreshUser($this->getMock(UserInterface::class));
     }
 
     /**
@@ -58,29 +59,6 @@ class OAuthUserProviderTest extends \PHPUnit_Framework_TestCase
     public function supportsClassProvider()
     {
         yield 'OAuthUser' => [OAuthUser::class, true];
-        yield 'other user' => [SomeUser::class, false];
-    }
-}
-
-class SomeUser implements UserInterface
-{
-    public function getRoles()
-    {
-    }
-
-    public function getPassword()
-    {
-    }
-
-    public function getSalt()
-    {
-    }
-
-    public function getUsername()
-    {
-    }
-
-    public function eraseCredentials()
-    {
+        yield 'other user' => [User::class, false];
     }
 }
