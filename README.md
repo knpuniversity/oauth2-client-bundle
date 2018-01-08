@@ -341,9 +341,10 @@ The `ClientRegistry` lazily creates the client objects.
 
 ### Authenticating any OAuth user
 
-If you don't need to fetch/persist any information about the user, you can use the `OAuthUserProvider` service to quickly authenticate them into your application.
+If you don't need to fetch/persist any information about the user, you can use the
+`OAuthUserProvider` service to quickly authenticate them in your application.
 
-Firstly define the user provider in your `security.yml` file:
+First define the user provider in your `security.yml` file:
 
 ```yml
 security:
@@ -352,14 +353,17 @@ security:
             id: knpu.oauth2.user_provider
 ```
 
-Then in your Guard authenticator use the user provider to log the user in to your application:
+Then in your Guard authenticator, use the user provider to easily fetch the user:
 
 ```php
-public function getUser($credentials, UserProviderInterface $userProvider) : UserInterface
+public function getUser($credentials, UserProviderInterface $userProvider)
 {
     return $userProvider->loadUserByUsername($this->getClient()->fetchUserFromToken($credentials)->getId());
 }
 ```
+
+The logged-in user will be an instance of `KnpU\OAuth2ClientBundle\Security\User\OAuthUser` and will
+have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
 
 ## Configuration
 
