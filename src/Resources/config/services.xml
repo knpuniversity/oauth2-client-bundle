@@ -13,6 +13,8 @@
             <argument type="service" id="service_container" />
             <argument /> <!-- argument added dynamically -->
         </service>
+
+        <service id="knpu.oauth2.user_provider" class="KnpU\OAuth2ClientBundle\Security\User\OAuthUserProvider" public="false" />
 	
 	<!-- Add service alias for autowiring -->
 	<service id="KnpU\OAuth2ClientBundle\Client\ClientRegistry" alias="knpu.oauth2.registry" public="false" />
