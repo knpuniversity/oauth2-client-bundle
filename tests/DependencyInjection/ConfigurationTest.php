@@ -73,4 +73,31 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
         return $tests;
     }
+
+    public function testClientMergingConfig()
+    {
+        $fbConfig = [
+            'type' => 'facebook',
+            'client_id' => 'ABC',
+            'client_secret' => '123',
+            'graph_api_version' => '2.3',
+            'redirect_route' => 'my_route',
+            'redirect_params' => ['foo' => 'bars'],
+        ];
+
+        $processor = new Processor();
+
+        $config = $processor->processConfiguration(
+            new Configuration(), [
+                ['clients' => ['fb1' => $fbConfig]],
+                ['clients' => ['fb2' => $fbConfig]],
+            ]
+        );
+
+        // verify the client keys are merged nicely
+        $this->assertSame(
+            ['fb1', 'fb2'],
+            array_keys($config['clients'])
+        );
+    }
 }
