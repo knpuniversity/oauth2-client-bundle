@@ -23,6 +23,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->arrayNode('clients')
+                ->normalizeKeys(false)
+                ->useAttributeAsKey('variable')
                 ->prototype('array')
                     ->prototype('variable')->end()
                 ->end()
