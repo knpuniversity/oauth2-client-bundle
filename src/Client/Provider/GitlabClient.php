@@ -12,6 +12,7 @@ namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
+use Omines\OAuth2\Client\Provider\GitlabResourceOwner;
 
 /**
  * GitlabClient.
