@@ -249,9 +249,6 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\RouterInterface;
 use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
 
 class MyFacebookAuthenticator extends SocialAuthenticator
 {
@@ -276,13 +273,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
     {
         // this method is only called if supports() returns true
 
-        try {
-            return $this->fetchAccessToken($this->getFacebookClient());
-        } catch (IdentityProviderException $e) {
-            throw new CustomUserMessageAuthenticationException(sprintf('Error fetching oauth credentials: "%s"', $e->getMessage());
-        } catch (InvalidStateException $e) {
-            throw new CustomUserMessageAuthenticationException('Invalid state parameter passed in callback URL');
-        }
+        return $this->fetchAccessToken($this->getFacebookClient());
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
