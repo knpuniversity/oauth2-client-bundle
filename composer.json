@@ -27,6 +27,7 @@
     },
     "require-dev": {
         "league/oauth2-facebook": "^1.1|^2.0",
+        "league/oauth2-github": "^0.2.2|^2.0",
         "symfony/security-guard": "^2.8|^3.0",
         "phpunit/phpunit": "^4.8"
     },

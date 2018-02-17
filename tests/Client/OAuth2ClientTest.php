@@ -17,11 +17,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
 {
-    private $requestStack;
+    protected $requestStack;
     /** @var Request */
-    private $request;
+    protected $request;
+    protected $provider;
     private $session;
-    private $provider;
 
     public function setup()
     {

@@ -22,7 +22,29 @@ class GithubClient extends OAuth2Client
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
-        return parent::fetchUserFromToken($accessToken);
+        $resourceOwner = parent::fetchUserFromToken($accessToken);
+
+        if (null === $resourceOwner->getEmail()) {
+            $response = $this->getOAuth2Provider()->getHttpClient()->request(
+                'GET',
+                'https://api.github.com/user/emails',
+                [
+                    'headers' => [
+                        'Authorization' => "Bearer {$accessToken->getToken()}"
+                    ]
+                ]
+            );
+
+            foreach (json_decode($response->getBody()->getContents(), true) as $email) {
+                if (true === $email['primary']) {
+                    return new GithubResourceOwner(\array_merge($resourceOwner->toArray(), [
+                        'email' => $email['email']
+                    ]));
+                }
+            }
+        }
+
+        return $resourceOwner;
     }
 
     /**
