@@ -25,7 +25,7 @@ class CanvasLMSProviderConfigurator implements ProviderConfiguratorInterface
                 ->defaultValue('')
                 ->info(
                     'This can be used to help the user identify which instance of an application this token is '
-                    .'for. For example, a mobile device application could provide the name of the device.'
+                    . 'for. For example, a mobile device application could provide the name of the device.'
                 )
 
             ->end()
@@ -43,7 +43,7 @@ class CanvasLMSProviderConfigurator implements ProviderConfiguratorInterface
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
             'purpose' => $config['purpose'],
-            'canvasInstanceUrl' => $config['canvas_instance_url']
+            'canvasInstanceUrl' => $config['canvas_instance_url'],
         ];
     }
 

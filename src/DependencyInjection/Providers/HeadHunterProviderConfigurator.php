@@ -28,7 +28,7 @@ class HeadHunterProviderConfigurator implements ProviderConfiguratorInterface
     {
         return [
             'clientId' => $config['client_id'],
-            'clientSecret' => $config['client_secret']
+            'clientSecret' => $config['client_secret'],
         ];
     }
 

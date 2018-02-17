@@ -34,7 +34,7 @@ class ZendeskProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-            'subdomain' => $config['subdomain']
+            'subdomain' => $config['subdomain'],
         ];
     }
 

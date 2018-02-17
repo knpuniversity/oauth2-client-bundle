@@ -34,6 +34,4 @@ class IdentityProviderAuthenticationException extends AuthenticationException
             '%error%' => $this->getPrevious()->getMessage(),
         ];
     }
-
-
 }

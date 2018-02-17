@@ -34,7 +34,7 @@ class SalesforceProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-            'domain' => $config['domain']
+            'domain' => $config['domain'],
         ];
     }
 
