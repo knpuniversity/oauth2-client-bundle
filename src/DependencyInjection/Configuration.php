@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->scalarNode('http_client')->defaultNull()->end()
             ->arrayNode('clients')
                 ->normalizeKeys(false)
                 ->useAttributeAsKey('variable')

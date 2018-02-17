@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
+use GuzzleHttp\ClientInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -39,16 +40,15 @@ class ProviderFactory
      * @param array $options
      * @param string $redirectUri
      * @param array $redirectParams
+     * @param array $collaborators
      * @return mixed
      */
-    public function createProvider($class, array $options, $redirectUri, array $redirectParams = [])
+    public function createProvider($class, array $options, $redirectUri, array $redirectParams = [], array $collaborators = [])
     {
         $redirectUri = $this->generator
             ->generate($redirectUri, $redirectParams, UrlGeneratorInterface::ABSOLUTE_URL);
 
         $options['redirectUri'] = $redirectUri;
-        // todo - make this configuration when someone needs this
-        $collaborators = [];
 
         return new $class($options, $collaborators);
     }

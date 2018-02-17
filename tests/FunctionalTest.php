@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\tests;
 
+use GuzzleHttp\Client;
 use KnpU\OAuth2ClientBundle\Tests\app\TestKernel;
 
 class FunctionalTest extends \PHPUnit_Framework_TestCase
@@ -30,6 +31,11 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase
             ->getClient('my_facebook');
         $this->assertSame($client, $client2);
         $this->assertTrue($container->has('oauth2.registry'));
+        $this->assertInstanceOf(Client::class, $client2->getOAuth2Provider()->getHttpClient());
+        $this->assertSame(
+            'foo',
+            $client2->getOAuth2Provider()->getHttpClient()->getConfig('uri')
+        );
 
         try {
             $container->get('knpu.oauth2.registry')->getClient('');
