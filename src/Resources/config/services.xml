@@ -15,9 +15,9 @@
         </service>
 
         <service id="knpu.oauth2.user_provider" class="KnpU\OAuth2ClientBundle\Security\User\OAuthUserProvider" public="false" />
-	
-	<!-- Add service alias for autowiring -->
-	<service id="KnpU\OAuth2ClientBundle\Client\ClientRegistry" alias="knpu.oauth2.registry" public="false" />
+
+        <!-- Add service alias for autowiring -->
+        <service id="KnpU\OAuth2ClientBundle\Client\ClientRegistry" alias="knpu.oauth2.registry" public="false" />
 
         <!-- Set an alias for easier use -->
         <service id="oauth2.registry" alias="knpu.oauth2.registry" public="true" />
