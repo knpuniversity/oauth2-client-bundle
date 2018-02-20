@@ -16,6 +16,7 @@ EOF
 return Symfony\CS\Config::create()
     ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
     ->fixers([
+        '-psr0',
         '-phpdoc_params',
         '-phpdoc_separation',
         '-phpdoc_var_without_name',

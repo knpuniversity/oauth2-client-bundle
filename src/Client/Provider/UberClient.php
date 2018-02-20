@@ -1,11 +1,12 @@
 <?php
+
 /*
-* OAuth2 Client Bundle
-* Copyright (c) KnpUniversity <http://knpuniversity.com/>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * OAuth2 Client Bundle
+ * Copyright (c) KnpUniversity <http://knpuniversity.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
@@ -16,17 +17,17 @@ use Stevenmaguire\OAuth2\Client\Provider\UberResourceOwner;
 class UberClient extends OAuth2Client
 {
     /**
-    * @param AccessToken $accessToken
-    * @return UberResourceOwner
-    */
+     * @param AccessToken $accessToken
+     * @return UberResourceOwner
+     */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
         return parent::fetchUserFromToken($accessToken);
     }
 
     /**
-    * @return UberResourceOwner
-    */
+     * @return UberResourceOwner
+     */
     public function fetchUser()
     {
         return parent::fetchUser();
