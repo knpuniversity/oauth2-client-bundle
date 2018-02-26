@@ -66,7 +66,7 @@ via Composer:
 | [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever         |
 | [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)           | composer require seinopsys/oauth2-deviantart        |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
-| [Discord](https://github.com/teamreflex/oauth2-discord)               | composer require team-reflex/oauth2-discord         |
+| [Discord](https://github.com/wohali/oauth2-discord-new)               | composer require wohali/oauth2-discord-new         |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |

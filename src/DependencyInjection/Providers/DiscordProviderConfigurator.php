@@ -21,7 +21,7 @@ class DiscordProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderClass(array $config)
     {
-        return 'Discord\OAuth\Discord';
+        return 'Wohali\OAuth2\Client\Provider\Discord';
     }
 
     public function getProviderOptions(array $config)
@@ -34,12 +34,12 @@ class DiscordProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getPackagistName()
     {
-        return 'team-reflex/oauth2-discord';
+        return 'wohali/oauth2-discord-new';
     }
 
     public function getLibraryHomepage()
     {
-        return 'https://github.com/teamreflex/oauth2-discord';
+        return 'https://github.com/wohali/oauth2-discord-new';
     }
 
     public function getProviderDisplayName()

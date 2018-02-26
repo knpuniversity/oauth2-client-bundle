@@ -12,13 +12,13 @@ namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use Discord\OAuth\Parts\User;
+use Wohali\OAuth2\Client\Provider\DiscordResourceOwner;
 
 class DiscordClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
-     * @return User
+     * @return DiscordResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +26,7 @@ class DiscordClient extends OAuth2Client
     }
 
     /**
-     * @return User
+     * @return DiscordResourceOwner
      */
     public function fetchUser()
     {
