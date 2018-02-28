@@ -19,7 +19,7 @@ class FacebookProviderConfigurator implements ProviderConfiguratorInterface
         $node
             ->scalarNode('graph_api_version')
                 ->isRequired()
-                ->defaultValue('v2.5')
+                ->example('graph_api_version: v2.12')
             ->end()
         ;
     }

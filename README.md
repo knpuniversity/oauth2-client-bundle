@@ -66,7 +66,7 @@ via Composer:
 | [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever         |
 | [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)           | composer require seinopsys/oauth2-deviantart        |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean  |
-| [Discord](https://github.com/wohali/oauth2-discord-new)               | composer require wohali/oauth2-discord-new         |
+| [Discord](https://github.com/wohali/oauth2-discord-new)               | composer require wohali/oauth2-discord-new          |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
@@ -126,7 +126,7 @@ knpu_oauth2_client:
             redirect_route: connect_facebook_check
             # route parameters to pass to your route, if needed
             redirect_params: {}
-            graph_api_version: v2.3
+            graph_api_version: v2.12
 ```
 
 **See the full configuration for *all* the supported "types"
@@ -548,7 +548,7 @@ knpu_oauth2_client:
 
         # will create service: "knpu.oauth2.client.discord"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DiscordClient
-        # composer require team-reflex/oauth2-discord
+        # composer require wohali/oauth2-discord-new
         discord:
             # must be "discord" - it activates that type!
             type: discord
@@ -670,7 +670,7 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_facebook_check
             redirect_params: {}
-            graph_api_version: v2.5
+            graph_api_version: v2.12
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 

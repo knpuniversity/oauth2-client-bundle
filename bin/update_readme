@@ -108,11 +108,10 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
             $customKeys[] = '# '.$child->getInfo();
         }
 
-        // if not required, comment out, it's extra
-        $keyString = $child->isRequired() ? '' : '# ';
-        $customKeys[] = $keyString . sprintf(
-            '%s: %s', $child->getName(), $defaultValue
-        );
+        // if not required, comment out: it's extra
+        $keyPrefix = $child->isRequired() ? '' : '# ';
+        $example = $child->getExample() ? $child->getExample() : sprintf('%s: %s', $child->getName(), $defaultValue);
+        $customKeys[] = $keyPrefix . $example;
     }
 
     $newSection = str_replace('%PROVIDER_NAME%', $type, $sectionTemplate);
