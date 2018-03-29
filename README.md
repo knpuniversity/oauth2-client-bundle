@@ -266,7 +266,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
     public function supports(Request $request)
     {
         // continue ONLY if the URL matches the check URL
-        return $request->getPathInfo() == '/connect/facebook/check';
+        return $request->getPathInfo() == $this->router->getRouteCollection()->get('connect_facebook_check')->getPath();
     }
 
     public function getCredentials(Request $request)
