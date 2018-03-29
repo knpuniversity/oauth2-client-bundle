@@ -273,8 +273,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
     {
         // this method is only called if supports() returns true
 
-        // For Symfony < 4.0 the supports method need to be called manually
-        // uncomment the following code or remove it:
+        // For Symfony < 4.0 the supports method need to be called manually:
         // if (!$this->supports()) {
         //    return;
         // }
