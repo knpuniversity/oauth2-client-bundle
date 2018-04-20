@@ -273,6 +273,11 @@ class MyFacebookAuthenticator extends SocialAuthenticator
     {
         // this method is only called if supports() returns true
 
+        // For Symfony lower than 3.4 the supports method need to be called manually here:
+        // if (!$this->supports($request)) {
+        //     return null;
+        // }
+
         return $this->fetchAccessToken($this->getFacebookClient());
     }
 
