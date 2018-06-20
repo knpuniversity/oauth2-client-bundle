@@ -15,6 +15,12 @@ This bundle integrates with [league/oauth2-client](http://oauth2-client.thephple
 
 * PHP 5.5.9 or higher
 
+## Relation to other OAuth bundles
+
+While searching for OAuth bundles you might have come across [hwi/oauth-bundle](https://github.com/hwi/HWIOAuthBundle) and you might be wondering why there are two pretty popular OAuth bundles.
+This is due to the fact that `hwi/oauth-bundle` was abandoned a few years ago. This is why development of this bundle started. However, in the meantime `hwi/oauth-bundle` is actively maintained again forcing you to choose between either one of them.
+Generally speaking, `hwi/oauth-bundle` gives you a lot more but it's also a bit harder to install. The `knpuniversity/oauth2-client-bundle`, however, gives you more low-level control on different OAuth clients.
+
 ## Installation
 
 Install the library via [Composer](https://getcomposer.org/) by
