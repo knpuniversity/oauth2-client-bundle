@@ -15,6 +15,19 @@ This bundle integrates with [league/oauth2-client](http://oauth2-client.thephple
 
 * PHP 5.5.9 or higher
 
+## This bundle or HWIOAuthBundle?
+
+In addition to this bundle, another OAuth bundle exists for Symfony: [hwi/oauth-bundle](https://github.com/hwi/HWIOAuthBundle).
+You might be wondering "why are there two popular OAuth bundles?".
+
+Great question! Generally speaking, `hwi/oauth-bundle` gives you more features out-of-the-box,
+including social authentication and registration (called "connect"). But, it's also a bit harder
+to install. The `knpuniversity/oauth2-client-bundle`, takes more work to setup, but gives you
+more low-level control.
+
+Not sure which to use? If you need OAuth (social) authentication & registration, try
+[hwi/oauth-bundle](https://github.com/hwi/HWIOAuthBundle). If you don't like it, come back!
+
 ## Installation
 
 Install the library via [Composer](https://getcomposer.org/) by
