@@ -119,7 +119,7 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
         $this->request->query->set('state', 'THE_STATE');
         $this->request->query->set('code', 'CODE_ABC');
 
-        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+        $this->session->remove(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
             ->willReturn('THE_STATE');
 
         $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
@@ -157,7 +157,7 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
     public function testGetAccessTokenThrowsInvalidStateException()
     {
         $this->request->query->set('state', 'ACTUAL_STATE');
-        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+        $this->session->remove(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
             ->willReturn('OTHER_STATE');
 
         $client = new OAuth2Client(
@@ -173,7 +173,7 @@ class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
     public function testGetAccessTokenThrowsMissingAuthCodeException()
     {
         $this->request->query->set('state', 'ACTUAL_STATE');
-        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+        $this->session->remove(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
            ->willReturn('ACTUAL_STATE');
 
         // don't set a code query parameter
