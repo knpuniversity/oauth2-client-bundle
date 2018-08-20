@@ -55,7 +55,7 @@ public function registerBundles()
 
 Awesome! Now, you'll want to configure a client.
 
-## Configuring a Client (e.g. for Facebook)
+## Configuring a Client
 
 You'll need to configure *one* client for *each* OAuth2 server
 (GitHub, Facebook, etc) that you want to talk to.
