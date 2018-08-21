@@ -30,29 +30,14 @@ Not sure which to use? If you need OAuth (social) authentication & registration,
 
 ## Installation
 
-Install the library via [Composer](https://getcomposer.org/) by
+Install the bundled library via [Composer](https://getcomposer.org/) by
 running the following command:
 
 ```bash
-composer require knpuniversity/oauth2-client-bundle
+composer req "knpuniversity/oauth2-client-bundle"
 ```
 
-Next, enable the bundle in your `app/AppKernel.php` file:
-
-```php
-<?php
-// app/AppKernel.php
-
-public function registerBundles()
-{
-    $bundles = [
-        // ...
-        new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
-        // ...
-    ];
-}
-```
-
+The bundle will be enabled automatically by flex.
 Awesome! Now, you'll want to configure a client.
 
 ## Configuring a Client
@@ -124,22 +109,33 @@ Awesome! Now, you'll configure your provider. For Facebook,
 this will look something like this.
 
 ```yml
-# app/config/config.yml
+# config/packages/knpu_oauth2_client.yaml
 knpu_oauth2_client:
     clients:
+        # configure your clients as described here: https://github.com/knpuniversity/oauth2-client-bundle#configuration
+
         # the key "facebook_main" can be anything, it
         # will create a service: "knpu.oauth2.client.facebook_main"
         facebook_main:
             # this will be one of the supported types
             type: facebook
-            client_id: YOUR_FACEBOOK_APP_ID
-            client_secret: YOUR_FACEBOOK_APP_SECRET
+            client_id: '%env(OAUTH_FACEBOOK_ID)%'
+            client_secret: '%env(OAUTH_FACEBOOK_SECRET)%'
             # the route that you're redirected to after
             # see the controller example below
-            redirect_route: connect_facebook_check
-            # route parameters to pass to your route, if needed
-            redirect_params: {}
+			redirect_route: connect_facebook_check
+			redirect_params: {}
             graph_api_version: v2.12
+```
+
+Notice the two `'%env(var)%'`calls?
+You will need to add these to your `.env`file.
+These are the credentials to the OAuth providers, you will obtain these from them.
+In case of Facebook on [developers.facebook.com](https://developers.facebook.com/apps/).
+
+```bash
+OAUTH_FACEBOOK_ID=fb_id
+OAUTH_FACEBOOK_SECRET=fb_secret
 ```
 
 **See the full configuration for *all* the supported "types"
@@ -159,31 +155,48 @@ controller that redirects to Facebook. Because we used the
 key `facebook_main` above, you can simply:
 
 ```php
-// ...
+namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class FacebookController extends Controller
 {
+	/**
+	 * Use the constructor to autowire your dependencies
+	 *
+	 * @param ClientRegistry $clientRegistry
+	 */
+	public function __construct(
+        ClientRegistry $clientRegistry
+    ) {
+        // add your dependencies
+        $this->clientRegistry = $clientRegistry;
+    }
+
     /**
      * Link to this controller to start the "connect" process
      *
-     * @Route("/connect/facebook")
+     * @Route("/connect/facebook", name="connect_facebook_start")
      */
     public function connectAction()
     {
         // will redirect to Facebook!
-        return $this->get('oauth2.registry')
-            ->getClient('facebook_main') // key used in config.yml
-            ->redirect();
-    }
+        return $this->clientRegistry
+            ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
+            ->redirect(
+                ['public_profile', 'email'] // the scopes you want to access
+            )
+        ;
+	}
 
     /**
      * After going to Facebook, you're redirected back here
      * because this is the "redirect_route" you configured
-     * in config.yml
+     * in config/packages/knpu_oauth2_client.yaml
      *
      * @Route("/connect/facebook/check", name="connect_facebook_check")
      */
@@ -193,22 +206,21 @@ class FacebookController extends Controller
         // leave this method blank and create a Guard authenticator
         // (read below)
 
-        /** @var \KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient $client */
-        $client = $this->get('oauth2.registry')
-            ->getClient('facebook_main');
+		/** @var \KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient $client */
+		$client = $this->clientRegistry->getClient('facebook_main');
 
-        try {
+		try {
             // the exact class depends on which provider you're using
             /** @var \League\OAuth2\Client\Provider\FacebookUser $user */
             $user = $client->fetchUser();
 
             // do something with all this new power!
-            $user->getFirstName();
+            var_dump($user); die;
             // ...
         } catch (IdentityProviderException $e) {
             // something went wrong!
             // probably you should return the reason to the user
-            var_dump($e->getMessage());die;
+            var_dump($e->getMessage()); die;
         }
     }
 }
@@ -220,8 +232,8 @@ There are multiple ways to access the objects you need to get your
 work done:
 
 ```php
-// KnpU\OAuth2ClientBundle\Client\ClientRegistry
-$registry = $this->get('oauth2.registry');
+// @var KnpU\OAuth2ClientBundle\Client\ClientRegistry
+$registry = $this->get('oauth2.registry'); // you can use the service name instead of injecting it into the controller
 
 // two ways to access the client
 $client = $registry->getClient('facebook_main');
@@ -255,13 +267,18 @@ which will hold similar logic.
 A `SocialAuthenticator` base class exists to help with a few things:
 
 ```php
-namespace AppBundle\Security;
+namespace App\Security;
 
+use App\Entity\User; // your user entity
+use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Routing\RouterInterface;
 use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class MyFacebookAuthenticator extends SocialAuthenticator
 {
@@ -269,7 +286,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
     private $em;
     private $router;
 
-    public function __construct(ClientRegistry $clientRegistry, EntityManager $em, RouterInterface $router)
+    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
     {
         $this->clientRegistry = $clientRegistry;
         $this->em = $em;
@@ -303,14 +320,14 @@ class MyFacebookAuthenticator extends SocialAuthenticator
         $email = $facebookUser->getEmail();
 
         // 1) have they logged in with Facebook before? Easy!
-        $existingUser = $this->em->getRepository('AppBundle:User')
+        $existingUser = $this->em->getRepository(User::class)
             ->findOneBy(['facebookId' => $facebookUser->getId()]);
         if ($existingUser) {
             return $existingUser;
         }
 
         // 2) do we have a matching user by email?
-        $user = $this->em->getRepository('AppBundle:User')
+        $user = $this->em->getRepository(User::class)
                     ->findOneBy(['email' => $email]);
 
         // 3) Maybe you just want to "register" them by creating
@@ -321,14 +338,14 @@ class MyFacebookAuthenticator extends SocialAuthenticator
 
         return $user;
     }
-    
+
     /**
      * @return FacebookClient
      */
     private function getFacebookClient()
     {
         return $this->clientRegistry
-            // "facebook_main" is the key used in config.yml
+            // "facebook_main" is the key used in config/packages/knpu_oauth2_client.yaml
             ->getClient('facebook_main');
     }
 
@@ -336,27 +353,23 @@ class MyFacebookAuthenticator extends SocialAuthenticator
 }
 ```
 
-Next, register your authenticator as a service:
+Next, register your authenticator in `security.yaml` under the `guard` section:
 
 ```yml
-# app/config/services.yml
-services:
-    my_facebook_authenticator:
-        class: AppBundle\Security\MyFacebookAuthenticator
-        autowire: true
-        # use autowiring, OR you can specify the argument manually
-        # arguments:
-        #     - '@oauth2.registry'
-        #     - '@doctrine.orm.entity_manager'
-        #     - '@router'
+# app/config/packages/security.yaml
+security:
+    firewalls:
+        main:
+            guard:
+                authenticators:
+                    - App\Security\Authenticator\FacebookAuthenticator
 ```
 
-Finally, setup this service in `security.yml` under the `guard` section. For more
-details: see http://symfony.com/doc/current/cookbook/security/guard-authentication.html#step-2-configure-the-authenticator.
+For more details: see http://symfony.com/doc/current/cookbook/security/guard-authentication.html#step-2-configure-the-authenticator.
 
 **CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
 into your authenticator instead of the `ClientRegistry`. However, this may cause
-ciricular reference issues and degrades performance (because autheticators are instantiated
+circular reference issues and degrades performance (because authenticators are instantiated
 on every request, even though you *rarely* need the `FacebookClient` to be created).
 The `ClientRegistry` lazily creates the client objects.
 
@@ -365,7 +378,7 @@ The `ClientRegistry` lazily creates the client objects.
 If you don't need to fetch/persist any information about the user, you can use the
 `OAuthUserProvider` service to quickly authenticate them in your application.
 
-First define the user provider in your `security.yml` file:
+First define the user provider in your `security.yaml` file:
 
 ```yml
 security:
@@ -393,7 +406,7 @@ Below is the configuration for *all* of the supported OAuth2 providers.
 any provider.
 
 ```yml
-# app/config/config.yml
+# config/packages/knpu_oauth2_client.yaml
 knpu_oauth2_client:
     clients:
         # will create service: "knpu.oauth2.client.amazon"
@@ -402,9 +415,9 @@ knpu_oauth2_client:
         amazon:
             # must be "amazon" - it activates that type!
             type: amazon
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %amazon_client_id%
-            client_secret: %amazon_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(amazon_client_id)%'
+            client_secret: '%env(amazon_client_secret)%'
             # a route name you'll create
             redirect_route: connect_amazon_check
             redirect_params: {}
@@ -418,9 +431,9 @@ knpu_oauth2_client:
         auth0:
             # must be "auth0" - it activates that type!
             type: auth0
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %auth0_client_id%
-            client_secret: %auth0_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(auth0_client_id)%'
+            client_secret: '%env(auth0_client_secret)%'
             # a route name you'll create
             redirect_route: connect_auth0_check
             redirect_params: {}
@@ -434,9 +447,9 @@ knpu_oauth2_client:
         azure:
             # must be "azure" - it activates that type!
             type: azure
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %azure_client_id%
-            client_secret: %azure_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(azure_client_id)%'
+            client_secret: '%env(azure_client_secret)%'
             # a route name you'll create
             redirect_route: connect_azure_check
             redirect_params: {}
@@ -450,9 +463,9 @@ knpu_oauth2_client:
         bitbucket:
             # must be "bitbucket" - it activates that type!
             type: bitbucket
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %bitbucket_client_id%
-            client_secret: %bitbucket_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(bitbucket_client_id)%'
+            client_secret: '%env(bitbucket_client_secret)%'
             # a route name you'll create
             redirect_route: connect_bitbucket_check
             redirect_params: {}
@@ -466,9 +479,9 @@ knpu_oauth2_client:
         box:
             # must be "box" - it activates that type!
             type: box
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %box_client_id%
-            client_secret: %box_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(box_client_id)%'
+            client_secret: '%env(box_client_secret)%'
             # a route name you'll create
             redirect_route: connect_box_check
             redirect_params: {}
@@ -482,9 +495,9 @@ knpu_oauth2_client:
         buffer:
             # must be "buffer" - it activates that type!
             type: buffer
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %buffer_client_id%
-            client_secret: %buffer_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(buffer_client_id)%'
+            client_secret: '%env(buffer_client_secret)%'
             # a route name you'll create
             redirect_route: connect_buffer_check
             redirect_params: {}
@@ -498,9 +511,9 @@ knpu_oauth2_client:
         canvas_lms:
             # must be "canvas_lms" - it activates that type!
             type: canvas_lms
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %canvas_lms_client_id%
-            client_secret: %canvas_lms_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(canvas_lms_client_id)%'
+            client_secret: '%env(canvas_lms_client_secret)%'
             # a route name you'll create
             redirect_route: connect_canvas_lms_check
             redirect_params: {}
@@ -517,9 +530,9 @@ knpu_oauth2_client:
         clever:
             # must be "clever" - it activates that type!
             type: clever
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %clever_client_id%
-            client_secret: %clever_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(clever_client_id)%'
+            client_secret: '%env(clever_client_secret)%'
             # a route name you'll create
             redirect_route: connect_clever_check
             redirect_params: {}
@@ -533,9 +546,9 @@ knpu_oauth2_client:
         devian_art:
             # must be "devian_art" - it activates that type!
             type: devian_art
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %devian_art_client_id%
-            client_secret: %devian_art_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(devian_art_client_id)%'
+            client_secret: '%env(devian_art_client_secret)%'
             # a route name you'll create
             redirect_route: connect_devian_art_check
             redirect_params: {}
@@ -549,9 +562,9 @@ knpu_oauth2_client:
         digital_ocean:
             # must be "digital_ocean" - it activates that type!
             type: digital_ocean
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %digital_ocean_client_id%
-            client_secret: %digital_ocean_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(digital_ocean_client_id)%'
+            client_secret: '%env(digital_ocean_client_secret)%'
             # a route name you'll create
             redirect_route: connect_digital_ocean_check
             redirect_params: {}
@@ -565,9 +578,9 @@ knpu_oauth2_client:
         discord:
             # must be "discord" - it activates that type!
             type: discord
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %discord_client_id%
-            client_secret: %discord_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(discord_client_id)%'
+            client_secret: '%env(discord_client_secret)%'
             # a route name you'll create
             redirect_route: connect_discord_check
             redirect_params: {}
@@ -581,9 +594,9 @@ knpu_oauth2_client:
         dribbble:
             # must be "dribbble" - it activates that type!
             type: dribbble
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %dribbble_client_id%
-            client_secret: %dribbble_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(dribbble_client_id)%'
+            client_secret: '%env(dribbble_client_secret)%'
             # a route name you'll create
             redirect_route: connect_dribbble_check
             redirect_params: {}
@@ -597,9 +610,9 @@ knpu_oauth2_client:
         dropbox:
             # must be "dropbox" - it activates that type!
             type: dropbox
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %dropbox_client_id%
-            client_secret: %dropbox_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(dropbox_client_id)%'
+            client_secret: '%env(dropbox_client_secret)%'
             # a route name you'll create
             redirect_route: connect_dropbox_check
             redirect_params: {}
@@ -613,9 +626,9 @@ knpu_oauth2_client:
         drupal:
             # must be "drupal" - it activates that type!
             type: drupal
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %drupal_client_id%
-            client_secret: %drupal_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(drupal_client_id)%'
+            client_secret: '%env(drupal_client_secret)%'
             # a route name you'll create
             redirect_route: connect_drupal_check
             redirect_params: {}
@@ -629,9 +642,9 @@ knpu_oauth2_client:
         eve_online:
             # must be "eve_online" - it activates that type!
             type: eve_online
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %eve_online_client_id%
-            client_secret: %eve_online_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(eve_online_client_id)%'
+            client_secret: '%env(eve_online_client_secret)%'
             # a route name you'll create
             redirect_route: connect_eve_online_check
             redirect_params: {}
@@ -645,9 +658,9 @@ knpu_oauth2_client:
         elance:
             # must be "elance" - it activates that type!
             type: elance
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %elance_client_id%
-            client_secret: %elance_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(elance_client_id)%'
+            client_secret: '%env(elance_client_secret)%'
             # a route name you'll create
             redirect_route: connect_elance_check
             redirect_params: {}
@@ -661,9 +674,9 @@ knpu_oauth2_client:
         eventbrite:
             # must be "eventbrite" - it activates that type!
             type: eventbrite
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %eventbrite_client_id%
-            client_secret: %eventbrite_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(eventbrite_client_id)%'
+            client_secret: '%env(eventbrite_client_secret)%'
             # a route name you'll create
             redirect_route: connect_eventbrite_check
             redirect_params: {}
@@ -677,9 +690,9 @@ knpu_oauth2_client:
         facebook:
             # must be "facebook" - it activates that type!
             type: facebook
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %facebook_client_id%
-            client_secret: %facebook_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(facebook_client_id)%'
+            client_secret: '%env(facebook_client_secret)%'
             # a route name you'll create
             redirect_route: connect_facebook_check
             redirect_params: {}
@@ -693,9 +706,9 @@ knpu_oauth2_client:
         fitbit:
             # must be "fitbit" - it activates that type!
             type: fitbit
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %fitbit_client_id%
-            client_secret: %fitbit_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(fitbit_client_id)%'
+            client_secret: '%env(fitbit_client_secret)%'
             # a route name you'll create
             redirect_route: connect_fitbit_check
             redirect_params: {}
@@ -709,9 +722,9 @@ knpu_oauth2_client:
         four_square:
             # must be "four_square" - it activates that type!
             type: four_square
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %four_square_client_id%
-            client_secret: %four_square_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(four_square_client_id)%'
+            client_secret: '%env(four_square_client_secret)%'
             # a route name you'll create
             redirect_route: connect_four_square_check
             redirect_params: {}
@@ -725,9 +738,9 @@ knpu_oauth2_client:
         headhunter:
             # must be "headhunter" - it activates that type!
             type: headhunter
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %headhunter_client_id%
-            client_secret: %headhunter_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(headhunter_client_id)%'
+            client_secret: '%env(headhunter_client_secret)%'
             # a route name you'll create
             redirect_route: connect_headhunter_check
             redirect_params: {}
@@ -741,9 +754,9 @@ knpu_oauth2_client:
         heroku:
             # must be "heroku" - it activates that type!
             type: heroku
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %heroku_client_id%
-            client_secret: %heroku_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(heroku_client_id)%'
+            client_secret: '%env(heroku_client_secret)%'
             # a route name you'll create
             redirect_route: connect_heroku_check
             redirect_params: {}
@@ -757,9 +770,9 @@ knpu_oauth2_client:
         instagram:
             # must be "instagram" - it activates that type!
             type: instagram
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %instagram_client_id%
-            client_secret: %instagram_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(instagram_client_id)%'
+            client_secret: '%env(instagram_client_secret)%'
             # a route name you'll create
             redirect_route: connect_instagram_check
             redirect_params: {}
@@ -773,9 +786,9 @@ knpu_oauth2_client:
         github:
             # must be "github" - it activates that type!
             type: github
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %github_client_id%
-            client_secret: %github_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(github_client_id)%'
+            client_secret: '%env(github_client_secret)%'
             # a route name you'll create
             redirect_route: connect_github_check
             redirect_params: {}
@@ -789,9 +802,9 @@ knpu_oauth2_client:
         gitlab:
             # must be "gitlab" - it activates that type!
             type: gitlab
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %gitlab_client_id%
-            client_secret: %gitlab_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(gitlab_client_id)%'
+            client_secret: '%env(gitlab_client_secret)%'
             # a route name you'll create
             redirect_route: connect_gitlab_check
             redirect_params: {}
@@ -806,9 +819,9 @@ knpu_oauth2_client:
         google:
             # must be "google" - it activates that type!
             type: google
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %google_client_id%
-            client_secret: %google_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(google_client_id)%'
+            client_secret: '%env(google_client_secret)%'
             # a route name you'll create
             redirect_route: connect_google_check
             redirect_params: {}
@@ -827,9 +840,9 @@ knpu_oauth2_client:
         keycloak:
             # must be "keycloak" - it activates that type!
             type: keycloak
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %keycloak_client_id%
-            client_secret: %keycloak_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(keycloak_client_id)%'
+            client_secret: '%env(keycloak_client_secret)%'
             # a route name you'll create
             redirect_route: connect_keycloak_check
             redirect_params: {}
@@ -852,9 +865,9 @@ knpu_oauth2_client:
         linkedin:
             # must be "linkedin" - it activates that type!
             type: linkedin
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %linkedin_client_id%
-            client_secret: %linkedin_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(linkedin_client_id)%'
+            client_secret: '%env(linkedin_client_secret)%'
             # a route name you'll create
             redirect_route: connect_linkedin_check
             redirect_params: {}
@@ -868,9 +881,9 @@ knpu_oauth2_client:
         mail_ru:
             # must be "mail_ru" - it activates that type!
             type: mail_ru
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %mail_ru_client_id%
-            client_secret: %mail_ru_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(mail_ru_client_id)%'
+            client_secret: '%env(mail_ru_client_secret)%'
             # a route name you'll create
             redirect_route: connect_mail_ru_check
             redirect_params: {}
@@ -884,9 +897,9 @@ knpu_oauth2_client:
         microsoft:
             # must be "microsoft" - it activates that type!
             type: microsoft
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %microsoft_client_id%
-            client_secret: %microsoft_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(microsoft_client_id)%'
+            client_secret: '%env(microsoft_client_secret)%'
             # a route name you'll create
             redirect_route: connect_microsoft_check
             redirect_params: {}
@@ -905,9 +918,9 @@ knpu_oauth2_client:
         mollie:
             # must be "mollie" - it activates that type!
             type: mollie
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %mollie_client_id%
-            client_secret: %mollie_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(mollie_client_id)%'
+            client_secret: '%env(mollie_client_secret)%'
             # a route name you'll create
             redirect_route: connect_mollie_check
             redirect_params: {}
@@ -921,9 +934,9 @@ knpu_oauth2_client:
         odnoklassniki:
             # must be "odnoklassniki" - it activates that type!
             type: odnoklassniki
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %odnoklassniki_client_id%
-            client_secret: %odnoklassniki_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(odnoklassniki_client_id)%'
+            client_secret: '%env(odnoklassniki_client_secret)%'
             # a route name you'll create
             redirect_route: connect_odnoklassniki_check
             redirect_params: {}
@@ -937,9 +950,9 @@ knpu_oauth2_client:
         paypal:
             # must be "paypal" - it activates that type!
             type: paypal
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %paypal_client_id%
-            client_secret: %paypal_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(paypal_client_id)%'
+            client_secret: '%env(paypal_client_secret)%'
             # a route name you'll create
             redirect_route: connect_paypal_check
             redirect_params: {}
@@ -954,9 +967,9 @@ knpu_oauth2_client:
         psn:
             # must be "psn" - it activates that type!
             type: psn
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %psn_client_id%
-            client_secret: %psn_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(psn_client_id)%'
+            client_secret: '%env(psn_client_secret)%'
             # a route name you'll create
             redirect_route: connect_psn_check
             redirect_params: {}
@@ -970,9 +983,9 @@ knpu_oauth2_client:
         salesforce:
             # must be "salesforce" - it activates that type!
             type: salesforce
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %salesforce_client_id%
-            client_secret: %salesforce_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(salesforce_client_id)%'
+            client_secret: '%env(salesforce_client_secret)%'
             # a route name you'll create
             redirect_route: connect_salesforce_check
             redirect_params: {}
@@ -987,9 +1000,9 @@ knpu_oauth2_client:
         slack:
             # must be "slack" - it activates that type!
             type: slack
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %slack_client_id%
-            client_secret: %slack_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(slack_client_id)%'
+            client_secret: '%env(slack_client_secret)%'
             # a route name you'll create
             redirect_route: connect_slack_check
             redirect_params: {}
@@ -1003,9 +1016,9 @@ knpu_oauth2_client:
         stripe:
             # must be "stripe" - it activates that type!
             type: stripe
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %stripe_client_id%
-            client_secret: %stripe_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(stripe_client_id)%'
+            client_secret: '%env(stripe_client_secret)%'
             # a route name you'll create
             redirect_route: connect_stripe_check
             redirect_params: {}
@@ -1019,9 +1032,9 @@ knpu_oauth2_client:
         strava:
             # must be "strava" - it activates that type!
             type: strava
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %strava_client_id%
-            client_secret: %strava_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(strava_client_id)%'
+            client_secret: '%env(strava_client_secret)%'
             # a route name you'll create
             redirect_route: connect_strava_check
             redirect_params: {}
@@ -1035,9 +1048,9 @@ knpu_oauth2_client:
         uber:
             # must be "uber" - it activates that type!
             type: uber
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %uber_client_id%
-            client_secret: %uber_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(uber_client_id)%'
+            client_secret: '%env(uber_client_secret)%'
             # a route name you'll create
             redirect_route: connect_uber_check
             redirect_params: {}
@@ -1051,9 +1064,9 @@ knpu_oauth2_client:
         unsplash:
             # must be "unsplash" - it activates that type!
             type: unsplash
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %unsplash_client_id%
-            client_secret: %unsplash_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(unsplash_client_id)%'
+            client_secret: '%env(unsplash_client_secret)%'
             # a route name you'll create
             redirect_route: connect_unsplash_check
             redirect_params: {}
@@ -1067,9 +1080,9 @@ knpu_oauth2_client:
         vimeo:
             # must be "vimeo" - it activates that type!
             type: vimeo
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %vimeo_client_id%
-            client_secret: %vimeo_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(vimeo_client_id)%'
+            client_secret: '%env(vimeo_client_secret)%'
             # a route name you'll create
             redirect_route: connect_vimeo_check
             redirect_params: {}
@@ -1083,9 +1096,9 @@ knpu_oauth2_client:
         vkontakte:
             # must be "vkontakte" - it activates that type!
             type: vkontakte
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %vkontakte_client_id%
-            client_secret: %vkontakte_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(vkontakte_client_id)%'
+            client_secret: '%env(vkontakte_client_secret)%'
             # a route name you'll create
             redirect_route: connect_vkontakte_check
             redirect_params: {}
@@ -1099,9 +1112,9 @@ knpu_oauth2_client:
         yahoo:
             # must be "yahoo" - it activates that type!
             type: yahoo
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %yahoo_client_id%
-            client_secret: %yahoo_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(yahoo_client_id)%'
+            client_secret: '%env(yahoo_client_secret)%'
             # a route name you'll create
             redirect_route: connect_yahoo_check
             redirect_params: {}
@@ -1115,9 +1128,9 @@ knpu_oauth2_client:
         yandex:
             # must be "yandex" - it activates that type!
             type: yandex
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %yandex_client_id%
-            client_secret: %yandex_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(yandex_client_id)%'
+            client_secret: '%env(yandex_client_secret)%'
             # a route name you'll create
             redirect_route: connect_yandex_check
             redirect_params: {}
@@ -1131,9 +1144,9 @@ knpu_oauth2_client:
         zendesk:
             # must be "zendesk" - it activates that type!
             type: zendesk
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: %zendesk_client_id%
-            client_secret: %zendesk_client_secret%
+            # add and configure client_id and client_secret in .env
+            client_id: '%env(zendesk_client_id)%'
+            client_secret: '%env(zendesk_client_secret)%'
             # a route name you'll create
             redirect_route: connect_zendesk_check
             redirect_params: {}
@@ -1167,7 +1180,7 @@ Now, just configure your provider like any other provider, but
 using the `generic` type:
 
 ```yml
-# app/config/config.yml
+# config/packages/knpu_oauth2_client.yaml
 knpu_oauth2_client:
     clients:
         # will create service: "knpu.oauth2.client.foo_bar_oauth"
@@ -1183,8 +1196,8 @@ knpu_oauth2_client:
             # provider_options: {}
 
             # now, all the normal options!
-            client_id: %foo_bar_client_id%
-            client_secret: %foo_bar_client_secret%
+            client_id: '%env(foo_bar_client_id)%'
+            client_secret: '%env(foo_bar_client_secret)%'
             redirect_route: connect_facebook_check
             redirect_params: {}
 ```
