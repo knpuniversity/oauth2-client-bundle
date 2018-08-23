@@ -16,7 +16,12 @@ class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)
     {
-        // no custom options
+        $node
+            ->scalarNode('account')
+                ->isRequired()
+                ->info('Your Auth0 domain/account, e.g. \'mycompany.auth0.com\'')
+            ->end()
+        ;
     }
 
     public function getProviderClass(array $config)
@@ -29,6 +34,7 @@ class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
+            'account' => $config['account']
         ];
     }
 
