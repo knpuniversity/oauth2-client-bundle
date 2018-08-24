@@ -818,6 +818,8 @@ knpu_oauth2_client:
             # hosted_domain: ''
             # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
             # user_fields: {}
+            # Optional value if you don't want or need to enable Google+ API access.
+            # use_oidc_mode: false
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
