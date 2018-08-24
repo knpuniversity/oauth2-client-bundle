@@ -19,7 +19,7 @@ class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
         $node
             ->scalarNode('account')
                 ->isRequired()
-                ->info('Your Auth0 domain/account, e.g. \'mycompany.auth0.com\'')
+                ->info('Your Auth0 domain/account, e.g. "mycompany" if your domain is "mycompany.auth0.com"')
             ->end()
         ;
     }
