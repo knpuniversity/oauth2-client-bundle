@@ -29,6 +29,9 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
                 ->prototype('scalar')->end()
                 ->info('Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people')
             ->end()
+            ->booleanNode('use_oidc_mode')->defaultFalse()
+                ->info('Optional value if you don\'t want or need to enable Google+ API access.')
+            ->end()
         ;
     }
 
@@ -54,6 +57,10 @@ class GoogleProviderConfigurator implements ProviderConfiguratorInterface
 
         if (!empty($config['user_fields'])) {
             $options['userFields'] = $config['user_fields'];
+        }
+
+        if (!empty($config['use_oidc_mode'])) {
+            $options['useOidcMode'] = $config['use_oidc_mode'];
         }
 
         return $options;
