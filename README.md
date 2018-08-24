@@ -418,9 +418,11 @@ knpu_oauth2_client:
         auth0:
             # must be "auth0" - it activates that type!
             type: auth0
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id, client_secret and account in parameters.yml
             client_id: %auth0_client_id%
             client_secret: %auth0_client_secret%
+            # e.g. 'mycompany.auth0.com'
+            account: %auth0_account%
             # a route name you'll create
             redirect_route: connect_auth0_check
             redirect_params: {}
