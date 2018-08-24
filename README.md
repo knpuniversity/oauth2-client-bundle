@@ -34,7 +34,7 @@ Install the bundle library via [Composer](https://getcomposer.org/) by
 running the following command:
 
 ```bash
-composer require "knpuniversity/oauth2-client-bundle"
+composer require knpuniversity/oauth2-client-bundle
 ```
 
 If you're using Symfony Flex, the bundle will be automatically enabled. For
