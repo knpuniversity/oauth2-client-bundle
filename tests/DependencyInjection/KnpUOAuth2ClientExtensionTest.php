@@ -18,8 +18,9 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use PHPUnit\Framework\TestCase;
 
-class KnpUOAuth2ClientExtensionTest extends \PHPUnit_Framework_TestCase
+class KnpUOAuth2ClientExtensionTest extends TestCase
 {
     /** @var ContainerBuilder */
     protected $configuration;

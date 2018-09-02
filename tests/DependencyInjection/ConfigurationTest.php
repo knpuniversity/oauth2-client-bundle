@@ -12,8 +12,9 @@ namespace KnpU\OAuth2ClientBundle\tests\DependencyInjection;
 
 use KnpU\OAuth2ClientBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Processor;
+use PHPUnit\Framework\TestCase;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     /**
      * @dataProvider provideConfigurationTests

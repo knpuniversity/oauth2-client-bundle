@@ -14,8 +14,9 @@ use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Provider\FacebookUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use PHPUnit\Framework\TestCase;
 
-class OAuth2ClientTest extends \PHPUnit_Framework_TestCase
+class OAuth2ClientTest extends TestCase
 {
     private $requestStack;
     /** @var Request */

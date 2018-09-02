@@ -11,11 +11,12 @@
 namespace KnpU\OAuth2ClientBundle\tests\Security\Helper;
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Serghei Luchianenco (s@luchianenco.com)
  */
-class FinishRegistrationBehaviorTest extends \PHPUnit_Framework_TestCase
+class FinishRegistrationBehaviorTest extends TestCase
 {
     private $traitObject;
 
