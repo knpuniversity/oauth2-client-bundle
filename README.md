@@ -395,6 +395,9 @@ any provider.
 ```yml
 # app/config/config.yml
 knpu_oauth2_client:
+    # can be set to the service id of a service that implements Guzzle\ClientInterface
+    http_client: null
+
     clients:
         # will create service: "knpu.oauth2.client.amazon"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AmazonClient
