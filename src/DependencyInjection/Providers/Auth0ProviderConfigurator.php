@@ -34,7 +34,7 @@ class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-            'account' => $config['account']
+            'account' => $config['account'],
         ];
     }
 
