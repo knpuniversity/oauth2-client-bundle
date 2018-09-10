@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->scalarNode('http_client')->defaultNull()->info('Service id of HTTP client to use (must implement GuzzleHttp\ClientInterface)')->end()
             ->arrayNode('clients')
                 ->normalizeKeys(false)
                 ->useAttributeAsKey('variable')

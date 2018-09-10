@@ -154,6 +154,7 @@ class KnpUOAuth2ClientExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
+        $httpClient = $config['http_client'];
         $clientConfigurations = $config['clients'];
 
         $clientServiceKeys = [];
@@ -185,6 +186,10 @@ class KnpUOAuth2ClientExtension extends Extension
 
             $configurator = $this->getConfigurator($type);
 
+            $collaborators = [];
+            if ($httpClient) {
+                $collaborators['httpClient'] = new Reference($httpClient);
+            }
             // hey, we should add the provider/client service!
             $clientServiceKey = $this->configureProviderAndClient(
                 $container,
@@ -196,7 +201,8 @@ class KnpUOAuth2ClientExtension extends Extension
                 $configurator->getProviderOptions($config),
                 $config['redirect_route'],
                 $config['redirect_params'],
-                $config['use_state']
+                $config['use_state'],
+                $collaborators
             );
 
             $clientServiceKeys[$key] = $clientServiceKey;
@@ -217,9 +223,10 @@ class KnpUOAuth2ClientExtension extends Extension
      * @param string $redirectRoute Route name for the redirect URL
      * @param array $redirectParams Route params for the redirect URL
      * @param bool $useState
+     * @param array $collaborators
      * @return string The client service id
      */
-    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState)
+    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators)
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
             throw new \LogicException(sprintf(
@@ -247,6 +254,7 @@ class KnpUOAuth2ClientExtension extends Extension
             $options,
             $redirectRoute,
             $redirectParams,
+            $collaborators,
         ]);
 
         $clientServiceKey = sprintf('knpu.oauth2.client.%s', $providerKey);

@@ -51,7 +51,7 @@ class ConfigurationTest extends TestCase
 
         $tests[] = [
             [],
-            ['clients' => []],
+            ['http_client' => null, 'clients' => []],
         ];
 
         $fbConfig = [
@@ -63,8 +63,8 @@ class ConfigurationTest extends TestCase
             'redirect_params' => ['foo' => 'bars'],
         ];
         $tests[] = [
-            ['clients' => ['facebook1' => $fbConfig]],
-            ['clients' => ['facebook1' => $fbConfig]],
+            ['http_client' => null, 'clients' => ['facebook1' => $fbConfig]],
+            ['http_client' => null, 'clients' => ['facebook1' => $fbConfig]],
         ];
 
         $tests[] = [

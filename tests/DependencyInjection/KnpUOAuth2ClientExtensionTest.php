@@ -64,6 +64,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
                 ['clientId' => 'CLIENT_ID', 'clientSecret' => 'SECRET', 'graphApiVersion' => 'API_VERSION'],
                 'the_route_name',
                 ['route_params' => 'foo'],
+                []
             ],
             // these arguments will be passed to the factory's method
             $providerDefinition->getArguments()
@@ -207,6 +208,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
                     'cool_stuff' => ['pizza', 'popcorn'],
                 ],
                 'foo_bar_route',
+                [],
                 [],
             ],
             // these arguments will be passed to the factory's method

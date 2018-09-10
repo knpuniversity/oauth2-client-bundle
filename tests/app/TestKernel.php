@@ -10,10 +10,12 @@
 
 namespace KnpU\OAuth2ClientBundle\tests\app;
 
+use GuzzleHttp\Client;
 use KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Kernel;
 
 class TestKernel extends Kernel
@@ -29,6 +31,12 @@ class TestKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(function (ContainerBuilder $container) {
+            $container->setDefinition('test.http_client', new Definition(Client::class, [
+                [
+                    'uri' => 'foo',
+                ],
+            ]));
+
             $container->loadFromExtension('framework', [
                 'secret' => 'this is a cool bundle. Shhh..., it\'s a secret...',
                 'router' => [
@@ -40,6 +48,7 @@ class TestKernel extends Kernel
             ]);
 
             $container->loadFromExtension('knpu_oauth2_client', [
+                'http_client' => 'test.http_client',
                 'clients' => [
                     'my_facebook' => [
                         'type' => 'facebook',
