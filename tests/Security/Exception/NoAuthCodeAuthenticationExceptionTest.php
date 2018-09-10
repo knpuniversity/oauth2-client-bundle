@@ -11,11 +11,12 @@
 namespace KnpU\OAuth2ClientBundle\tests\Security\Exception;
 
 use KnpU\OAuth2ClientBundle\Security\Exception\NoAuthCodeAuthenticationException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Serghei Luchianenco (s@luchianenco.com)
  */
-class NoAuthCodeAuthenticationExceptionTest extends \PHPUnit_Framework_TestCase
+class NoAuthCodeAuthenticationExceptionTest extends TestCase
 {
     public function testException()
     {

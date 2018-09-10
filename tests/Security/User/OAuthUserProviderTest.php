@@ -15,8 +15,9 @@ use KnpU\OAuth2ClientBundle\Security\User\OAuthUserProvider;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
+use PHPUnit\Framework\TestCase;
 
-class OAuthUserProviderTest extends \PHPUnit_Framework_TestCase
+class OAuthUserProviderTest extends TestCase
 {
     public function testLoadUserByUsername()
     {

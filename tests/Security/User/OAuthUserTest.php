@@ -11,8 +11,9 @@
 namespace KnpU\OAuth2ClientBundle\Tests\Security\User;
 
 use KnpU\OAuth2ClientBundle\Security\User\OAuthUser;
+use PHPUnit\Framework\TestCase;
 
-class OAuthUserTest extends \PHPUnit_Framework_TestCase
+class OAuthUserTest extends TestCase
 {
     public function testRoles()
     {

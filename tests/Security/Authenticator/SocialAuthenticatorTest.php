@@ -18,8 +18,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use PHPUnit\Framework\TestCase;
 
-class SocialAuthenticatorTest extends \PHPUnit_Framework_TestCase
+class SocialAuthenticatorTest extends TestCase
 {
     public function testFetchAccessTokenSimplyReturns()
     {

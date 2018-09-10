@@ -11,8 +11,9 @@
 namespace KnpU\OAuth2ClientBundle\tests;
 
 use KnpU\OAuth2ClientBundle\Tests\app\TestKernel;
+use PHPUnit\Framework\TestCase;
 
-class FunctionalTest extends \PHPUnit_Framework_TestCase
+class FunctionalTest extends TestCase
 {
     public function testServicesAreUsable()
     {
