@@ -10,7 +10,6 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection;
 
-use GuzzleHttp\ClientInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
