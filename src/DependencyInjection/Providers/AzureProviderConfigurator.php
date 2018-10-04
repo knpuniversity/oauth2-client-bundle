@@ -43,7 +43,7 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
             ->end()
             ->booleanNode('auth_with_resource')
                 ->info('Send resource field with auth-request')
-            ->end()
+            ->end();
     }
 
     public function getProviderClass(array $config)
