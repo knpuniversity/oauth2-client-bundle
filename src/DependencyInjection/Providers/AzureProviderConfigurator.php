@@ -54,16 +54,16 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
     public function getProviderOptions(array $config)
     {
         return [
-            'clientId'         => $config['client_id'],
-            'clientSecret'     => $config['client_secret'],
-            'urlLogin'         => $config['url_login'],
-            'pathAuthorize'    => $config['path_authorize'],
-            'pathToken'        => $config['path_token'],
-            'scope'            => $config['scope'],
-            'tenant'           => $config['tenant'],
-            'urlAPI'           => $config['url_api'],
-            'resource'         => $config['resource'],
-            'API_VERSION'      => $config['api_version'],
+            'clientId' => $config['client_id'],
+            'clientSecret' => $config['client_secret'],
+            'urlLogin' => $config['url_login'],
+            'pathAuthorize' => $config['path_authorize'],
+            'pathToken' => $config['path_token'],
+            'scope' => $config['scope'],
+            'tenant' => $config['tenant'],
+            'urlAPI' => $config['url_api'],
+            'resource' => $config['resource'],
+            'API_VERSION' => $config['api_version'],
             'authWithResource' => $config['auth_with_resource'],
         ];
     }
