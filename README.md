@@ -472,6 +472,17 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+            # Azure specific options
+            # url_login: 'https://login.microsoftonline.com/'
+            # path_authorize: '/oauth2/authorize'
+            # path_token: ''
+            # scope: ['']
+            # tenant: 'common'
+            # url_api: 'https://graph.windows.net/'
+            # resource: ''
+            # api_version: '1.6'
+            # auth_with_resource: true
+
         # will create service: "knpu.oauth2.client.bitbucket"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient
         # composer require stevenmaguire/oauth2-bitbucket
