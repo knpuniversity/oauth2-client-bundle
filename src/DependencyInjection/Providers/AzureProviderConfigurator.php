@@ -28,6 +28,7 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
             ->end()
             ->arrayNode('scope')
                 ->info('Oauth scope send with the request')
+                ->prototype('scalar')->end()
             ->end()
             ->scalarNode('tenant')
                 ->info('The tenant to use, default is `common`')
