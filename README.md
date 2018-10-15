@@ -658,6 +658,7 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_drupal_check
             redirect_params: {}
+            base_url: '%env(OAUTH_DRUPAL_BASE_URL)%'
 
             # whether to check OAuth2 "state": defaults to true
             # use_state: true

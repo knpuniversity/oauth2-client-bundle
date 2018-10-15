@@ -16,7 +16,9 @@ class DrupalProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)
     {
-        // no custom options
+        $node->scalarNode('base_url')
+          ->isRequired()
+          ->info('Drupal oAuth2 server URL');
     }
 
     public function getProviderClass(array $config)
@@ -29,6 +31,7 @@ class DrupalProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
+            'baseUrl' => $config['base_url'],
         ];
     }
 
