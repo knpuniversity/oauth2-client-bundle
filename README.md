@@ -468,20 +468,26 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_azure_check
             redirect_params: {}
-
+            # Domain to build login URL
+            # url_login: ''
+            # Oauth path to authorize against
+            # path_authorize: ''
+            # Oauth path to retrieve a token
+            # path_token: ''
+            # Oauth scope send with the request
+            # scope: {}
+            # The tenant to use, default is `common`
+            # tenant: ''
+            # Domain to build request URL
+            # url_api: ''
+            # Oauth resource field
+            # resource: ''
+            # The API version to run against
+            # api_version: ''
+            # Send resource field with auth-request
+            # auth_with_resource: false
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
-
-            # Azure specific options
-            # url_login: 'https://login.microsoftonline.com/'
-            # path_authorize: '/oauth2/authorize'
-            # path_token: ''
-            # scope: ['']
-            # tenant: 'common'
-            # url_api: 'https://graph.windows.net/'
-            # resource: ''
-            # api_version: '1.6'
-            # auth_with_resource: true
 
         # will create service: "knpu.oauth2.client.bitbucket"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient
@@ -658,8 +664,8 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_drupal_check
             redirect_params: {}
-            base_url: '%env(OAUTH_DRUPAL_BASE_URL)%'
-
+            # Drupal oAuth2 server URL
+            base_url: ''
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
