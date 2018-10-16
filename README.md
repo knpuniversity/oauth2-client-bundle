@@ -469,23 +469,23 @@ knpu_oauth2_client:
             redirect_route: connect_azure_check
             redirect_params: {}
             # Domain to build login URL
-            # url_login: ''
+            # url_login: 'https://login.microsoftonline.com/'
             # Oauth path to authorize against
-            # path_authorize: ''
+            # path_authorize: '/oauth2/authorize'
             # Oauth path to retrieve a token
             # path_token: ''
             # Oauth scope send with the request
             # scope: {}
             # The tenant to use, default is `common`
-            # tenant: ''
+            # tenant: 'common'
             # Domain to build request URL
-            # url_api: ''
+            # url_api: 'https://graph.windows.net/'
             # Oauth resource field
             # resource: ''
             # The API version to run against
-            # api_version: ''
+            # api_version: '1.6'
             # Send resource field with auth-request
-            # auth_with_resource: false
+            # auth_with_resource: true
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -665,7 +665,7 @@ knpu_oauth2_client:
             redirect_route: connect_drupal_check
             redirect_params: {}
             # Drupal oAuth2 server URL
-            base_url: ''
+            base_url: '%env(OAUTH_DRUPAL_BASE_URL)%'
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
