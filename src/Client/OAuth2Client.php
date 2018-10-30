@@ -18,7 +18,7 @@ use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class OAuth2Client
+class OAuth2Client implements OAuth2ClientInterface
 {
     const OAUTH2_SESSION_STATE_KEY = 'knpu.oauth2_client_state';
 
