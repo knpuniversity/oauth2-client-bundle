@@ -14,7 +14,6 @@ use League\OAuth2\Client\Token\AccessToken;
 
 interface OAuth2ClientInterface
 {
-
     /**
      * Call this to avoid using and checking "state".
      */
