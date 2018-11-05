@@ -1236,9 +1236,9 @@ you can use.
 
 ## Extending/Decorating Client Classes
 
-Maybe you need some extra services inside client class? No problem! You can 
+Maybe you need some extra services inside your client class? No problem! You can 
 decorate existing client class with your own implementation. All you need is
-implement OAuth2ClientInterface:
+new class that implement OAuth2ClientInterface:
 
 ```php
 namespace App\Client;
@@ -1257,7 +1257,7 @@ class CacheableAzureClient implements OAuth2ClientInterface
         // ...
     }
 
-    // override all public functions, call the method on the internal $this->client object
+    // override all public functions and call the method on the internal $this->client object
     // but add caching wherever you need it
 }
 ```
