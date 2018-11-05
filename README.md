@@ -1234,6 +1234,43 @@ knpu_oauth2_client:
 That's it! Now you'll have a `knpu.oauth2.client.foo_bar_oauth` service
 you can use.
 
+## Extending/Decorating Client Classes
+
+Maybe you need some extra services inside your client class? No problem! You can 
+decorate existing client class with your own implementation. All you need is
+new class that implement OAuth2ClientInterface:
+
+```php
+namespace App\Client;
+
+use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
+use KnpU\OAuth2ClientBundle\Client\Provider\AzureClient;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+
+class CacheableAzureClient implements OAuth2ClientInterface
+{
+    private $client;
+    private $cache;
+
+    public function __construct(AzureClient $client, AdapterInterface $cache)
+    {
+        // ...
+    }
+
+    // override all public functions and call the method on the internal $this->client object
+    // but add caching wherever you need it
+}
+```
+
+and configure it:
+
+```yml
+# config/services.yaml
+services:
+    App\Client\CacheableAzureClient:
+        decorates: knpu.oauth2.client.azure
+```
+
 ## Contributing
 
 Of course, open source is fueled by everyone's ability to give just a little
