@@ -37,6 +37,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HeadHunterProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\JiraProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\KeycloakProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MailRuProviderConfigurator;
@@ -104,6 +105,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'headhunter' => HeadHunterProviderConfigurator::class,
         'heroku' => HerokuProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
+        'jira' => JiraProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
         'google' => GoogleProviderConfigurator::class,
