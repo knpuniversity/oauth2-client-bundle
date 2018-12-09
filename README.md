@@ -248,7 +248,7 @@ their access token and user information.
 But often, you will want to actually authenticate that user: log
 them into your system. In that case, instead of putting all of
 the logic in `connectCheckAction` as shown above, you'll leave that
-blank and create a [Guard authenticator](knpuniversity.com/screencast/guard),
+blank and create a [Guard authenticator](https://symfonycasts.com/screencast/symfony-security),
 which will hold similar logic.
 
 A `SocialAuthenticator` base class exists to help with a few things:
