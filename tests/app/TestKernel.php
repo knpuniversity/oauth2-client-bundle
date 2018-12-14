@@ -64,11 +64,19 @@ class TestKernel extends Kernel
 
     public function getCacheDir()
     {
-        return $this->getProjectDir().'/tests/app/cache/'.$this->getEnvironment();
+        if (method_exists($this, 'getProjectDir')) {
+            return $this->getProjectDir() . '/tests/app/cache/' . $this->getEnvironment();
+        }
+
+        return parent::getCacheDir();
     }
 
     public function getLogDir()
     {
-        return $this->getProjectDir().'/tests/app/log';
+        if (method_exists($this, 'getProjectDir')) {
+            return $this->getProjectDir() . '/tests/app/cache/' . $this->getEnvironment();
+        }
+
+        return parent::getLogDir();
     }
 }
