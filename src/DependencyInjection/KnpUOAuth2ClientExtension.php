@@ -155,6 +155,7 @@ class KnpUOAuth2ClientExtension extends Extension
         $loader->load('services.xml');
 
         $httpClient = $config['http_client'];
+        $httpClientOptions = array_key_exists('http_client_options', $config) ? $config['http_client_options'] : [];
         $clientConfigurations = $config['clients'];
 
         $clientServiceKeys = [];
@@ -162,7 +163,7 @@ class KnpUOAuth2ClientExtension extends Extension
             // manually make sure "type" is there
             if (!isset($clientConfig['type'])) {
                 throw new InvalidConfigurationException(sprintf(
-                    'Your "knpu_oauth2_client.clients." config entry is missing the "type" key.',
+                    'Your "knpu_oauth2_client.clients.%s" config entry is missing the "type" key.',
                     $key
                 ));
             }
@@ -186,9 +187,13 @@ class KnpUOAuth2ClientExtension extends Extension
 
             $configurator = $this->getConfigurator($type);
 
+            $providerOptions = $configurator->getProviderOptions($config);
+
             $collaborators = [];
             if ($httpClient) {
                 $collaborators['httpClient'] = new Reference($httpClient);
+            } else {
+                $providerOptions = array_merge($providerOptions, $httpClientOptions);
             }
             // hey, we should add the provider/client service!
             $clientServiceKey = $this->configureProviderAndClient(
@@ -198,7 +203,7 @@ class KnpUOAuth2ClientExtension extends Extension
                 $configurator->getProviderClass($config),
                 $configurator->getClientClass($config),
                 $configurator->getPackagistName(),
-                $configurator->getProviderOptions($config),
+                $providerOptions,
                 $config['redirect_route'],
                 $config['redirect_params'],
                 $config['use_state'],

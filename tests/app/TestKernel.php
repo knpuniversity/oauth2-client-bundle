@@ -61,4 +61,14 @@ class TestKernel extends Kernel
             ]);
         });
     }
+
+    public function getCacheDir()
+    {
+        return $this->getProjectDir().'/tests/app/cache/'.$this->getEnvironment();
+    }
+
+    public function getLogDir()
+    {
+        return $this->getProjectDir().'/tests/app/log';
+    }
 }
