@@ -325,6 +325,8 @@ class KnpUOAuth2ClientExtension extends Extension
         $optionsNode
             ->scalarNode('client_id')->isRequired()->end()
             ->scalarNode('client_secret')->isRequired()->end()
+            ->scalarNode('client_public')->defaultNull()->end()
+            ->scalarNode('access_token')->defaultNull()->end()
             ->scalarNode('redirect_route')->isRequired()->end()
             ->arrayNode('redirect_params')
                 ->prototype('scalar')->end()
