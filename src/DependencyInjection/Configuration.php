@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('http_client')->defaultNull()->info('Service id of HTTP client to use (must implement GuzzleHttp\ClientInterface)')->end()
             ->arrayNode('http_client_options')
+                ->defaultNull()
                 ->children()
                     ->integerNode('timeout')->min(0)->end()
                     ->scalarNode('proxy')->end()
