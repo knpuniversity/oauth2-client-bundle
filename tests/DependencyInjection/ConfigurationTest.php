@@ -51,7 +51,7 @@ class ConfigurationTest extends TestCase
 
         $tests[] = [
             [],
-            ['http_client' => null, 'clients' => []],
+            ['http_client' => null, 'clients' => [], 'http_client_options' => []],
         ];
 
         $fbConfig = [
@@ -64,7 +64,7 @@ class ConfigurationTest extends TestCase
         ];
         $tests[] = [
             ['http_client' => null, 'clients' => ['facebook1' => $fbConfig]],
-            ['http_client' => null, 'clients' => ['facebook1' => $fbConfig]],
+            ['http_client' => null, 'clients' => ['facebook1' => $fbConfig], 'http_client_options' => []],
         ];
 
         $tests[] = [
