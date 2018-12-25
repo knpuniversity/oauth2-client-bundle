@@ -155,7 +155,7 @@ class KnpUOAuth2ClientExtension extends Extension
         $loader->load('services.xml');
 
         $httpClient = $config['http_client'];
-        $httpClientOptions = array_key_exists('http_client_options', $config) ? $config['http_client_options'] : [];
+        $httpClientOptions = $config['http_client_options'];
         $clientConfigurations = $config['clients'];
 
         $clientServiceKeys = [];
