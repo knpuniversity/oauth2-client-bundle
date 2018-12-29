@@ -1,5 +1,4 @@
 <?php
-
 /*
  * OAuth2 Client Bundle
  * Copyright (c) KnpUniversity <http://knpuniversity.com/>
@@ -17,8 +16,11 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('knpu_oauth2_client');
+        $treeBuilder = new TreeBuilder('knpu_oauth2_client');
+        if (method_exists($treeBuilder, 'getRootNode'))
+            $rootNode = $treeBuilder->getRootNode();
+        else
+            $rootNode = $treeBuilder->root('knpu_oauth2_client');
 
         $rootNode
             ->children()
