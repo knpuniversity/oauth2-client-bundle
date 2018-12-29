@@ -17,11 +17,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('knpu_oauth2_client');
-        if (method_exists($treeBuilder, 'getRootNode'))
+        if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
-        else
+        } else {
             $rootNode = $treeBuilder->root('knpu_oauth2_client');
-
+        }
         $rootNode
             ->children()
             ->scalarNode('http_client')->defaultNull()->info('Service id of HTTP client to use (must implement GuzzleHttp\ClientInterface)')->end()
