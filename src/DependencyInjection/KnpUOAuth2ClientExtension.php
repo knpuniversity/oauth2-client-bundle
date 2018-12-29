@@ -1,5 +1,6 @@
 <?php
-/**
+
+/*
  * OAuth2 Client Bundle
  * Copyright (c) KnpUniversity <http://knpuniversity.com/>
  *
