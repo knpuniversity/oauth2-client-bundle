@@ -79,6 +79,7 @@ via Composer:
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
 | [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
+| [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira                |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
@@ -174,6 +175,8 @@ class FacebookController extends Controller
      */
     public function connectAction(ClientRegistry $clientRegistry)
     {
+        // on Symfony 3.3 or lower, $clientRegistry = $this->get('knpu.oauth2.registry');
+    
         // will redirect to Facebook!
         return $clientRegistry
             ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
@@ -245,7 +248,7 @@ their access token and user information.
 But often, you will want to actually authenticate that user: log
 them into your system. In that case, instead of putting all of
 the logic in `connectCheckAction` as shown above, you'll leave that
-blank and create a [Guard authenticator](knpuniversity.com/screencast/guard),
+blank and create a [Guard authenticator](https://symfonycasts.com/screencast/symfony-security),
 which will hold similar logic.
 
 A `SocialAuthenticator` base class exists to help with a few things:
@@ -468,20 +471,26 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_azure_check
             redirect_params: {}
-
+            # Domain to build login URL
+            # url_login: 'https://login.microsoftonline.com/'
+            # Oauth path to authorize against
+            # path_authorize: '/oauth2/authorize'
+            # Oauth path to retrieve a token
+            # path_token: ''
+            # Oauth scope send with the request
+            # scope: {}
+            # The tenant to use, default is `common`
+            # tenant: 'common'
+            # Domain to build request URL
+            # url_api: 'https://graph.windows.net/'
+            # Oauth resource field
+            # resource: ''
+            # The API version to run against
+            # api_version: '1.6'
+            # Send resource field with auth-request
+            # auth_with_resource: true
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
-
-            # Azure specific options
-            # url_login: 'https://login.microsoftonline.com/'
-            # path_authorize: '/oauth2/authorize'
-            # path_token: ''
-            # scope: ['']
-            # tenant: 'common'
-            # url_api: 'https://graph.windows.net/'
-            # resource: ''
-            # api_version: '1.6'
-            # auth_with_resource: true
 
         # will create service: "knpu.oauth2.client.bitbucket"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient
@@ -658,8 +667,8 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_drupal_check
             redirect_params: {}
+            # Drupal oAuth2 server URL
             base_url: '%env(OAUTH_DRUPAL_BASE_URL)%'
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -802,6 +811,22 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_instagram_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.jira"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\JiraClient
+        # composer require mrjoops/oauth2-jira
+        jira:
+            # must be "jira" - it activates that type!
+            type: jira
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_JIRA_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_JIRA_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_jira_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
@@ -1233,6 +1258,43 @@ knpu_oauth2_client:
 
 That's it! Now you'll have a `knpu.oauth2.client.foo_bar_oauth` service
 you can use.
+
+## Extending/Decorating Client Classes
+
+Maybe you need some extra services inside your client class? No problem! You can 
+decorate existing client class with your own implementation. All you need is
+new class that implement OAuth2ClientInterface:
+
+```php
+namespace App\Client;
+
+use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
+use KnpU\OAuth2ClientBundle\Client\Provider\AzureClient;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+
+class CacheableAzureClient implements OAuth2ClientInterface
+{
+    private $client;
+    private $cache;
+
+    public function __construct(AzureClient $client, AdapterInterface $cache)
+    {
+        // ...
+    }
+
+    // override all public functions and call the method on the internal $this->client object
+    // but add caching wherever you need it
+}
+```
+
+and configure it:
+
+```yml
+# config/services.yaml
+services:
+    App\Client\CacheableAzureClient:
+        decorates: knpu.oauth2.client.azure
+```
 
 ## Contributing
 

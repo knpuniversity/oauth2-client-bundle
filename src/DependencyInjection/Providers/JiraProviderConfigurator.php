@@ -10,24 +10,20 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\JiraClient;
+use Mrjoops\OAuth2\Client\Provider\Jira;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
-class DrupalProviderConfigurator implements ProviderConfiguratorInterface
+class JiraProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)
     {
-        $node
-            ->scalarNode('base_url')
-                ->example("base_url: '%env(OAUTH_DRUPAL_BASE_URL)%'")
-                ->isRequired()
-                ->info('Drupal oAuth2 server URL')
-            ->end()
-        ;
+        // no options...
     }
 
     public function getProviderClass(array $config)
     {
-        return 'ChrisHemmings\OAuth2\Client\Provider\Drupal';
+        return Jira::class;
     }
 
     public function getProviderOptions(array $config)
@@ -35,27 +31,26 @@ class DrupalProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-            'baseUrl' => $config['base_url'],
         ];
     }
 
     public function getPackagistName()
     {
-        return 'chrishemmings/oauth2-drupal';
+        return 'mrjoops/oauth2-jira';
     }
 
     public function getLibraryHomepage()
     {
-        return 'https://github.com/chrishemmings/oauth2-drupal';
+        return 'https://github.com/mrjoops/oauth2-jira';
     }
 
     public function getProviderDisplayName()
     {
-        return 'Drupal';
+        return 'Jira';
     }
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\DrupalClient';
+        return JiraClient::class;
     }
 }

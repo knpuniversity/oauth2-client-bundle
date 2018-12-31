@@ -37,6 +37,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HeadHunterProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\JiraProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\KeycloakProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MailRuProviderConfigurator;
@@ -104,6 +105,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'headhunter' => HeadHunterProviderConfigurator::class,
         'heroku' => HerokuProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
+        'jira' => JiraProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
         'google' => GoogleProviderConfigurator::class,
@@ -179,8 +181,12 @@ class KnpUOAuth2ClientExtension extends Extension
             }
 
             // process the configuration
-            $tree = new TreeBuilder();
-            $node = $tree->root('knpu_oauth2_client/clients/' . $key);
+            $tree = new TreeBuilder('knpu_oauth2_client/clients/' . $key);
+            if (method_exists($tree, 'getRootNode')) {
+                $node = $tree->getRootNode();
+            } else {
+                $node = $tree->root('knpu_oauth2_client/clients/' . $key);
+            }
             $this->buildConfigurationForType($node, $type);
             $processor = new Processor();
             $config = $processor->process($tree->buildTree(), [$clientConfig]);

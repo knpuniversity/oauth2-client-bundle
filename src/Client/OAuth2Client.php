@@ -18,7 +18,7 @@ use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class OAuth2Client
+class OAuth2Client implements OAuth2ClientInterface
 {
     const OAUTH2_SESSION_STATE_KEY = 'knpu.oauth2_client_state';
 
@@ -90,7 +90,7 @@ class OAuth2Client
     public function getAccessToken()
     {
         if (!$this->isStateless) {
-            $expectedState = $this->getSession()->remove(self::OAUTH2_SESSION_STATE_KEY);
+            $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
             $actualState = $this->getCurrentRequest()->query->get('state');
             if (!$actualState || ($actualState !== $expectedState)) {
                 throw new InvalidStateException('Invalid state');
