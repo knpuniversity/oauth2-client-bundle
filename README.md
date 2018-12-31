@@ -423,7 +423,14 @@ any provider.
 # app/config/config.yml
 knpu_oauth2_client:
     # can be set to the service id of a service that implements Guzzle\ClientInterface
-    http_client: null
+    # http_client: null
+
+    # options to configure the default http client
+    # http_client_options
+    #     timeout: 0
+    #     proxy: null
+    #     Use only with proxy option set
+    #     verify: false
 
     clients:
         # will create service: "knpu.oauth2.client.amazon"
