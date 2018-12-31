@@ -22,23 +22,33 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('http_client')->defaultNull()->info('Service id of HTTP client to use (must implement GuzzleHttp\ClientInterface)')->end()
-            ->arrayNode('http_client_options')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->integerNode('timeout')->min(0)->end()
-                    ->scalarNode('proxy')->end()
-                    ->booleanNode('verify')->info('Use only with proxy option set')->end()
+                ->scalarNode('http_client')
+                    ->defaultNull()
+                    ->info('Service id of HTTP client to use (must implement GuzzleHttp\ClientInterface)')
+                ->end()
+                ->arrayNode('http_client_options')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('timeout')->min(0)->end()
+                        ->scalarNode('proxy')->end()
+                        ->booleanNode('verify')->info('Use only with proxy option set')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('clients')
+                    ->normalizeKeys(false)
+                    ->useAttributeAsKey('variable')
+                    ->prototype('array')
+                        ->prototype('variable')->end()
+                    ->end()
                 ->end()
             ->end()
-            ->arrayNode('clients')
-                ->normalizeKeys(false)
-                ->useAttributeAsKey('variable')
-                ->prototype('array')
-                    ->prototype('variable')->end()
-                ->end()
+            ->validate()
+                ->ifTrue(function ($v) {
+                    return isset($v['http_client_options'], $v['http_client']) && !empty($v['http_client_options']);
+                })
+                ->thenInvalid('You cannot use both "http_client_options" and "http_client" at the same time under "knpu_oauth2_client".')
             ->end()
-        ->end();
+        ;
 
         return $treeBuilder;
     }
