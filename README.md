@@ -476,7 +476,7 @@ knpu_oauth2_client:
             # Oauth path to authorize against
             # path_authorize: '/oauth2/authorize'
             # Oauth path to retrieve a token
-            # path_token: ''
+            # path_token: '/oauth2/token'
             # Oauth scope send with the request
             # scope: {}
             # The tenant to use, default is `common`
