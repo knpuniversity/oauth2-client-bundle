@@ -80,6 +80,7 @@ via Composer:
 | [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
 | [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira                |
+| [Geocaching](https://github.com/Surfoo/oauth2-geocaching)             | composer require surfoo/oauth2-geocaching           |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
@@ -835,6 +836,24 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_jira_check
             redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.geocaching"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GeocachingClient
+        # composer require surfoo/oauth2-geocaching
+        geocaching:
+            # must be "geocaching" - it activates that type!
+            type: geocaching
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_GEOCACHING_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_GEOCACHING_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_geocaching_check
+            redirect_params: {}
+            # dev, staging or production
+            environment: production
 
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
