@@ -80,7 +80,7 @@ via Composer:
 | [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
 | [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira                |
-| [Geocaching](https://github.com/Surfoo/oauth2-geocaching)             | composer require surfoo/oauth2-geocaching           |
+| [Geocaching](https://github.com/surfoo/oauth2-geocaching)             | composer require surfoo/oauth2-geocaching           |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
@@ -854,7 +854,6 @@ knpu_oauth2_client:
             redirect_params: {}
             # dev, staging or production
             environment: production
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 

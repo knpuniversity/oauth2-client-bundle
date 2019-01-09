@@ -21,8 +21,8 @@ class GeocachingProviderConfigurator implements ProviderConfiguratorInterface
         $node
         ->scalarNode('environment')
             ->isRequired()
-            ->defaultValue('production')
-            ->example('environment: "dev", "staging", "production"')
+            ->info('dev, staging or production')
+            ->example('environment: production')
         ->end()
     ;
     }
