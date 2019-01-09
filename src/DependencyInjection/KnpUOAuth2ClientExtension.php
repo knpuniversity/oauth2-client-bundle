@@ -31,6 +31,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfig
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FitbitProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FoursquareProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GeocachingProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GitlabProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GoogleProviderConfigurator;
@@ -106,6 +107,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'heroku' => HerokuProviderConfigurator::class,
         'instagram' => InstagramProviderConfigurator::class,
         'jira' => JiraProviderConfigurator::class,
+        'geocaching' => GeocachingProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
         'google' => GoogleProviderConfigurator::class,
