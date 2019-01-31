@@ -21,7 +21,7 @@ use KnpU\OAuth2ClientBundle\Security\Helper\SaveAuthFailureMessage;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
+use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 
 abstract class SocialAuthenticator extends AbstractGuardAuthenticator
 {
@@ -29,7 +29,7 @@ abstract class SocialAuthenticator extends AbstractGuardAuthenticator
     use PreviousUrlHelper;
     use SaveAuthFailureMessage;
 
-    protected function fetchAccessToken(OAuth2Client $client)
+    protected function fetchAccessToken(OAuth2ClientInterface $client)
     {
         try {
             return $client->getAccessToken();
