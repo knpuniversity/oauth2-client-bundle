@@ -950,6 +950,8 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_linkedin_check
             redirect_params: {}
+            # Optional value to specify Linkedin's API version to use. As the time of writing, v1 is still used by default by league/oauth2-linkedin.
+            # api_version: null
             # Optional value to specify fields to be requested from the profile. Since Linkedin\'s API upgrade from v1 to v2, fields and authorizations policy have been enforced. See https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin for more details.
             # fields: []
             # whether to check OAuth2 "state": defaults to true
