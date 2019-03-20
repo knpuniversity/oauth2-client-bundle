@@ -16,7 +16,12 @@ class LinkedInProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)
     {
-        // no custom options
+        $node
+            ->arrayNode('fields')
+                ->prototype('scalar')->end()
+                ->info('Optional value to specify fields to be requested from the profile. Since Linkedin\'s API upgrade from v1 to v2, fields and authorizations policy have been enforced. See https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin for more details.')
+            ->end()
+        ;
     }
 
     public function getProviderClass(array $config)
@@ -26,10 +31,16 @@ class LinkedInProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderOptions(array $config)
     {
-        return [
+        $options = [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
         ];
+
+        if (!empty($config['fields'])) {
+            $options['fields'] = $config['fields'];
+        }
+
+        return $options;
     }
 
     public function getPackagistName()
