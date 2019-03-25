@@ -177,7 +177,7 @@ class FacebookController extends Controller
     public function connectAction(ClientRegistry $clientRegistry)
     {
         // on Symfony 3.3 or lower, $clientRegistry = $this->get('knpu.oauth2.registry');
-    
+
         // will redirect to Facebook!
         return $clientRegistry
             ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
@@ -950,7 +950,10 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_linkedin_check
             redirect_params: {}
-
+            # Optional value to specify Linkedin's API version to use. As the time of writing, v1 is still used by default by league/oauth2-linkedin.
+            # api_version: null
+            # Optional value to specify fields to be requested from the profile. Since Linkedin\'s API upgrade from v1 to v2, fields and authorizations policy have been enforced. See https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin for more details.
+            # fields: []
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1286,7 +1289,7 @@ you can use.
 
 ## Extending/Decorating Client Classes
 
-Maybe you need some extra services inside your client class? No problem! You can 
+Maybe you need some extra services inside your client class? No problem! You can
 decorate existing client class with your own implementation. All you need is
 new class that implement OAuth2ClientInterface:
 
