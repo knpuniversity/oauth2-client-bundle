@@ -463,7 +463,7 @@ knpu_oauth2_client:
             redirect_route: connect_auth0_check
             redirect_params: {}
             # Your Auth0 domain/account, e.g. "mycompany" if your domain is "mycompany.auth0.com"
-            account: ''
+            account: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -492,7 +492,7 @@ knpu_oauth2_client:
             # Domain to build request URL
             # url_api: 'https://graph.windows.net/'
             # Oauth resource field
-            # resource: ''
+            # resource: null
             # The API version to run against
             # api_version: '1.6'
             # Send resource field with auth-request
@@ -561,7 +561,7 @@ knpu_oauth2_client:
             redirect_route: connect_canvas_lms_check
             redirect_params: {}
             # URL of Canvas Instance (e.g. https://canvas.instructure.com)
-            canvas_instance_url: ''
+            canvas_instance_url: null
             # This can be used to help the user identify which instance of an application this token is for. For example, a mobile device application could provide the name of the device.
             # purpose: ''
             # whether to check OAuth2 "state": defaults to true
@@ -903,9 +903,9 @@ knpu_oauth2_client:
             redirect_route: connect_google_check
             redirect_params: {}
             # Optional value for sending access_type parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters
-            # access_type: ''
+            # access_type: null
             # Optional value for sending hd parameter. More detail: https://developers.google.com/identity/protocols/OpenIDConnect#hd-param
-            # hosted_domain: ''
+            # hosted_domain: null
             # Optional value for additional fields to be requested from the user profile. If set, these values will be included with the defaults. More details: https://developers.google.com/+/web/api/rest/latest/people
             # user_fields: {}
             # Optional value if you don't want or need to enable Google+ API access.
@@ -926,15 +926,15 @@ knpu_oauth2_client:
             redirect_route: connect_keycloak_check
             redirect_params: {}
             # Keycloak server URL
-            auth_server_url: ''
+            auth_server_url: null
             # Keycloak realm
-            realm: ''
+            realm: null
             # Optional: Encryption algorith, i.e. RS256
-            # encryption_algorithm: ''
+            # encryption_algorithm: null
             # Optional: Encryption key path, i.e. ../key.pem
-            # encryption_key_path: ''
+            # encryption_key_path: null
             # Optional: Encryption key, i.e. contents of key or certificate
-            # encryption_key: ''
+            # encryption_key: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -952,8 +952,8 @@ knpu_oauth2_client:
             redirect_params: {}
             # Optional value to specify Linkedin's API version to use. As the time of writing, v1 is still used by default by league/oauth2-linkedin.
             # api_version: null
-            # Optional value to specify fields to be requested from the profile. Since Linkedin\'s API upgrade from v1 to v2, fields and authorizations policy have been enforced. See https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin for more details.
-            # fields: []
+            # Optional value to specify fields to be requested from the profile. Since Linkedin's API upgrade from v1 to v2, fields and authorizations policy have been enforced. See https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin for more details.
+            # fields: {}
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -986,11 +986,11 @@ knpu_oauth2_client:
             redirect_route: connect_microsoft_check
             redirect_params: {}
             # Optional value for URL Authorize
-            # url_authorize: ''
+            # url_authorize: null
             # Optional value for URL Access Token
-            # url_access_token: ''
+            # url_access_token: null
             # Optional value for URL Resource Owner Details
-            # url_resource_owner_details: ''
+            # url_resource_owner_details: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1233,7 +1233,7 @@ knpu_oauth2_client:
             redirect_route: connect_zendesk_check
             redirect_params: {}
             # Your Zendesk subdomain
-            subdomain: ''
+            subdomain: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 ```
