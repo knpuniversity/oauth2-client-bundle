@@ -99,9 +99,15 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
                 ? 'true'
                 : 'false';
         } else {
-            $defaultValue = $child->getDefaultValue()
-                ? $child->getDefaultValue()
-                : "''";
+            if ($child->getDefaultValue()) {
+                $defaultValue = $child->getDefaultValue();
+            } else {
+                if ('string' === gettype($child->getDefaultValue())) {
+                    $defaultValue = "''";
+                } else {
+                    $defaultValue = 'null';
+                }
+            }
         }
 
         if ($child->getInfo()) {
