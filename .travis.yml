@@ -26,4 +26,7 @@ before_install:
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 
+# Fail CI if repo is in dirty state after bin/update_readme
+before_script: ./bin/update_readme && git diff --exit-code README.md
+
 script: ./vendor/bin/phpunit
