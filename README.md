@@ -70,20 +70,20 @@ via Composer:
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble           |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox       |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal        |
-| [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
 | [Elance](https://github.com/stevenmaguire/oauth2-elance)              | composer require stevenmaguire/oauth2-elance        |
+| [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline           |
 | [Eventbrite](https://github.com/stevenmaguire/oauth2-eventbrite)      | composer require stevenmaguire/oauth2-eventbrite    |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook             |
 | [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit               |
 | [Foursquare](https://github.com/stevenmaguire/oauth2-foursquare)      | composer require stevenmaguire/oauth2-foursquare    |
-| [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
-| [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
-| [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
-| [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira                |
 | [Geocaching](https://github.com/surfoo/oauth2-geocaching)             | composer require surfoo/oauth2-geocaching           |
 | [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab               |
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
+| [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
+| [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
+| [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
+| [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira                |
 | [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak      |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin             |
 | [MailRu](https://github.com/rakeev/oauth2-mailru)                     | composer require aego/oauth2-mailru                 |
@@ -94,8 +94,8 @@ via Composer:
 | [PSN](https://github.com/larabros/oauth2-psn)                         | composer require larabros/oauth2-psn                |
 | [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)      | composer require stevenmaguire/oauth2-salesforce    |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
-| [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
 | [Strava](https://github.com/Edwin-Luijten/oauth2-strava)              | composer require edwin-luijten/oauth2-strava        |
+| [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
 | [Uber](https://github.com/stevenmaguire/oauth2-uber)                  | composer require stevenmaguire/oauth2-uber          |
 | [Unsplash](https://github.com/hughbertd/oauth2-unsplash)              | composer require hughbertd/oauth2-unsplash          |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
@@ -680,22 +680,6 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
-        # will create service: "knpu.oauth2.client.eve_online"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient
-        # composer require evelabs/oauth2-eveonline
-        eve_online:
-            # must be "eve_online" - it activates that type!
-            type: eve_online
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: '%env(OAUTH_EVE_ONLINE_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_EVE_ONLINE_CLIENT_SECRET)%'
-            # a route name you'll create
-            redirect_route: connect_eve_online_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
         # will create service: "knpu.oauth2.client.elance"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\ElanceClient
         # composer require stevenmaguire/oauth2-elance
@@ -707,6 +691,22 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_ELANCE_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_elance_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.eve_online"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\EveOnlineClient
+        # composer require evelabs/oauth2-eveonline
+        eve_online:
+            # must be "eve_online" - it activates that type!
+            type: eve_online
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_EVE_ONLINE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_EVE_ONLINE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_eve_online_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
@@ -771,70 +771,6 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_FOUR_SQUARE_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_four_square_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.headhunter"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HeadHunterClient
-        # composer require alexmasterov/oauth2-headhunter
-        headhunter:
-            # must be "headhunter" - it activates that type!
-            type: headhunter
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: '%env(OAUTH_HEADHUNTER_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_HEADHUNTER_CLIENT_SECRET)%'
-            # a route name you'll create
-            redirect_route: connect_headhunter_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.heroku"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HerokuClient
-        # composer require stevenmaguire/oauth2-heroku
-        heroku:
-            # must be "heroku" - it activates that type!
-            type: heroku
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: '%env(OAUTH_HEROKU_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_HEROKU_CLIENT_SECRET)%'
-            # a route name you'll create
-            redirect_route: connect_heroku_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.instagram"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\InstagramClient
-        # composer require league/oauth2-instagram
-        instagram:
-            # must be "instagram" - it activates that type!
-            type: instagram
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
-            # a route name you'll create
-            redirect_route: connect_instagram_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
-        # will create service: "knpu.oauth2.client.jira"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\JiraClient
-        # composer require mrjoops/oauth2-jira
-        jira:
-            # must be "jira" - it activates that type!
-            type: jira
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: '%env(OAUTH_JIRA_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_JIRA_CLIENT_SECRET)%'
-            # a route name you'll create
-            redirect_route: connect_jira_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
@@ -910,6 +846,70 @@ knpu_oauth2_client:
             # user_fields: {}
             # Optional value if you don't want or need to enable Google+ API access.
             # use_oidc_mode: false
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.headhunter"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HeadHunterClient
+        # composer require alexmasterov/oauth2-headhunter
+        headhunter:
+            # must be "headhunter" - it activates that type!
+            type: headhunter
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_HEADHUNTER_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_HEADHUNTER_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_headhunter_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.heroku"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\HerokuClient
+        # composer require stevenmaguire/oauth2-heroku
+        heroku:
+            # must be "heroku" - it activates that type!
+            type: heroku
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_HEROKU_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_HEROKU_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_heroku_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.instagram"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\InstagramClient
+        # composer require league/oauth2-instagram
+        instagram:
+            # must be "instagram" - it activates that type!
+            type: instagram
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_instagram_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.jira"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\JiraClient
+        # composer require mrjoops/oauth2-jira
+        jira:
+            # must be "jira" - it activates that type!
+            type: jira
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_JIRA_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_JIRA_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_jira_check
+            redirect_params: {}
+
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1092,22 +1092,6 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
-        # will create service: "knpu.oauth2.client.stripe"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\StripeClient
-        # composer require adam-paterson/oauth2-stripe
-        stripe:
-            # must be "stripe" - it activates that type!
-            type: stripe
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: '%env(OAUTH_STRIPE_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_STRIPE_CLIENT_SECRET)%'
-            # a route name you'll create
-            redirect_route: connect_stripe_check
-            redirect_params: {}
-
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
         # will create service: "knpu.oauth2.client.strava"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\StravaClient
         # composer require edwin-luijten/oauth2-strava
@@ -1119,6 +1103,22 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_STRAVA_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_strava_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.stripe"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\StripeClient
+        # composer require adam-paterson/oauth2-stripe
+        stripe:
+            # must be "stripe" - it activates that type!
+            type: stripe
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_STRIPE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_STRIPE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_stripe_check
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
