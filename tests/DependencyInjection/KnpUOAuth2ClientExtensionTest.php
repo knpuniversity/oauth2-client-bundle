@@ -260,7 +260,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
         $tests[] = ['facebook1' => $badConfig3];
 
         $badConfig4 = $goodConfig;
-        unset($badConfig4['redirect_uri']);
+        unset($badConfig4['redirect_route']);
         $tests[] = ['facebook1' => $badConfig4];
 
         $badConfig5 = $goodConfig;
@@ -268,7 +268,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
         $tests[] = ['facebook1' => $badConfig5];
 
         $badConfig6 = $goodConfig;
-        $badConfig6['redirect_paras'] = 'NOT AN ARRAY';
+        $badConfig6['redirect_params'] = 'NOT AN ARRAY';
         $tests[] = ['facebook1' => $badConfig6];
 
         $badConfig7 = $goodConfig;
