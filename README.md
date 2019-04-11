@@ -230,7 +230,7 @@ to fetch the user, the access token, or other things:
 // get the user directly
 $user = $client->fetchUser();
 
-// get the access token and then user
+// OR: get the access token and then user
 $accessToken = $client->getAccessToken();
 $user = $client->fetchUserFromToken($accessToken);
 
