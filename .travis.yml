@@ -11,10 +11,15 @@ php:
     - 5.6
     - 7.0
     - 7.1
-
+    - 7.2
+    - 7.3
 matrix:
     include:
         - php: 7.1
+          env: DEPENDENCIES=dev
+        - php: 7.2
+          env: DEPENDENCIES=dev
+        - php: 7.3
           env: DEPENDENCIES=dev
         - php: 5.5
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
