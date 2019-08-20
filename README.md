@@ -90,6 +90,7 @@ via Composer:
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft     |
 | [Mollie](https://github.com/mollie/oauth2-mollie-php)                 | composer require mollie/oauth2-mollie-php           |
 | [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki          |
+| [Okta](https://github.com/foxworth42/oauth2-okta)                     | composer require foxworth42/oauth2-okta             |
 | [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal        |
 | [PSN](https://github.com/larabros/oauth2-psn)                         | composer require larabros/oauth2-psn                |
 | [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)      | composer require stevenmaguire/oauth2-salesforce    |
@@ -1031,6 +1032,23 @@ knpu_oauth2_client:
             redirect_route: connect_odnoklassniki_check
             redirect_params: {}
 
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.okta"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\OktaClient
+        # composer require foxworth42/oauth2-okta
+        okta:
+            # must be "okta" - it activates that type!
+            type: okta
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_OKTA_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_OKTA_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_okta_check
+            redirect_params: {}
+            # Issuer URI from Okta
+            issuer: https://mycompany.okta.com/oauth2/default
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
