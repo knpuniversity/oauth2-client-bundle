@@ -384,7 +384,7 @@ security:
 	    # ...
 +            guard:
 +                authenticators:
-+                    - App\Security\Authenticator\FacebookAuthenticator
++                    - App\Security\MyFacebookAuthenticator
 ```
 
 For more details: see http://symfony.com/doc/current/cookbook/security/guard-authentication.html#step-2-configure-the-authenticator.
