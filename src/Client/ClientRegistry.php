@@ -50,4 +50,14 @@ class ClientRegistry
 
         return $this->container->get($this->serviceMap[$key]);
     }
+
+    /**
+     * Returns all enabled client keys.
+     *
+     * @return array
+     */
+    public function getEnabledClientKeys()
+    {
+        return array_keys($this->serviceMap);
+    }
 }
