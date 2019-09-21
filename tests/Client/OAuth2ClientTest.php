@@ -18,11 +18,11 @@ use PHPUnit\Framework\TestCase;
 
 class OAuth2ClientTest extends TestCase
 {
-    private $requestStack;
+    protected $requestStack;
     /** @var Request */
-    private $request;
+    protected $request;
+    protected $provider;
     private $session;
-    private $provider;
 
     public function setup()
     {
