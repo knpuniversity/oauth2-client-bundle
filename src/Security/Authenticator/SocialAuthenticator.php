@@ -42,13 +42,13 @@ abstract class SocialAuthenticator extends AbstractGuardAuthenticator
         }
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         // do nothing - the fact that the access token works is enough
         return true;
     }
 
-    public function supportsRememberMe()
+    public function supportsRememberMe(): bool
     {
         return true;
     }
