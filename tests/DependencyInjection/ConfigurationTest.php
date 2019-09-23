@@ -42,6 +42,9 @@ class ConfigurationTest extends TestCase
             if (!$expectsException) {
                 throw $e;
             }
+
+            // placeholder assertion when we expect an exception
+            $this->assertTrue(true);
         }
     }
 
