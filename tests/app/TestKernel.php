@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\tests\app;
+namespace KnpU\OAuth2ClientBundle\Tests\app;
 
 use GuzzleHttp\Client;
 use KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle;

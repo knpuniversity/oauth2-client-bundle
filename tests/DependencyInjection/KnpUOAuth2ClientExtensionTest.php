@@ -136,8 +136,10 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
 
         foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
             $configurator = $extension->getConfigurator($type);
-            $tree = new TreeBuilder();
-            $configNode = $tree->root('testing');
+            $tree = new TreeBuilder('testing');
+            $configNode = method_exists($tree, 'getRootNode')
+                ? $tree->getRootNode()
+                : $tree->root('testing');
             $configurator->buildConfiguration($configNode->children(), $type);
 
             /** @var ArrayNode $arrayNode */
