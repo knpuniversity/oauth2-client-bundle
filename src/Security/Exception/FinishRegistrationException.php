@@ -45,7 +45,7 @@ class FinishRegistrationException extends AuthenticationException
      * this message is shown to your user, then you're missing
      * this piece of your code.
      */
-    public function getMessageKey()
+    public function getMessageKey(): string
     {
         return 'You need to finish registration to login.';
     }

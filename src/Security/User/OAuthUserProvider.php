@@ -37,7 +37,7 @@ class OAuthUserProvider implements UserProviderInterface
         return $this->loadUserByUsername($user->getUsername());
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return OAuthUser::class === $class;
     }
