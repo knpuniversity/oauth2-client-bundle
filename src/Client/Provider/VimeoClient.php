@@ -18,6 +18,7 @@ class VimeoClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return VimeoResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

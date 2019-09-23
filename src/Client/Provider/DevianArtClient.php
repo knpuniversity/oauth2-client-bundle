@@ -18,6 +18,7 @@ class DevianArtClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return DeviantArtResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

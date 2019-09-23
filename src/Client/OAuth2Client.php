@@ -35,7 +35,7 @@ class OAuth2Client implements OAuth2ClientInterface
      * OAuth2Client constructor.
      *
      * @param AbstractProvider $provider
-     * @param RequestStack $requestStack
+     * @param RequestStack     $requestStack
      */
     public function __construct(AbstractProvider $provider, RequestStack $requestStack)
     {
@@ -57,6 +57,7 @@ class OAuth2Client implements OAuth2ClientInterface
      *
      * @param array $scopes  The scopes you want (leave empty to use default)
      * @param array $options Extra options to pass to the "Provider" class
+     *
      * @return RedirectResponse
      */
     public function redirect(array $scopes = [], array $options = [])
@@ -85,7 +86,7 @@ class OAuth2Client implements OAuth2ClientInterface
      *
      * @throws InvalidStateException
      * @throws MissingAuthorizationCodeException
-     * @throws IdentityProviderException If token cannot be fetched
+     * @throws IdentityProviderException         If token cannot be fetched
      */
     public function getAccessToken()
     {
@@ -112,6 +113,7 @@ class OAuth2Client implements OAuth2ClientInterface
      * Returns the "User" information (called a resource owner).
      *
      * @param AccessToken $accessToken
+     *
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
@@ -159,7 +161,7 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
-     * @return null|\Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface|null
      */
     private function getSession()
     {

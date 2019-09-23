@@ -18,6 +18,7 @@ class ElanceClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return ElanceResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

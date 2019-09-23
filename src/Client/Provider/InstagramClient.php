@@ -18,6 +18,7 @@ class InstagramClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return InstagramResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

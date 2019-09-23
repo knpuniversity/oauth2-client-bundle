@@ -24,6 +24,7 @@ interface ProviderConfiguratorInterface
 
     /**
      * @param array $configuration
+     *
      * @return string
      */
     public function getProviderClass(array $configuration);
@@ -35,12 +36,14 @@ interface ProviderConfiguratorInterface
      * default to OAuth2Client.
      *
      * @param array $config
+     *
      * @return string
      */
     public function getClientClass(array $config);
 
     /**
      * @param array $configuration
+     *
      * @return array
      */
     public function getProviderOptions(array $configuration);

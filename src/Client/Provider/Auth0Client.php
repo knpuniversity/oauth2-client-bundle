@@ -18,6 +18,7 @@ class Auth0Client extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return Auth0ResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -18,6 +18,7 @@ class SlackClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return SlackResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

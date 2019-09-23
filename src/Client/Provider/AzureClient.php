@@ -18,6 +18,7 @@ class AzureClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return AzureResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

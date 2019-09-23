@@ -18,6 +18,7 @@ class HeadHunterClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return HeadHunterResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

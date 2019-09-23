@@ -18,6 +18,7 @@ class BoxClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return BoxResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

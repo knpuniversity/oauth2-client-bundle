@@ -18,6 +18,7 @@ class AmazonClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return AmazonResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

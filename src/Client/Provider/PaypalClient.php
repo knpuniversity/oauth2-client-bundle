@@ -18,6 +18,7 @@ class PaypalClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return PaypalResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

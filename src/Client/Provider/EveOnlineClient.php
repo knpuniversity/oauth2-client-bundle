@@ -18,6 +18,7 @@ class EveOnlineClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return EveOnlineResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

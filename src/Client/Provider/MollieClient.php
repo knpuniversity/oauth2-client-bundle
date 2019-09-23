@@ -18,6 +18,7 @@ class MollieClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return MollieResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

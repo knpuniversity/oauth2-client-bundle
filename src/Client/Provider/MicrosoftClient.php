@@ -18,6 +18,7 @@ class MicrosoftClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return MicrosoftResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

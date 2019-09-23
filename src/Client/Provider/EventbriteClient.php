@@ -18,6 +18,7 @@ class EventbriteClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return EventbriteResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -18,6 +18,7 @@ class HerokuClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return HerokuResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

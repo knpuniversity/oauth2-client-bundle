@@ -18,6 +18,7 @@ class DropboxClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return DropboxResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -18,6 +18,7 @@ class CanvasLMSClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return CanvasLMSResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

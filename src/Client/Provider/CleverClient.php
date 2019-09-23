@@ -18,6 +18,7 @@ class CleverClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return CleverUser
      */
     public function fetchUserFromToken(AccessToken $accessToken)

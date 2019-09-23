@@ -18,6 +18,7 @@ class YandexClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return YandexResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

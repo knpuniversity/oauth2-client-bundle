@@ -18,6 +18,7 @@ class DrupalClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return DrupalResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)
