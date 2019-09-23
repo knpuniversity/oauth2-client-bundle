@@ -293,7 +293,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
         $this->assertEquals('knpu_oauth2_client', $extension->getAlias());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->configuration);
     }

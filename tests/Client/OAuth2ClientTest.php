@@ -24,7 +24,7 @@ class OAuth2ClientTest extends TestCase
     private $session;
     private $provider;
 
-    public function setup()
+    public function setup(): void
     {
         $this->requestStack = new RequestStack();
         $this->session = $this->prophesize('Symfony\Component\HttpFoundation\Session\SessionInterface');
