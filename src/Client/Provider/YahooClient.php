@@ -18,6 +18,7 @@ class YahooClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return YahooUser
      */
     public function fetchUserFromToken(AccessToken $accessToken)

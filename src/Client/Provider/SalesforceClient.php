@@ -18,6 +18,7 @@ class SalesforceClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return SalesforceResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

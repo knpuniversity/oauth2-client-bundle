@@ -25,6 +25,7 @@ interface OAuth2ClientInterface
      *
      * @param array $scopes  The scopes you want (leave empty to use default)
      * @param array $options Extra options to pass to the "Provider" class
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirect(array $scopes, array $options);
@@ -36,7 +37,7 @@ interface OAuth2ClientInterface
      *
      * @throws \KnpU\OAuth2ClientBundle\Exception\InvalidStateException
      * @throws \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException If token cannot be fetched
+     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException   If token cannot be fetched
      */
     public function getAccessToken();
 
@@ -44,6 +45,7 @@ interface OAuth2ClientInterface
      * Returns the "User" information (called a resource owner).
      *
      * @param AccessToken $accessToken
+     *
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken);

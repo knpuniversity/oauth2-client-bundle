@@ -18,6 +18,7 @@ class MailRuClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return MailruResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

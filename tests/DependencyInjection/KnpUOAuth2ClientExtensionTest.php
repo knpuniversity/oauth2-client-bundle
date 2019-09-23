@@ -15,6 +15,8 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorIn
 use Symfony\Component\Config\Definition\ArrayNode;
 use Symfony\Component\Config\Definition\BooleanNode;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\IntegerNode;
 use Symfony\Component\Config\Definition\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -131,13 +133,14 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
 
     public function provideTypesAndConfig()
     {
-        $tests = [];
         $extension = new KnpUOAuth2ClientExtension();
 
         foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
             $configurator = $extension->getConfigurator($type);
-            $tree = new TreeBuilder();
-            $configNode = $tree->root('testing');
+            $tree = new TreeBuilder('testing');
+            $configNode = method_exists($tree, 'getRootNode')
+                ? $tree->getRootNode()
+                : $tree->root('testing');
             $configurator->buildConfiguration($configNode->children(), $type);
 
             /** @var ArrayNode $arrayNode */
@@ -156,15 +159,15 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
                     $config[$child->getName()] = [];
                 } elseif ($child instanceof BooleanNode) {
                     $config[$child->getName()] = (bool) rand(0, 1);
-                } else {
+                } elseif ($child instanceof IntegerNode) {
                     $config[$child->getName()] = rand();
+                } else {
+                    $config[$child->getName()] = 'random_'.rand();
                 }
             }
 
-            $tests[] = [$type, $config];
+            yield $type => [$type, $config];
         }
-
-        return $tests;
     }
 
     public function testGenericProvider()
@@ -224,11 +227,11 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
     }
 
     /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      * @dataProvider provideBadConfiguration
      */
     public function testBadClientsConfiguration(array $badClientsConfig)
     {
+        $this->expectException(InvalidConfigurationException::class);
         $this->configuration = new ContainerBuilder();
         $loader = new KnpUOAuth2ClientExtension(false);
         $config = ['clients' => $badClientsConfig];
@@ -291,7 +294,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
         $this->assertEquals('knpu_oauth2_client', $extension->getAlias());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->configuration);
     }

@@ -18,6 +18,7 @@ class GoogleClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return GoogleUser
      */
     public function fetchUserFromToken(AccessToken $accessToken)

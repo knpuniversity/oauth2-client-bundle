@@ -18,6 +18,7 @@ class FoursquareClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return FoursquareResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

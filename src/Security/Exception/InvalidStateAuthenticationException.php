@@ -23,7 +23,7 @@ class InvalidStateAuthenticationException extends AuthenticationException
         parent::__construct($e->getMessage(), $e->getCode(), $e);
     }
 
-    public function getMessageKey()
+    public function getMessageKey(): string
     {
         return 'Invalid state parameter passed in callback URL.';
     }

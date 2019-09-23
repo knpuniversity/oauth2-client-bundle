@@ -22,6 +22,10 @@ class NoAuthCodeAuthenticationExceptionTest extends TestCase
     {
         $e = new NoAuthCodeAuthenticationException();
 
-        $this->assertInternalType('string', $e->getMessageKey());
+        if (method_exists($this, 'assertIsString')) {
+            $this->assertIsString($e->getMessageKey());
+        } else {
+            $this->assertInternalType('string', $e->getMessageKey());
+        }
     }
 }

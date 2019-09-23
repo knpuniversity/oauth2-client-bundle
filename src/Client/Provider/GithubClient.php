@@ -18,6 +18,7 @@ class GithubClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return GithubResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

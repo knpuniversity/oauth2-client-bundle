@@ -12,6 +12,7 @@ namespace KnpU\OAuth2ClientBundle\Tests\Security\User;
 
 use KnpU\OAuth2ClientBundle\Security\User\OAuthUser;
 use KnpU\OAuth2ClientBundle\Security\User\OAuthUserProvider;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use PHPUnit\Framework\TestCase;
@@ -37,11 +38,9 @@ class OAuthUserProviderTest extends TestCase
         $this->assertEquals($expected, $userProvider->refreshUser($user));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\UnsupportedUserException
-     */
     public function testRefreshOtherUser()
     {
+        $this->expectException(UnsupportedUserException::class);
         $userProvider = new OAuthUserProvider();
 
         $userProvider->refreshUser($this->createMock(UserInterface::class));

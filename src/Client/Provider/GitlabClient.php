@@ -23,6 +23,7 @@ class GitlabClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return GitlabResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

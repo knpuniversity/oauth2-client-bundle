@@ -18,6 +18,7 @@ class VKontakteClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return User
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -18,6 +18,7 @@ class BufferClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return BufferUser
      */
     public function fetchUserFromToken(AccessToken $accessToken)

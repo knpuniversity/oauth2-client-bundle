@@ -146,7 +146,7 @@ class KnpUOAuth2ClientExtension extends Extension
     /**
      * Load the bundle configuration.
      *
-     * @param array $configs
+     * @param array            $configs
      * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -155,7 +155,7 @@ class KnpUOAuth2ClientExtension extends Extension
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
         $httpClient = $config['http_client'];
@@ -183,10 +183,10 @@ class KnpUOAuth2ClientExtension extends Extension
             }
 
             // process the configuration
-            $tree = new TreeBuilder('knpu_oauth2_client/clients/' . $key);
+            $tree = new TreeBuilder('knpu_oauth2_client/clients/'.$key);
             $node = method_exists($tree, 'getRootNode')
                 ? $tree->getRootNode()
-                : $tree->root('knpu_oauth2_client/clients/' . $key);
+                : $tree->root('knpu_oauth2_client/clients/'.$key);
 
             $this->buildConfigurationForType($node, $type);
             $processor = new Processor();
@@ -226,16 +226,17 @@ class KnpUOAuth2ClientExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param string $providerType  The "type" used in the config - e.g. "facebook"
-     * @param string $providerKey   The config key used for this - e.g. "facebook_client", "my_facebook"
-     * @param string $providerClass Provider class
-     * @param string $clientClass   Class to use for the Client
-     * @param string $packageName   Packagist package name required
-     * @param array $options        Options passed to when constructing the provider
-     * @param string $redirectRoute Route name for the redirect URL
-     * @param array $redirectParams Route params for the redirect URL
-     * @param bool $useState
-     * @param array $collaborators
+     * @param string           $providerType   The "type" used in the config - e.g. "facebook"
+     * @param string           $providerKey    The config key used for this - e.g. "facebook_client", "my_facebook"
+     * @param string           $providerClass  Provider class
+     * @param string           $clientClass    Class to use for the Client
+     * @param string           $packageName    Packagist package name required
+     * @param array            $options        Options passed to when constructing the provider
+     * @param string           $redirectRoute  Route name for the redirect URL
+     * @param array            $redirectParams Route params for the redirect URL
+     * @param bool             $useState
+     * @param array            $collaborators
+     *
      * @return string The client service id
      */
     private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators)
@@ -286,7 +287,7 @@ class KnpUOAuth2ClientExtension extends Extension
         }
 
         // add an alias, but only if a provider type is used only 1 time
-        if (!in_array($providerType, $this->duplicateProviderTypes, true)) {
+        if (!\in_array($providerType, $this->duplicateProviderTypes, true)) {
             // alias already exists? This is a duplicate type, record it
             if ($container->hasAlias($clientClass)) {
                 $this->duplicateProviderTypes[] = $providerType;
@@ -304,20 +305,21 @@ class KnpUOAuth2ClientExtension extends Extension
         return array_keys(self::$supportedProviderTypes);
     }
 
-   /**
-    * @param string $type
-    * @return ProviderConfiguratorInterface
-    */
-   public function getConfigurator($type)
-   {
-       if (!isset($this->configurators[$type])) {
-           $class = self::$supportedProviderTypes[$type];
+    /**
+     * @param string $type
+     *
+     * @return ProviderConfiguratorInterface
+     */
+    public function getConfigurator($type)
+    {
+        if (!isset($this->configurators[$type])) {
+            $class = self::$supportedProviderTypes[$type];
 
-           $this->configurators[$type] = new $class();
-       }
+            $this->configurators[$type] = new $class();
+        }
 
-       return $this->configurators[$type];
-   }
+        return $this->configurators[$type];
+    }
 
     /**
      * Overridden so the alias isn't "knp_uo_auth2_client".

@@ -24,7 +24,7 @@ class ClientRegistry
      * ClientRegistry constructor.
      *
      * @param ContainerInterface $container
-     * @param array $serviceMap
+     * @param array              $serviceMap
      */
     public function __construct(ContainerInterface $container, array $serviceMap)
     {
@@ -36,6 +36,7 @@ class ClientRegistry
      * Easy accessor for client objects.
      *
      * @param string $key
+     *
      * @return OAuth2Client
      */
     public function getClient($key)

@@ -18,6 +18,7 @@ class DribbbleClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return DribbbleResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

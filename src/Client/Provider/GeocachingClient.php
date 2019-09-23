@@ -18,6 +18,7 @@ class GeocachingClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return GeocachingResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

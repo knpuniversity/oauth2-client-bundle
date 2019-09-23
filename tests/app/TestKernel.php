@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\tests\app;
+namespace KnpU\OAuth2ClientBundle\Tests\app;
 
 use GuzzleHttp\Client;
 use KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class TestKernel extends Kernel
 {
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         return [
             new FrameworkBundle(),
@@ -62,7 +62,7 @@ class TestKernel extends Kernel
         });
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         if (method_exists($this, 'getProjectDir')) {
             return $this->getProjectDir() . '/tests/app/cache/' . $this->getEnvironment();
@@ -71,7 +71,7 @@ class TestKernel extends Kernel
         return parent::getCacheDir();
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         if (method_exists($this, 'getProjectDir')) {
             return $this->getProjectDir() . '/tests/app/cache/' . $this->getEnvironment();

@@ -18,6 +18,7 @@ class OdnoklassnikiClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return OdnoklassnikiResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -18,6 +18,7 @@ class FacebookClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return FacebookUser
      */
     public function fetchUserFromToken(AccessToken $accessToken)

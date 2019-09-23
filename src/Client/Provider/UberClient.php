@@ -18,6 +18,7 @@ class UberClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return UberResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

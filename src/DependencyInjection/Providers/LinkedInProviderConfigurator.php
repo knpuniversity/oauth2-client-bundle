@@ -40,7 +40,7 @@ class LinkedInProviderConfigurator implements ProviderConfiguratorInterface
             'clientSecret' => $config['client_secret'],
         ];
 
-        if (!is_null($config['api_version'])) {
+        if (null !== $config['api_version']) {
             $options['resourceOwnerVersion'] = $config['api_version'];
         }
 

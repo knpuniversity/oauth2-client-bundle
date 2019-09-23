@@ -18,6 +18,7 @@ class StravaClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return StravaResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

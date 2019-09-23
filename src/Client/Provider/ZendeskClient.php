@@ -18,6 +18,7 @@ class ZendeskClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return ZendeskResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

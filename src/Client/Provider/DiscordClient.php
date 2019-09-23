@@ -18,6 +18,7 @@ class DiscordClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return DiscordResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -18,6 +18,7 @@ class LinkedInClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return LinkedInResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

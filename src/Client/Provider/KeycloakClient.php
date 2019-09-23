@@ -18,6 +18,7 @@ class KeycloakClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return KeycloakResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -18,6 +18,7 @@ class PsnClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
+     *
      * @return PsnResourceOwner
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -20,7 +20,7 @@ class PreviousUrlHelperTest extends TestCase
 {
     private $traitObject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->traitObject = $this
             ->getMockForTrait('KnpU\OAuth2ClientBundle\Security\Helper\PreviousUrlHelper');

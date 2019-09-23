@@ -36,10 +36,11 @@ class ProviderFactory
      * Creates a provider of the given class.
      *
      * @param string $class
-     * @param array $options
+     * @param array  $options
      * @param string $redirectUri
-     * @param array $redirectParams
-     * @param array $collaborators
+     * @param array  $redirectParams
+     * @param array  $collaborators
+     *
      * @return mixed
      */
     public function createProvider($class, array $options, $redirectUri, array $redirectParams = [], array $collaborators = [])
