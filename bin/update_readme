@@ -62,8 +62,10 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
         continue;
     }
 
-    $tree = new TreeBuilder();
-    $configNode = $tree->root('generating_readme');
+    $tree = new TreeBuilder('knpu_oauth2_client');
+    $configNode = method_exists($tree, 'getRootNode')
+        ? $tree->getRootNode()
+        : $tree->root('knpu_oauth2_client');
     $configurator = $extension->getConfigurator($type);
     $configurator->buildConfiguration($configNode->children());
 

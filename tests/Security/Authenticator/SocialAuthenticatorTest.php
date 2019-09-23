@@ -70,6 +70,9 @@ class StubSocialAuthenticator extends SocialAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
     }
+    public function supports(Request $request)
+    {
+    }
     public function getCredentials(Request $request)
     {
     }
