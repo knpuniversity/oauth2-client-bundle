@@ -1,10 +1,7 @@
 parameters:
-	autoload_files:
-		- ./vendor/bin/.phpunit/phpunit-7.4/vendor/autoload.php
 	level: 7
 	inferPrivatePropertyTypeFromConstructor: true
 	paths:
 		- ./src/
-		- ./tests/
 	excludes_analyse:
 		- */cache/*
