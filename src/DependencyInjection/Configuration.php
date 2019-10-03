@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                     ->normalizeKeys(false)
                     ->useAttributeAsKey('variable')
                     ->prototype('array')
+                        ->useAttributeAsKey('variable')
                         ->prototype('variable')->end()
                     ->end()
                 ->end()
