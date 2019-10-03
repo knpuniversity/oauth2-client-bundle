@@ -13,7 +13,7 @@ php:
 matrix:
     include:
         - php: 7.3
-          env: DEPENDENCIES=dev
+          env: DEPENDENCIES=dev LINT=1
         - php: 7.1
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
 
@@ -27,4 +27,6 @@ install: composer update --prefer-dist $COMPOSER_FLAGS
 # Fail CI if repo is in dirty state after bin/update_readme
 before_script: ./bin/update_readme && git diff --exit-code README.md
 
-script: ./vendor/bin/simple-phpunit
+script:
+    - ./vendor/bin/simple-phpunit
+    - if [ "$LINT" = 1 ]; then ./vendor/bin/phpstan analyse; fi;
