@@ -19,7 +19,7 @@ class StravaClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return StravaResourceOwner
+     * @return StravaResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class StravaClient extends OAuth2Client
     }
 
     /**
-     * @return StravaResourceOwner
+     * @return StravaResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

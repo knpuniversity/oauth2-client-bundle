@@ -19,7 +19,7 @@ class BufferClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return BufferUser
+     * @return BufferUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class BufferClient extends OAuth2Client
     }
 
     /**
-     * @return BufferUser
+     * @return BufferUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

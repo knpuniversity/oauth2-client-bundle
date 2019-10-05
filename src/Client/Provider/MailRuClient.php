@@ -19,7 +19,7 @@ class MailRuClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return MailruResourceOwner
+     * @return MailruResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class MailRuClient extends OAuth2Client
     }
 
     /**
-     * @return MailruResourceOwner
+     * @return MailruResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

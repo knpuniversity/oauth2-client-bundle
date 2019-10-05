@@ -19,7 +19,7 @@ class PaypalClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return PaypalResourceOwner
+     * @return PaypalResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class PaypalClient extends OAuth2Client
     }
 
     /**
-     * @return PaypalResourceOwner
+     * @return PaypalResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

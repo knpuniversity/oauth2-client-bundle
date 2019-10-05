@@ -19,7 +19,7 @@ class DropboxClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return DropboxResourceOwner
+     * @return DropboxResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class DropboxClient extends OAuth2Client
     }
 
     /**
-     * @return DropboxResourceOwner
+     * @return DropboxResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

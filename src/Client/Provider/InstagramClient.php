@@ -19,7 +19,7 @@ class InstagramClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return InstagramResourceOwner
+     * @return InstagramResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class InstagramClient extends OAuth2Client
     }
 
     /**
-     * @return InstagramResourceOwner
+     * @return InstagramResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

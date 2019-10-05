@@ -19,7 +19,7 @@ class DrupalClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return DrupalResourceOwner
+     * @return DrupalResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class DrupalClient extends OAuth2Client
     }
 
     /**
-     * @return DrupalResourceOwner
+     * @return DrupalResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

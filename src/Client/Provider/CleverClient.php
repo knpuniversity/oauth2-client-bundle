@@ -19,7 +19,7 @@ class CleverClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return CleverUser
+     * @return CleverUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class CleverClient extends OAuth2Client
     }
 
     /**
-     * @return CleverUser
+     * @return CleverUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {
