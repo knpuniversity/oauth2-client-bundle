@@ -83,7 +83,7 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * Call this after the user is redirected back to get the access token.
      *
-     * @return \League\OAuth2\Client\Token\AccessToken
+     * @return AccessToken|\League\OAuth2\Client\Token\AccessTokenInterface
      *
      * @throws InvalidStateException
      * @throws MissingAuthorizationCodeException
@@ -132,6 +132,7 @@ class OAuth2Client implements OAuth2ClientInterface
      */
     public function fetchUser()
     {
+        /** @var AccessToken $token */
         $token = $this->getAccessToken();
 
         return $this->fetchUserFromToken($token);
