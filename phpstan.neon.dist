@@ -1,5 +1,5 @@
 parameters:
-	level: 1
+	level: max
 	inferPrivatePropertyTypeFromConstructor: true
 	paths:
 		- ./src/
@@ -17,3 +17,11 @@ parameters:
 		-
 			message: '#Class [a-zA-Z0-9\\_]+ not found#'
 			path: ./src/DependencyInjection/Providers
+
+		# The DependencyInjection returns are very complex to deal with
+		-
+			message: '#.*NodeParentInterface|null.*#'
+			path: ./src/DependencyInjection/Providers
+		-
+			message: '#.*NodeDefinition::children.*#'
+			path: ./src/DependencyInjection
