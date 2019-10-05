@@ -17,6 +17,7 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OAuth2Client implements OAuth2ClientInterface
 {
@@ -161,13 +162,13 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface|null
+     * @return SessionInterface
      */
     private function getSession()
     {
         $session = $this->getCurrentRequest()->getSession();
 
-        if (!$session) {
+        if (!$session instanceof SessionInterface) {
             throw new \LogicException('In order to use "state", you must have a session. Set the OAuth2Client to stateless to avoid state');
         }
 
