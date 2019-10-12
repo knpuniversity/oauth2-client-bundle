@@ -19,9 +19,10 @@ trait SaveAuthFailureMessage
 {
     protected function saveAuthenticationErrorToSession(Request $request, AuthenticationException $exception)
     {
-        $session = $request->getSession();
-        if ($session instanceof SessionInterface) {
-            $session->set(Security::AUTHENTICATION_ERROR, $exception);
+        if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
+            throw new \LogicException('In order to save an authentication error, you must have a session available.');
         }
+
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
     }
 }

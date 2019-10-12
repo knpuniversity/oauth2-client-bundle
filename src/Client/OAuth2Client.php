@@ -167,12 +167,10 @@ class OAuth2Client implements OAuth2ClientInterface
      */
     private function getSession()
     {
-        $session = $this->getCurrentRequest()->getSession();
-
-        if (!$session instanceof SessionInterface) {
+        if (!$this->getCurrentRequest()->hasSession()) {
             throw new \LogicException('In order to use "state", you must have a session. Set the OAuth2Client to stateless to avoid state');
         }
 
-        return $session;
+        return $this->getCurrentRequest()->getSession();
     }
 }

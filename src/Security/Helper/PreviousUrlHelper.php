@@ -27,9 +27,8 @@ trait PreviousUrlHelper
     {
         // if the user hit a secure page and start() was called, this was
         // the URL they were on, and probably where you want to redirect to
-        $session = $request->getSession();
-        if ($session instanceof SessionInterface) {
-            return $session->get('_security.'.$providerKey.'.target_path');
+        if ($request->hasSession() && $request->getSession() instanceof SessionInterface) {
+            return $request->getSession()->get('_security.'.$providerKey.'.target_path');
         }
 
         return '';

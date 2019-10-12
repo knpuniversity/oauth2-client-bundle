@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\tests\Security\Helper;
 
+use LogicException;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PHPUnit\Framework\TestCase;
 
@@ -33,6 +34,7 @@ class PreviousUrlHelperTest extends TestCase
         $session->get('_security.some_firewall_name.target_path')
             ->willReturn('/some/url');
 
+        $request->hasSession()->willReturn(true);
         $request->getSession()->willReturn($session->reveal());
         $previousUrl = $this->traitObject->getPreviousUrl(
             $request->reveal(),
@@ -40,5 +42,18 @@ class PreviousUrlHelperTest extends TestCase
         );
 
         $this->assertEquals($previousUrl, '/some/url');
+    }
+
+    public function testGetPreviousUrlWithoutSession()
+    {
+        $request = $this->prophesize('Symfony\Component\HttpFoundation\Request');
+        $request->hasSession()->willReturn(false);
+
+        $previousUrl = $this->traitObject->getPreviousUrl(
+            $request->reveal(),
+            'some_firewall_name'
+        );
+
+        $this->assertEquals($previousUrl, '');
     }
 }
