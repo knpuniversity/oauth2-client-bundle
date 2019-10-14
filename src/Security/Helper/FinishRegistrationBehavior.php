@@ -11,8 +11,9 @@
 namespace KnpU\OAuth2ClientBundle\Security\Helper;
 
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use LogicException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Use this trait if sometimes your authenticator requires people
@@ -26,12 +27,17 @@ trait FinishRegistrationBehavior
      * @param Request                     $request
      * @param FinishRegistrationException $e
      *
-     * @return RedirectResponse
+     * @throws LogicException
      */
     protected function saveUserInfoToSession(Request $request, FinishRegistrationException $e)
     {
         // save the user information!
-        $request->getSession()->set(
+        if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
+            throw new LogicException('In order to save user info, you must have a session available.');
+        }
+        $session = $request->getSession();
+
+        $session->set(
             'guard.finish_registration.user_information',
             $e->getUserInformation()
         );
@@ -43,9 +49,16 @@ trait FinishRegistrationBehavior
      * @param Request $request
      *
      * @return mixed
+     *
+     * @throws LogicException
      */
     public function getUserInfoFromSession(Request $request)
     {
-        return $request->getSession()->get('guard.finish_registration.user_information');
+        if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
+            throw new LogicException('In order to have saved user info, you must have a session available.');
+        }
+        $session = $request->getSession();
+
+        return $session->get('guard.finish_registration.user_information');
     }
 }

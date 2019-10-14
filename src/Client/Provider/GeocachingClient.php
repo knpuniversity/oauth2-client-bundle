@@ -19,7 +19,7 @@ class GeocachingClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return GeocachingResourceOwner
+     * @return GeocachingResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class GeocachingClient extends OAuth2Client
     }
 
     /**
-     * @return GeocachingResourceOwner
+     * @return GeocachingResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

@@ -41,15 +41,23 @@ class ClientRegistry
      */
     public function getClient($key)
     {
-        if (!isset($this->serviceMap[$key])) {
-            throw new \InvalidArgumentException(sprintf(
-                'There is no OAuth2 client called "%s". Available are: %s',
-                $key,
-                implode(', ', array_keys($this->serviceMap))
-            ));
+        if (isset($this->serviceMap[$key])) {
+            $client = $this->container->get($this->serviceMap[$key]);
+            if (!$client instanceof OAuth2Client) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Somehow the "%s" client is not an instance of OAuth2Client.',
+                    $key
+                ));
+            }
+
+            return $client;
         }
 
-        return $this->container->get($this->serviceMap[$key]);
+        throw new \InvalidArgumentException(sprintf(
+            'There is no OAuth2 client called "%s". Available are: %s',
+            $key,
+            implode(', ', array_keys($this->serviceMap))
+        ));
     }
 
     /**

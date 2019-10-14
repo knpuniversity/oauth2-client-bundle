@@ -19,7 +19,7 @@ class SlackClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return SlackResourceOwner
+     * @return SlackResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class SlackClient extends OAuth2Client
     }
 
     /**
-     * @return SlackResourceOwner
+     * @return SlackResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

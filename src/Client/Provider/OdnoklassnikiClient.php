@@ -19,7 +19,7 @@ class OdnoklassnikiClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return OdnoklassnikiResourceOwner
+     * @return OdnoklassnikiResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class OdnoklassnikiClient extends OAuth2Client
     }
 
     /**
-     * @return OdnoklassnikiResourceOwner
+     * @return OdnoklassnikiResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

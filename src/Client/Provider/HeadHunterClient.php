@@ -19,7 +19,7 @@ class HeadHunterClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return HeadHunterResourceOwner
+     * @return HeadHunterResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class HeadHunterClient extends OAuth2Client
     }
 
     /**
-     * @return HeadHunterResourceOwner
+     * @return HeadHunterResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

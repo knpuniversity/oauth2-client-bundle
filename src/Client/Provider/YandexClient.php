@@ -19,7 +19,7 @@ class YandexClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return YandexResourceOwner
+     * @return YandexResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class YandexClient extends OAuth2Client
     }
 
     /**
-     * @return YandexResourceOwner
+     * @return YandexResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

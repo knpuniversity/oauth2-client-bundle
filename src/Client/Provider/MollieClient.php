@@ -19,7 +19,7 @@ class MollieClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return MollieResourceOwner
+     * @return MollieResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class MollieClient extends OAuth2Client
     }
 
     /**
-     * @return MollieResourceOwner
+     * @return MollieResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

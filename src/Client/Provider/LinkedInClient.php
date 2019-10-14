@@ -19,7 +19,7 @@ class LinkedInClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return LinkedInResourceOwner
+     * @return LinkedInResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class LinkedInClient extends OAuth2Client
     }
 
     /**
-     * @return LinkedInResourceOwner
+     * @return LinkedInResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

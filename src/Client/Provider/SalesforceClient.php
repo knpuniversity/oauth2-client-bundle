@@ -19,7 +19,7 @@ class SalesforceClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return SalesforceResourceOwner
+     * @return SalesforceResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class SalesforceClient extends OAuth2Client
     }
 
     /**
-     * @return SalesforceResourceOwner
+     * @return SalesforceResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

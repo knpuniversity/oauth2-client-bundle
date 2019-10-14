@@ -19,7 +19,7 @@ class VKontakteClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return User
+     * @return User|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class VKontakteClient extends OAuth2Client
     }
 
     /**
-     * @return User
+     * @return User|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

@@ -19,7 +19,7 @@ class GoogleClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return GoogleUser
+     * @return GoogleUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class GoogleClient extends OAuth2Client
     }
 
     /**
-     * @return GoogleUser
+     * @return GoogleUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

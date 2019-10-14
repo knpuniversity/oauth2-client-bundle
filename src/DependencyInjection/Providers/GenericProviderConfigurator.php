@@ -47,12 +47,12 @@ class GenericProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getPackagistName()
     {
-        return false;
+        return '';
     }
 
     public function getLibraryHomepage()
     {
-        return false;
+        return '';
     }
 
     public function getProviderDisplayName()

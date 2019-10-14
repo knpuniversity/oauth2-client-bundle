@@ -19,7 +19,7 @@ class FitbitClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return FitbitUser
+     * @return FitbitUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class FitbitClient extends OAuth2Client
     }
 
     /**
-     * @return FitbitUser
+     * @return FitbitUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

@@ -19,7 +19,7 @@ class JiraClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return JiraResourceOwner
+     * @return JiraResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class JiraClient extends OAuth2Client
     }
 
     /**
-     * @return JiraResourceOwner
+     * @return JiraResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

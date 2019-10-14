@@ -17,6 +17,7 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OAuth2Client implements OAuth2ClientInterface
 {
@@ -82,7 +83,7 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * Call this after the user is redirected back to get the access token.
      *
-     * @return \League\OAuth2\Client\Token\AccessToken
+     * @return AccessToken|\League\OAuth2\Client\Token\AccessTokenInterface
      *
      * @throws InvalidStateException
      * @throws MissingAuthorizationCodeException
@@ -131,6 +132,7 @@ class OAuth2Client implements OAuth2ClientInterface
      */
     public function fetchUser()
     {
+        /** @var AccessToken $token */
         $token = $this->getAccessToken();
 
         return $this->fetchUserFromToken($token);
@@ -161,16 +163,14 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface|null
+     * @return SessionInterface
      */
     private function getSession()
     {
-        $session = $this->getCurrentRequest()->getSession();
-
-        if (!$session) {
+        if (!$this->getCurrentRequest()->hasSession()) {
             throw new \LogicException('In order to use "state", you must have a session. Set the OAuth2Client to stateless to avoid state');
         }
 
-        return $session;
+        return $this->getCurrentRequest()->getSession();
     }
 }

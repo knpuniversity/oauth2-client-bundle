@@ -19,7 +19,7 @@ class DribbbleClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return DribbbleResourceOwner
+     * @return DribbbleResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class DribbbleClient extends OAuth2Client
     }
 
     /**
-     * @return DribbbleResourceOwner
+     * @return DribbbleResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

@@ -19,7 +19,7 @@ class YahooClient extends OAuth2Client
     /**
      * @param AccessToken $accessToken
      *
-     * @return YahooUser
+     * @return YahooUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -27,7 +27,7 @@ class YahooClient extends OAuth2Client
     }
 
     /**
-     * @return YahooUser
+     * @return YahooUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {
