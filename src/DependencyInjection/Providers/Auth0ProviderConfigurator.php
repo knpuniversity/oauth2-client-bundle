@@ -17,9 +17,14 @@ class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
     public function buildConfiguration(NodeBuilder $node)
     {
         $node
+            ->scalarNode('custom_domain')
+                ->info('Your custom/definite Auth0 domain, e.g. "login.mycompany.com". Set this if you use Auth0\'s Custom Domain feature. The "account" and "region" parameters will be ignored in this case.')
+            ->end()
             ->scalarNode('account')
-                ->isRequired()
                 ->info('Your Auth0 domain/account, e.g. "mycompany" if your domain is "mycompany.auth0.com"')
+            ->end()
+            ->scalarNode('region')
+                ->info('Your Auth0 region, e.g. "eu" if your tenant is in the EU.')
             ->end()
         ;
     }
@@ -34,7 +39,9 @@ class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
+            'customDomain' => $config['custom_domain'],
             'account' => $config['account'],
+            'region' => $config['region'],
         ];
     }
 
