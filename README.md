@@ -470,8 +470,12 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_auth0_check
             redirect_params: {}
+            # Your custom/definite Auth0 domain, e.g. "login.mycompany.com". Set this if you use Auth0's Custom Domain feature. The "account" and "region" parameters will be ignored in this case.
+            # custom_domain: null
             # Your Auth0 domain/account, e.g. "mycompany" if your domain is "mycompany.auth0.com"
-            account: null
+            # account: null
+            # Your Auth0 region, e.g. "eu" if your tenant is in the EU.
+            # region: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
