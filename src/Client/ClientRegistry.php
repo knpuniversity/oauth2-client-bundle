@@ -37,15 +37,15 @@ class ClientRegistry
      *
      * @param string $key
      *
-     * @return OAuth2Client
+     * @return OAuth2ClientInterface
      */
     public function getClient($key)
     {
         if (isset($this->serviceMap[$key])) {
             $client = $this->container->get($this->serviceMap[$key]);
-            if (!$client instanceof OAuth2Client) {
+            if (!$client instanceof OAuth2ClientInterface) {
                 throw new \InvalidArgumentException(sprintf(
-                    'Somehow the "%s" client is not an instance of OAuth2Client.',
+                    'Somehow the "%s" client is not an instance of OAuth2ClientInterface.',
                     $key
                 ));
             }
