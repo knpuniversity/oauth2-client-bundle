@@ -13,7 +13,7 @@ This bundle integrates with [league/oauth2-client](http://oauth2-client.thephple
 
 ## Requirements
 
-* PHP 7.1 or higher
+* PHP 7.1.3 or higher
 
 ## This bundle or HWIOAuthBundle?
 
