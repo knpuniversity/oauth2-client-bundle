@@ -82,6 +82,7 @@ via Composer:
 | [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google               |
 | [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter     |
 | [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku        |
+| [IBM App ID](https://github.com/Jampire/oauth2-appid)                 | composer require jampire/oauth2-appid               |
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram            |
 | [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira                |
 | [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak      |
@@ -453,6 +454,26 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_AMAZON_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_amazon_check
+            redirect_params: {}
+
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.appid"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AppIdClient
+        # composer require jampire/oauth2-appid
+        appid:
+            # must be "appid" - it activates that type!
+            type: appid
+            # add and configure options in your parameters.yml or env
+            client_id: '%env(OAUTH_APPID_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_APPID_CLIENT_SECRET)%'
+            tenant_id: '%env(OAUTH_APPID_TENANT_ID)%'
+            base_auth_uri: '%env(OAUTH_APPID_BASE_AUTH_URI)%'
+            # a route name you'll create, for example connect_appid_check 
+            redirect_route: '%env(OAUTH_APPID_REDIRECT_ROUTE)%'
+            # Identity Provider code: defaults to saml
+            # idp: '%env(OAUTH_APPID_IDP)%'
             redirect_params: {}
 
             # whether to check OAuth2 "state": defaults to true
