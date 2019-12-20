@@ -465,15 +465,15 @@ knpu_oauth2_client:
         apple:
             # must be "apple" - it activates that type!
             type: apple
-            client_id: '%env(OAUTH_APPLE_CLIENT_ID)%' # your serviceId key's identifier
-            client_secret: '' # not used, feel free to let it blank
-            team_id: '%env(OAUTH_APPLE_TEAM_ID)%' # your apple team Id
-            key_file_id: '%env(OAUTH_APPLE_KEY_FILE_ID)%' # your key Id
-            key_file_path: '%env(OAUTH_APPLE_KEY_FILE_PATH)%' # where is located your key file
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_APPLE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_APPLE_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_apple_check
             redirect_params: {}
-
+            # team_id: null
+            # key_file_id: null
+            # key_file_path: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
