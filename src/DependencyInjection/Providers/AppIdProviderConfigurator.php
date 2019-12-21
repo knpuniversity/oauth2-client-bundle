@@ -3,8 +3,6 @@
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
-use Jampire\OAuth2\Client\Provider\AppIdProvider;
-use KnpU\OAuth2ClientBundle\Client\Provider\AppIdClient;
 
 /**
  * Class AppIdProviderConfigurator
@@ -20,30 +18,30 @@ class AppIdProviderConfigurator implements ProviderConfiguratorInterface
         $node
             ->scalarNode('base_auth_uri')
                 ->isRequired()
-                ->info('IBM App ID base URL. More detail: https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started')
-                ->example('base_auth_uri: https://us-south.appid.cloud.ibm.com/oauth/v4')
+                ->info('IBM App ID base URL. For example, "https://us-south.appid.cloud.ibm.com/oauth/v4". More details at https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started')
+                ->example('base_auth_uri: \'%env(OAUTH_APPID_BASE_AUTH_URI)%\'')
             ->end()
             ->scalarNode('tenant_id')
                 ->isRequired()
-                ->info('IBM App ID service tenant ID. More detail: https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started')
-                ->example('tenant_id: 1234-5678-abcd-efgh')
+                ->info('IBM App ID service tenant ID. For example, "1234-5678-abcd-efgh". More details at https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started')
+                ->example('tenant_id: \'%env(OAUTH_APPID_TENANT_ID)%\'')
             ->end()
             ->scalarNode('idp')
                 ->defaultValue('saml')
-                ->info('Identity Provider code. More detail: https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started')
-                ->example('idp: saml')
+                ->info('Identity Provider code. Defaults to "saml". More details at https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started')
+                ->example('idp: \'%env(OAUTH_APPID_IDP)%\'')
             ->end()
         ;
     }
 
     public function getProviderClass(array $configuration)
     {
-        return AppIdProvider::class;
+        return 'Jampire\OAuth2\Client\Provider\AppIdProvider';
     }
 
     public function getClientClass(array $config)
     {
-        return AppIdClient::class;
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\AppIdClient';
     }
 
     public function getProviderOptions(array $configuration)
@@ -53,7 +51,7 @@ class AppIdProviderConfigurator implements ProviderConfiguratorInterface
             'clientSecret' => $configuration['client_secret'],
             'baseAuthUri' => $configuration['base_auth_uri'],
             'tenantId' => $configuration['tenant_id'],
-            'redirectRouteName' => $configuration['redirect_route'],
+            'redirectRoute' => $configuration['redirect_route'],
             'idp' => $configuration['idp'],
         ];
     }
