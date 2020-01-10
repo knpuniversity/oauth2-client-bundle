@@ -48,6 +48,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MollieProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderWithoutClientSecretConfiguratorInterface;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PsnProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SalesforceProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
@@ -338,7 +339,13 @@ class KnpUOAuth2ClientExtension extends Extension
         $optionsNode = $node->children();
         $optionsNode
             ->scalarNode('client_id')->isRequired()->end()
-            ->scalarNode('client_secret')->isRequired()->end()
+        ;
+
+        if (self::configuratorNeedsClientSecret($this->getConfigurator($type))) {
+            $optionsNode->scalarNode('client_secret')->isRequired()->end();
+        }
+
+        $optionsNode
             ->scalarNode('redirect_route')->isRequired()->end()
             ->arrayNode('redirect_params')
                 ->prototype('scalar')->end()
@@ -350,5 +357,17 @@ class KnpUOAuth2ClientExtension extends Extension
         $this->getConfigurator($type)
             ->buildConfiguration($optionsNode);
         $optionsNode->end();
+    }
+
+    /**
+     * @internal
+     */
+    public static function configuratorNeedsClientSecret(ProviderConfiguratorInterface $configurator): bool
+    {
+        if (!$configurator instanceof ProviderWithoutClientSecretConfiguratorInterface) {
+            return true;
+        }
+
+        return $configurator->needsClientSecret();
     }
 }

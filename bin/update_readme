@@ -40,7 +40,7 @@ $sectionTemplate = <<<EOF
             type: %PROVIDER_NAME%
             # add and configure client_id and client_secret in parameters.yml
             client_id: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_SECRET)%'
+            %CLIENT_SECRET%
             # a route name you'll create
             redirect_route: connect_%PROVIDER_NAME%_check
             redirect_params: {}
@@ -122,7 +122,23 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
         $customKeys[] = $keyPrefix . $example;
     }
 
-    $newSection = str_replace('%UCPROVIDER_NAME%', strtoupper($type), $sectionTemplate);
+    $newSection = $sectionTemplate;
+
+    if (KnpUOAuth2ClientExtension::configuratorNeedsClientSecret($configurator)) {
+        $newSection = str_replace(
+            '%CLIENT_SECRET%',
+            "client_secret: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_SECRET)%'",
+            $newSection
+        );
+    } else {
+        $newSection = str_replace(
+            '            %CLIENT_SECRET%',
+            '',
+            $newSection
+        );
+    }
+
+    $newSection = str_replace('%UCPROVIDER_NAME%', strtoupper($type), $newSection);
     $newSection = str_replace('%PROVIDER_NAME%', $type, $newSection);
     $newSection = str_replace('%CLIENT_CLASS%', $configurator->getClientClass(array()), $newSection);
     $newSection = str_replace('%PACKAGE_NAME%', $configurator->getPackagistName(), $newSection);

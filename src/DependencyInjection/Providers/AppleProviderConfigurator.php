@@ -4,19 +4,24 @@ namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
-class AppleProviderConfigurator implements ProviderConfiguratorInterface
+class AppleProviderConfigurator implements ProviderConfiguratorInterface, ProviderWithoutClientSecretConfiguratorInterface
 {
+    public function needsClientSecret(): bool
+    {
+        return false;
+    }
+
     public function buildConfiguration(NodeBuilder $node)
     {
         $node
             ->scalarNode('team_id')
-                ->cannotBeEmpty()
+                ->isRequired()
             ->end()
             ->scalarNode('key_file_id')
-                ->cannotBeEmpty()
+                ->isRequired()
             ->end()
             ->scalarNode('key_file_path')
-                ->cannotBeEmpty()
+                ->isRequired()
             ->end()
         ;
     }
