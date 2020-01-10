@@ -11,14 +11,12 @@
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
-use League\OAuth2\Client\Token\AccessToken;
 use Larabros\OAuth2\Client\Provider\PsnResourceOwner;
+use League\OAuth2\Client\Token\AccessToken;
 
 class PsnClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return PsnResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

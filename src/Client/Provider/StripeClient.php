@@ -10,15 +10,13 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
+use AdamPaterson\OAuth2\Client\Provider\StripeResourceOwner;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use AdamPaterson\OAuth2\Client\Provider\StripeResourceOwner;
 
 class StripeClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return StripeResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

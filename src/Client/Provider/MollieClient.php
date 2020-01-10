@@ -17,8 +17,6 @@ use Mollie\OAuth2\Client\Provider\MollieResourceOwner;
 class MollieClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return MollieResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

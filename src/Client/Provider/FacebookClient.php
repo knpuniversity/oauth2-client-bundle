@@ -17,8 +17,6 @@ use League\OAuth2\Client\Token\AccessToken;
 class FacebookClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return FacebookUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

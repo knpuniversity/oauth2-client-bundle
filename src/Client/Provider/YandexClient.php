@@ -10,15 +10,13 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
+use Aego\OAuth2\Client\Provider\YandexResourceOwner;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use Aego\OAuth2\Client\Provider\YandexResourceOwner;
 
 class YandexClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return YandexResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

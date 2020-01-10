@@ -17,8 +17,6 @@ use Stevenmaguire\OAuth2\Client\Provider\MicrosoftResourceOwner;
 class MicrosoftClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return MicrosoftResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

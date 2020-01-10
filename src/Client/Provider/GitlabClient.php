@@ -22,8 +22,6 @@ use Omines\OAuth2\Client\Provider\GitlabResourceOwner;
 class GitlabClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return GitlabResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

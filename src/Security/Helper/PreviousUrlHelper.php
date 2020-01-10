@@ -18,8 +18,7 @@ trait PreviousUrlHelper
     /**
      * Returns the URL (if any) the user visited that forced them to login.
      *
-     * @param Request $request
-     * @param string  $providerKey
+     * @param string $providerKey
      *
      * @return string
      */

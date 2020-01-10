@@ -17,8 +17,6 @@ use Stevenmaguire\OAuth2\Client\Provider\BoxResourceOwner;
 class BoxClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return BoxResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
