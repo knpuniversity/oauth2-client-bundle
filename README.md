@@ -57,6 +57,7 @@ via Composer:
 | OAuth2 Provider                                                       | Install                                             |
 | --------------------------------------------------------------------- | ------------------------------------------------------ |
 | [Amazon](https://github.com/luchianenco/oauth2-amazon)                | composer require luchianenco/oauth2-amazon          |
+| [Apple](https://github.com/patrickbussmann/oauth2-apple)              | composer require patrickbussmann/oauth2-apple       |
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
@@ -455,6 +456,24 @@ knpu_oauth2_client:
             redirect_route: connect_amazon_check
             redirect_params: {}
 
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.apple"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AppleClient
+        # composer require patrickbussmann/oauth2-apple
+        apple:
+            # must be "apple" - it activates that type!
+            type: apple
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_APPLE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_APPLE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_apple_check
+            redirect_params: {}
+            # team_id: null
+            # key_file_id: null
+            # key_file_path: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
