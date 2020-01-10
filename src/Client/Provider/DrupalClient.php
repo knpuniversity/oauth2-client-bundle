@@ -10,15 +10,13 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
+use ChrisHemmings\OAuth2\Client\Provider\DrupalResourceOwner;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use ChrisHemmings\OAuth2\Client\Provider\DrupalResourceOwner;
 
 class DrupalClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return DrupalResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -24,9 +24,6 @@ trait FinishRegistrationBehavior
     /**
      * Call this from within your onAuthenticationFailure() method.
      *
-     * @param Request                     $request
-     * @param FinishRegistrationException $e
-     *
      * @throws LogicException
      */
     protected function saveUserInfoToSession(Request $request, FinishRegistrationException $e)
@@ -45,8 +42,6 @@ trait FinishRegistrationBehavior
 
     /**
      * Useful during registration to get your user information back out.
-     *
-     * @param Request $request
      *
      * @return mixed
      *

@@ -48,6 +48,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MollieProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderWithoutClientSecretConfiguratorInterface;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PsnProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SalesforceProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigurator;
@@ -64,12 +65,12 @@ use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Config\FileLocator;
 
 class KnpUOAuth2ClientExtension extends Extension
 {
@@ -147,9 +148,6 @@ class KnpUOAuth2ClientExtension extends Extension
 
     /**
      * Load the bundle configuration.
-     *
-     * @param array            $configs
-     * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -168,20 +166,13 @@ class KnpUOAuth2ClientExtension extends Extension
         foreach ($clientConfigurations as $key => $clientConfig) {
             // manually make sure "type" is there
             if (!isset($clientConfig['type'])) {
-                throw new InvalidConfigurationException(sprintf(
-                    'Your "knpu_oauth2_client.clients.%s" config entry is missing the "type" key.',
-                    $key
-                ));
+                throw new InvalidConfigurationException(sprintf('Your "knpu_oauth2_client.clients.%s" config entry is missing the "type" key.', $key));
             }
 
             $type = $clientConfig['type'];
             unset($clientConfig['type']);
             if (!isset(self::$supportedProviderTypes[$type])) {
-                throw new InvalidConfigurationException(sprintf(
-                    'The "knpu_oauth2_client.clients" config "type" key "%s" is not supported. We support (%s)',
-                    $type,
-                    implode(', ', self::$supportedProviderTypes)
-                ));
+                throw new InvalidConfigurationException(sprintf('The "knpu_oauth2_client.clients" config "type" key "%s" is not supported. We support (%s)', $type, implode(', ', self::$supportedProviderTypes)));
             }
 
             // process the configuration
@@ -227,28 +218,22 @@ class KnpUOAuth2ClientExtension extends Extension
     }
 
     /**
-     * @param ContainerBuilder $container
-     * @param string           $providerType   The "type" used in the config - e.g. "facebook"
-     * @param string           $providerKey    The config key used for this - e.g. "facebook_client", "my_facebook"
-     * @param string           $providerClass  Provider class
-     * @param string           $clientClass    Class to use for the Client
-     * @param string           $packageName    Packagist package name required
-     * @param array            $options        Options passed to when constructing the provider
-     * @param string           $redirectRoute  Route name for the redirect URL
-     * @param array            $redirectParams Route params for the redirect URL
-     * @param bool             $useState
-     * @param array            $collaborators
+     * @param string $providerType   The "type" used in the config - e.g. "facebook"
+     * @param string $providerKey    The config key used for this - e.g. "facebook_client", "my_facebook"
+     * @param string $providerClass  Provider class
+     * @param string $clientClass    Class to use for the Client
+     * @param string $packageName    Packagist package name required
+     * @param array  $options        Options passed to when constructing the provider
+     * @param string $redirectRoute  Route name for the redirect URL
+     * @param array  $redirectParams Route params for the redirect URL
+     * @param bool   $useState
      *
      * @return string The client service id
      */
     private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators)
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
-            throw new \LogicException(sprintf(
-                'Run `composer require %s` in order to use the "%s" OAuth provider.',
-                $packageName,
-                $providerType
-            ));
+            throw new \LogicException(sprintf('Run `composer require %s` in order to use the "%s" OAuth provider.', $packageName, $providerType));
         }
 
         $providerServiceKey = sprintf('knpu.oauth2.provider.%s', $providerKey);
@@ -338,7 +323,13 @@ class KnpUOAuth2ClientExtension extends Extension
         $optionsNode = $node->children();
         $optionsNode
             ->scalarNode('client_id')->isRequired()->end()
-            ->scalarNode('client_secret')->isRequired()->end()
+        ;
+
+        if (self::configuratorNeedsClientSecret($this->getConfigurator($type))) {
+            $optionsNode->scalarNode('client_secret')->isRequired()->end();
+        }
+
+        $optionsNode
             ->scalarNode('redirect_route')->isRequired()->end()
             ->arrayNode('redirect_params')
                 ->prototype('scalar')->end()
@@ -350,5 +341,17 @@ class KnpUOAuth2ClientExtension extends Extension
         $this->getConfigurator($type)
             ->buildConfiguration($optionsNode);
         $optionsNode->end();
+    }
+
+    /**
+     * @internal
+     */
+    public static function configuratorNeedsClientSecret(ProviderConfiguratorInterface $configurator): bool
+    {
+        if (!$configurator instanceof ProviderWithoutClientSecretConfiguratorInterface) {
+            return true;
+        }
+
+        return $configurator->needsClientSecret();
     }
 }

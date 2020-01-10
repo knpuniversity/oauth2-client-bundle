@@ -17,8 +17,6 @@ use Stevenmaguire\OAuth2\Client\Provider\SalesforceResourceOwner;
 class SalesforceClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return SalesforceResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -11,14 +11,12 @@
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
-use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Provider\StravaResourceOwner;
+use League\OAuth2\Client\Token\AccessToken;
 
 class StravaClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return StravaResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

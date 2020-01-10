@@ -44,8 +44,6 @@ interface OAuth2ClientInterface
     /**
      * Returns the "User" information (called a resource owner).
      *
-     * @param AccessToken $accessToken
-     *
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken);

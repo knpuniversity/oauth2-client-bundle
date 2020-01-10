@@ -17,8 +17,6 @@ use Stevenmaguire\OAuth2\Client\Provider\UberResourceOwner;
 class UberClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return UberResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

@@ -17,8 +17,6 @@ use SeinopSys\OAuth2\Client\Provider\DeviantArtResourceOwner;
 class DevianArtClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return DeviantArtResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

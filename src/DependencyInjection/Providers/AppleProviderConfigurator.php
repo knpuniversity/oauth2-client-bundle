@@ -1,22 +1,35 @@
 <?php
 
+/*
+ * OAuth2 Client Bundle
+ * Copyright (c) KnpUniversity <http://knpuniversity.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
-class AppleProviderConfigurator implements ProviderConfiguratorInterface
+class AppleProviderConfigurator implements ProviderConfiguratorInterface, ProviderWithoutClientSecretConfiguratorInterface
 {
+    public function needsClientSecret(): bool
+    {
+        return false;
+    }
+
     public function buildConfiguration(NodeBuilder $node)
     {
         $node
             ->scalarNode('team_id')
-                ->cannotBeEmpty()
+                ->isRequired()
             ->end()
             ->scalarNode('key_file_id')
-                ->cannotBeEmpty()
+                ->isRequired()
             ->end()
             ->scalarNode('key_file_path')
-                ->cannotBeEmpty()
+                ->isRequired()
             ->end()
         ;
     }

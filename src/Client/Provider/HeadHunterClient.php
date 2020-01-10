@@ -10,15 +10,13 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
+use AlexMasterov\OAuth2\Client\Provider\HeadHunterResourceOwner;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use AlexMasterov\OAuth2\Client\Provider\HeadHunterResourceOwner;
 
 class HeadHunterClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return HeadHunterResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

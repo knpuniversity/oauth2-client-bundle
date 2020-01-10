@@ -17,8 +17,6 @@ use Luchianenco\OAuth2\Client\Provider\AmazonResourceOwner;
 class AmazonClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return AmazonResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

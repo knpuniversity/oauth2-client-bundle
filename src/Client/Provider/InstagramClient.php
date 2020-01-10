@@ -17,8 +17,6 @@ use League\OAuth2\Client\Token\AccessToken;
 class InstagramClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return InstagramResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
