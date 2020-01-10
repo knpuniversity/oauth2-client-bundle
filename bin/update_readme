@@ -132,7 +132,7 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
         );
     } else {
         $newSection = str_replace(
-            '            %CLIENT_SECRET%',
+            '            %CLIENT_SECRET%'.PHP_EOL,
             '',
             $newSection
         );
@@ -145,7 +145,7 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
 
     if (empty($customKeys)) {
         $newSection = str_replace(
-            '            %ADDITIONAL_CONFIG%',
+            '            %ADDITIONAL_CONFIG%'.PHP_EOL,
             '',
             $newSection
         );
