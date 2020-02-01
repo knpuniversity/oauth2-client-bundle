@@ -17,8 +17,6 @@ use Stevenmaguire\OAuth2\Client\Provider\BitbucketResourceOwner;
 class BitbucketClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return BitbucketResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

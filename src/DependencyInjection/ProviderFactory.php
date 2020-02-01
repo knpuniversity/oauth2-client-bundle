@@ -24,8 +24,6 @@ class ProviderFactory
 
     /**
      * ProviderFactory constructor.
-     *
-     * @param UrlGeneratorInterface $generator
      */
     public function __construct(UrlGeneratorInterface $generator)
     {
@@ -36,10 +34,7 @@ class ProviderFactory
      * Creates a provider of the given class.
      *
      * @param string $class
-     * @param array  $options
      * @param string $redirectUri
-     * @param array  $redirectParams
-     * @param array  $collaborators
      *
      * @return mixed
      */

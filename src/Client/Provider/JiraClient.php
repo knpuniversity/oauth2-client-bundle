@@ -17,8 +17,6 @@ use Mrjoops\OAuth2\Client\Provider\JiraResourceOwner;
 class JiraClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return JiraResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

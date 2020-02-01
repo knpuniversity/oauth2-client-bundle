@@ -152,6 +152,11 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
                 'redirect_params' => [],
                 'use_state' => rand(0, 1) == 0,
             ];
+
+            if (!KnpUOAuth2ClientExtension::configuratorNeedsClientSecret($configurator)) {
+                unset($config['client_secret']);
+            }
+
             // loop through and assign some random values
             foreach ($arrayNode->getChildren() as $child) {
                 /** @var NodeInterface $child */

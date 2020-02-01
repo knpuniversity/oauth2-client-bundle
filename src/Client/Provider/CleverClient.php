@@ -17,8 +17,6 @@ use Schoolrunner\OAuth2\Client\User\CleverUser;
 class CleverClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return CleverUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)

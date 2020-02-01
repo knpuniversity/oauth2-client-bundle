@@ -34,9 +34,6 @@ class OAuth2Client implements OAuth2ClientInterface
 
     /**
      * OAuth2Client constructor.
-     *
-     * @param AbstractProvider $provider
-     * @param RequestStack     $requestStack
      */
     public function __construct(AbstractProvider $provider, RequestStack $requestStack)
     {
@@ -112,8 +109,6 @@ class OAuth2Client implements OAuth2ClientInterface
 
     /**
      * Returns the "User" information (called a resource owner).
-     *
-     * @param AccessToken $accessToken
      *
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */

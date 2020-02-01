@@ -58,6 +58,7 @@ via Composer:
 | --------------------------------------------------------------------- | ------------------------------------------------------ |
 | [Amazon](https://github.com/luchianenco/oauth2-amazon)                | composer require luchianenco/oauth2-amazon          |
 | [AppID](https://github.com/Jampire/oauth2-appid)                      | composer require jampire/oauth2-appid               |
+| [Apple](https://github.com/patrickbussmann/oauth2-apple)              | composer require patrickbussmann/oauth2-apple       |
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
@@ -455,7 +456,23 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_amazon_check
             redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
 
+        # will create service: "knpu.oauth2.client.apple"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AppleClient
+        # composer require patrickbussmann/oauth2-apple
+        apple:
+            # must be "apple" - it activates that type!
+            type: apple
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_APPLE_CLIENT_ID)%'
+            # a route name you'll create
+            redirect_route: connect_apple_check
+            redirect_params: {}
+            team_id: null
+            key_file_id: null
+            key_file_path: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -546,7 +563,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_bitbucket_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -562,7 +578,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_box_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -578,7 +593,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_buffer_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -613,7 +627,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_clever_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -629,7 +642,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_devian_art_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -645,7 +657,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_digital_ocean_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -661,7 +672,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_discord_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -677,7 +687,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_dribbble_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -693,7 +702,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_dropbox_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -726,7 +734,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_elance_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -742,7 +749,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_eve_online_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -758,7 +764,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_eventbrite_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -790,7 +795,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_fitbit_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -806,7 +810,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_four_square_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -839,7 +842,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_github_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -895,7 +897,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_headhunter_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -911,7 +912,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_heroku_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -927,7 +927,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_instagram_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -943,7 +942,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_jira_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1003,7 +1001,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_mail_ru_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1040,7 +1037,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_mollie_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1056,7 +1052,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_odnoklassniki_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1089,7 +1084,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_psn_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1122,7 +1116,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_slack_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1138,7 +1131,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_strava_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1154,7 +1146,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_stripe_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1170,7 +1161,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_uber_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1186,7 +1176,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_unsplash_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1202,7 +1191,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_vimeo_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1218,7 +1206,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_vkontakte_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1234,7 +1221,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_yahoo_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1250,7 +1236,6 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_yandex_check
             redirect_params: {}
-
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 

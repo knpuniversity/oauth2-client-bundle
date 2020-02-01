@@ -10,15 +10,13 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
+use djchen\OAuth2\Client\Provider\FitbitUser;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use djchen\OAuth2\Client\Provider\FitbitUser;
 
 class FitbitClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return FitbitUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
