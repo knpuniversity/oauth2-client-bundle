@@ -459,23 +459,6 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
-        # will create service: "knpu.oauth2.client.apple"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AppleClient
-        # composer require patrickbussmann/oauth2-apple
-        apple:
-            # must be "apple" - it activates that type!
-            type: apple
-            # add and configure client_id and client_secret in parameters.yml
-            client_id: '%env(OAUTH_APPLE_CLIENT_ID)%'
-            # a route name you'll create
-            redirect_route: connect_apple_check
-            redirect_params: {}
-            team_id: null
-            key_file_id: null
-            key_file_path: null
-            # whether to check OAuth2 "state": defaults to true
-            # use_state: true
-
         # will create service: "knpu.oauth2.client.appid"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AppIdClient
         # composer require jampire/oauth2-appid
@@ -494,6 +477,23 @@ knpu_oauth2_client:
             tenant_id: '%env(OAUTH_APPID_TENANT_ID)%'
             # Identity Provider code. Defaults to "saml". More details at https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started
             # idp: '%env(OAUTH_APPID_IDP)%'
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.apple"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AppleClient
+        # composer require patrickbussmann/oauth2-apple
+        apple:
+            # must be "apple" - it activates that type!
+            type: apple
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_APPLE_CLIENT_ID)%'
+            # a route name you'll create
+            redirect_route: connect_apple_check
+            redirect_params: {}
+            team_id: null
+            key_file_id: null
+            key_file_path: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
