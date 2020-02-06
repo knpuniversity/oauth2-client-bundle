@@ -1,23 +1,28 @@
 <?php
 
+/*
+ * OAuth2 Client Bundle
+ * Copyright (c) KnpUniversity <http://knpuniversity.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
-use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
-use League\OAuth2\Client\Token\AccessToken;
-use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use Jampire\OAuth2\Client\Provider\AppIdResourceOwner;
+use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+use League\OAuth2\Client\Token\AccessToken;
 
 /**
- * Class AppIdClient
+ * Class AppIdClient.
  *
  * @author  Dzianis Kotau <jampire.blr@gmail.com>
- * @package KnpU\OAuth2ClientBundle\Client\Provider
  */
 class AppIdClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     *
      * @return AppIdResourceOwner|ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
