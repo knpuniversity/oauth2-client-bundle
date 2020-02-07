@@ -57,6 +57,7 @@ via Composer:
 | OAuth2 Provider                                                       | Install                                             |
 | --------------------------------------------------------------------- | ------------------------------------------------------ |
 | [Amazon](https://github.com/luchianenco/oauth2-amazon)                | composer require luchianenco/oauth2-amazon          |
+| [AppID](https://github.com/Jampire/oauth2-appid)                      | composer require jampire/oauth2-appid               |
 | [Apple](https://github.com/patrickbussmann/oauth2-apple)              | composer require patrickbussmann/oauth2-apple       |
 | [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0                |
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
@@ -455,6 +456,27 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_amazon_check
             redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.appid"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\AppIdClient
+        # composer require jampire/oauth2-appid
+        appid:
+            # must be "appid" - it activates that type!
+            type: appid
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(OAUTH_APPID_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_APPID_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_appid_check
+            redirect_params: {}
+            # IBM App ID base URL. For example, "https://us-south.appid.cloud.ibm.com/oauth/v4". More details at https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started
+            base_auth_uri: '%env(OAUTH_APPID_BASE_AUTH_URI)%'
+            # IBM App ID service tenant ID. For example, "1234-5678-abcd-efgh". More details at https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started
+            tenant_id: '%env(OAUTH_APPID_TENANT_ID)%'
+            # Identity Provider code. Defaults to "saml". More details at https://cloud.ibm.com/docs/services/appid?topic=appid-getting-started
+            # idp: '%env(OAUTH_APPID_IDP)%'
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
