@@ -437,7 +437,7 @@ knpu_oauth2_client:
     # http_client: null
 
     # options to configure the default http client
-    # http_client_options
+    # http_client_options:
     #     timeout: 0
     #     proxy: null
     #     Use only with proxy option set
