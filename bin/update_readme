@@ -38,7 +38,7 @@ $sectionTemplate = <<<EOF
         %PROVIDER_NAME%:
             # must be "%PROVIDER_NAME%" - it activates that type!
             type: %PROVIDER_NAME%
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_ID)%'
             %CLIENT_SECRET%
             # a route name you'll create
@@ -243,13 +243,13 @@ Below is the configuration for *all* of the supported OAuth2 providers.
 any provider.
 
 ```yml
-# app/config/config.yml
+# config/packages/knpu_oauth2_client.yaml
 knpu_oauth2_client:
     # can be set to the service id of a service that implements Guzzle\ClientInterface
     # http_client: null
 
     # options to configure the default http client
-    # http_client_options
+    # http_client_options:
     #     timeout: 0
     #     proxy: null
     #     Use only with proxy option set
