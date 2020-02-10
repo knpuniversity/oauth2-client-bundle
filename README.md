@@ -431,7 +431,7 @@ Below is the configuration for *all* of the supported OAuth2 providers.
 any provider.
 
 ```yml
-# app/config/config.yml
+# config/packages/knpu_oauth2_client.yaml
 knpu_oauth2_client:
     # can be set to the service id of a service that implements Guzzle\ClientInterface
     # http_client: null
@@ -450,7 +450,7 @@ knpu_oauth2_client:
         amazon:
             # must be "amazon" - it activates that type!
             type: amazon
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_AMAZON_CLIENT_ID)%'
             client_secret: '%env(OAUTH_AMAZON_CLIENT_SECRET)%'
             # a route name you'll create
@@ -465,7 +465,7 @@ knpu_oauth2_client:
         appid:
             # must be "appid" - it activates that type!
             type: appid
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_APPID_CLIENT_ID)%'
             client_secret: '%env(OAUTH_APPID_CLIENT_SECRET)%'
             # a route name you'll create
@@ -486,7 +486,7 @@ knpu_oauth2_client:
         apple:
             # must be "apple" - it activates that type!
             type: apple
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_APPLE_CLIENT_ID)%'
             # a route name you'll create
             redirect_route: connect_apple_check
@@ -503,7 +503,7 @@ knpu_oauth2_client:
         auth0:
             # must be "auth0" - it activates that type!
             type: auth0
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_AUTH0_CLIENT_ID)%'
             client_secret: '%env(OAUTH_AUTH0_CLIENT_SECRET)%'
             # a route name you'll create
@@ -524,7 +524,7 @@ knpu_oauth2_client:
         azure:
             # must be "azure" - it activates that type!
             type: azure
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_AZURE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_AZURE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -557,7 +557,7 @@ knpu_oauth2_client:
         bitbucket:
             # must be "bitbucket" - it activates that type!
             type: bitbucket
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_BITBUCKET_CLIENT_ID)%'
             client_secret: '%env(OAUTH_BITBUCKET_CLIENT_SECRET)%'
             # a route name you'll create
@@ -572,7 +572,7 @@ knpu_oauth2_client:
         box:
             # must be "box" - it activates that type!
             type: box
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_BOX_CLIENT_ID)%'
             client_secret: '%env(OAUTH_BOX_CLIENT_SECRET)%'
             # a route name you'll create
@@ -587,7 +587,7 @@ knpu_oauth2_client:
         buffer:
             # must be "buffer" - it activates that type!
             type: buffer
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_BUFFER_CLIENT_ID)%'
             client_secret: '%env(OAUTH_BUFFER_CLIENT_SECRET)%'
             # a route name you'll create
@@ -602,7 +602,7 @@ knpu_oauth2_client:
         canvas_lms:
             # must be "canvas_lms" - it activates that type!
             type: canvas_lms
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_CANVAS_LMS_CLIENT_ID)%'
             client_secret: '%env(OAUTH_CANVAS_LMS_CLIENT_SECRET)%'
             # a route name you'll create
@@ -621,7 +621,7 @@ knpu_oauth2_client:
         clever:
             # must be "clever" - it activates that type!
             type: clever
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_CLEVER_CLIENT_ID)%'
             client_secret: '%env(OAUTH_CLEVER_CLIENT_SECRET)%'
             # a route name you'll create
@@ -636,7 +636,7 @@ knpu_oauth2_client:
         devian_art:
             # must be "devian_art" - it activates that type!
             type: devian_art
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_DEVIAN_ART_CLIENT_ID)%'
             client_secret: '%env(OAUTH_DEVIAN_ART_CLIENT_SECRET)%'
             # a route name you'll create
@@ -651,7 +651,7 @@ knpu_oauth2_client:
         digital_ocean:
             # must be "digital_ocean" - it activates that type!
             type: digital_ocean
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_DIGITAL_OCEAN_CLIENT_ID)%'
             client_secret: '%env(OAUTH_DIGITAL_OCEAN_CLIENT_SECRET)%'
             # a route name you'll create
@@ -666,7 +666,7 @@ knpu_oauth2_client:
         discord:
             # must be "discord" - it activates that type!
             type: discord
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_DISCORD_CLIENT_ID)%'
             client_secret: '%env(OAUTH_DISCORD_CLIENT_SECRET)%'
             # a route name you'll create
@@ -681,7 +681,7 @@ knpu_oauth2_client:
         dribbble:
             # must be "dribbble" - it activates that type!
             type: dribbble
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_DRIBBBLE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_DRIBBBLE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -696,7 +696,7 @@ knpu_oauth2_client:
         dropbox:
             # must be "dropbox" - it activates that type!
             type: dropbox
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_DROPBOX_CLIENT_ID)%'
             client_secret: '%env(OAUTH_DROPBOX_CLIENT_SECRET)%'
             # a route name you'll create
@@ -711,7 +711,7 @@ knpu_oauth2_client:
         drupal:
             # must be "drupal" - it activates that type!
             type: drupal
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_DRUPAL_CLIENT_ID)%'
             client_secret: '%env(OAUTH_DRUPAL_CLIENT_SECRET)%'
             # a route name you'll create
@@ -728,7 +728,7 @@ knpu_oauth2_client:
         elance:
             # must be "elance" - it activates that type!
             type: elance
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_ELANCE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_ELANCE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -743,7 +743,7 @@ knpu_oauth2_client:
         eve_online:
             # must be "eve_online" - it activates that type!
             type: eve_online
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_EVE_ONLINE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_EVE_ONLINE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -758,7 +758,7 @@ knpu_oauth2_client:
         eventbrite:
             # must be "eventbrite" - it activates that type!
             type: eventbrite
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_EVENTBRITE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_EVENTBRITE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -773,7 +773,7 @@ knpu_oauth2_client:
         facebook:
             # must be "facebook" - it activates that type!
             type: facebook
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_FACEBOOK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_FACEBOOK_CLIENT_SECRET)%'
             # a route name you'll create
@@ -789,7 +789,7 @@ knpu_oauth2_client:
         fitbit:
             # must be "fitbit" - it activates that type!
             type: fitbit
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_FITBIT_CLIENT_ID)%'
             client_secret: '%env(OAUTH_FITBIT_CLIENT_SECRET)%'
             # a route name you'll create
@@ -804,7 +804,7 @@ knpu_oauth2_client:
         four_square:
             # must be "four_square" - it activates that type!
             type: four_square
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_FOUR_SQUARE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_FOUR_SQUARE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -819,7 +819,7 @@ knpu_oauth2_client:
         geocaching:
             # must be "geocaching" - it activates that type!
             type: geocaching
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_GEOCACHING_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GEOCACHING_CLIENT_SECRET)%'
             # a route name you'll create
@@ -836,7 +836,7 @@ knpu_oauth2_client:
         github:
             # must be "github" - it activates that type!
             type: github
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_GITHUB_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GITHUB_CLIENT_SECRET)%'
             # a route name you'll create
@@ -851,7 +851,7 @@ knpu_oauth2_client:
         gitlab:
             # must be "gitlab" - it activates that type!
             type: gitlab
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_GITLAB_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GITLAB_CLIENT_SECRET)%'
             # a route name you'll create
@@ -868,7 +868,7 @@ knpu_oauth2_client:
         google:
             # must be "google" - it activates that type!
             type: google
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_GOOGLE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -891,7 +891,7 @@ knpu_oauth2_client:
         headhunter:
             # must be "headhunter" - it activates that type!
             type: headhunter
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_HEADHUNTER_CLIENT_ID)%'
             client_secret: '%env(OAUTH_HEADHUNTER_CLIENT_SECRET)%'
             # a route name you'll create
@@ -906,7 +906,7 @@ knpu_oauth2_client:
         heroku:
             # must be "heroku" - it activates that type!
             type: heroku
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_HEROKU_CLIENT_ID)%'
             client_secret: '%env(OAUTH_HEROKU_CLIENT_SECRET)%'
             # a route name you'll create
@@ -921,7 +921,7 @@ knpu_oauth2_client:
         instagram:
             # must be "instagram" - it activates that type!
             type: instagram
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'
             client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
             # a route name you'll create
@@ -936,7 +936,7 @@ knpu_oauth2_client:
         jira:
             # must be "jira" - it activates that type!
             type: jira
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_JIRA_CLIENT_ID)%'
             client_secret: '%env(OAUTH_JIRA_CLIENT_SECRET)%'
             # a route name you'll create
@@ -951,7 +951,7 @@ knpu_oauth2_client:
         keycloak:
             # must be "keycloak" - it activates that type!
             type: keycloak
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_KEYCLOAK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_KEYCLOAK_CLIENT_SECRET)%'
             # a route name you'll create
@@ -976,7 +976,7 @@ knpu_oauth2_client:
         linkedin:
             # must be "linkedin" - it activates that type!
             type: linkedin
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_LINKEDIN_CLIENT_ID)%'
             client_secret: '%env(OAUTH_LINKEDIN_CLIENT_SECRET)%'
             # a route name you'll create
@@ -995,7 +995,7 @@ knpu_oauth2_client:
         mail_ru:
             # must be "mail_ru" - it activates that type!
             type: mail_ru
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_MAIL_RU_CLIENT_ID)%'
             client_secret: '%env(OAUTH_MAIL_RU_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1010,7 +1010,7 @@ knpu_oauth2_client:
         microsoft:
             # must be "microsoft" - it activates that type!
             type: microsoft
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_MICROSOFT_CLIENT_ID)%'
             client_secret: '%env(OAUTH_MICROSOFT_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1031,7 +1031,7 @@ knpu_oauth2_client:
         mollie:
             # must be "mollie" - it activates that type!
             type: mollie
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_MOLLIE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_MOLLIE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1046,7 +1046,7 @@ knpu_oauth2_client:
         odnoklassniki:
             # must be "odnoklassniki" - it activates that type!
             type: odnoklassniki
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_ODNOKLASSNIKI_CLIENT_ID)%'
             client_secret: '%env(OAUTH_ODNOKLASSNIKI_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1061,7 +1061,7 @@ knpu_oauth2_client:
         paypal:
             # must be "paypal" - it activates that type!
             type: paypal
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_PAYPAL_CLIENT_ID)%'
             client_secret: '%env(OAUTH_PAYPAL_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1078,7 +1078,7 @@ knpu_oauth2_client:
         psn:
             # must be "psn" - it activates that type!
             type: psn
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_PSN_CLIENT_ID)%'
             client_secret: '%env(OAUTH_PSN_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1093,7 +1093,7 @@ knpu_oauth2_client:
         salesforce:
             # must be "salesforce" - it activates that type!
             type: salesforce
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_SALESFORCE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_SALESFORCE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1110,7 +1110,7 @@ knpu_oauth2_client:
         slack:
             # must be "slack" - it activates that type!
             type: slack
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_SLACK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_SLACK_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1125,7 +1125,7 @@ knpu_oauth2_client:
         strava:
             # must be "strava" - it activates that type!
             type: strava
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_STRAVA_CLIENT_ID)%'
             client_secret: '%env(OAUTH_STRAVA_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1140,7 +1140,7 @@ knpu_oauth2_client:
         stripe:
             # must be "stripe" - it activates that type!
             type: stripe
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_STRIPE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_STRIPE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1155,7 +1155,7 @@ knpu_oauth2_client:
         uber:
             # must be "uber" - it activates that type!
             type: uber
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_UBER_CLIENT_ID)%'
             client_secret: '%env(OAUTH_UBER_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1170,7 +1170,7 @@ knpu_oauth2_client:
         unsplash:
             # must be "unsplash" - it activates that type!
             type: unsplash
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_UNSPLASH_CLIENT_ID)%'
             client_secret: '%env(OAUTH_UNSPLASH_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1185,7 +1185,7 @@ knpu_oauth2_client:
         vimeo:
             # must be "vimeo" - it activates that type!
             type: vimeo
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_VIMEO_CLIENT_ID)%'
             client_secret: '%env(OAUTH_VIMEO_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1200,7 +1200,7 @@ knpu_oauth2_client:
         vkontakte:
             # must be "vkontakte" - it activates that type!
             type: vkontakte
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_VKONTAKTE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_VKONTAKTE_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1215,7 +1215,7 @@ knpu_oauth2_client:
         yahoo:
             # must be "yahoo" - it activates that type!
             type: yahoo
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_YAHOO_CLIENT_ID)%'
             client_secret: '%env(OAUTH_YAHOO_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1230,7 +1230,7 @@ knpu_oauth2_client:
         yandex:
             # must be "yandex" - it activates that type!
             type: yandex
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_YANDEX_CLIENT_ID)%'
             client_secret: '%env(OAUTH_YANDEX_CLIENT_SECRET)%'
             # a route name you'll create
@@ -1245,7 +1245,7 @@ knpu_oauth2_client:
         zendesk:
             # must be "zendesk" - it activates that type!
             type: zendesk
-            # add and configure client_id and client_secret in parameters.yml
+            # add and configure client_id and client_secret in parameters.yml or .env* files
             client_id: '%env(OAUTH_ZENDESK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_ZENDESK_CLIENT_SECRET)%'
             # a route name you'll create
