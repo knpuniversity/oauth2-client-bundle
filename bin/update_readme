@@ -38,7 +38,7 @@ $sectionTemplate = <<<EOF
         %PROVIDER_NAME%:
             # must be "%PROVIDER_NAME%" - it activates that type!
             type: %PROVIDER_NAME%
-            # add and configure client_id and client_secret in parameters.yml or .env* files
+            # add and set these environment variables in your .env files
             client_id: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_ID)%'
             %CLIENT_SECRET%
             # a route name you'll create
