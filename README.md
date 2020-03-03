@@ -96,6 +96,7 @@ via Composer:
 | [PSN](https://github.com/larabros/oauth2-psn)                         | composer require larabros/oauth2-psn                |
 | [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)      | composer require stevenmaguire/oauth2-salesforce    |
 | [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack         |
+| [Spotify](https://github.com/ker0x/oauth2-spotify)                    | composer require kerox/oauth2-spotify               |
 | [Strava](https://github.com/Edwin-Luijten/oauth2-strava)              | composer require edwin-luijten/oauth2-strava        |
 | [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe        |
 | [Uber](https://github.com/stevenmaguire/oauth2-uber)                  | composer require stevenmaguire/oauth2-uber          |
@@ -1115,6 +1116,21 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_SLACK_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_slack_check
+            redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.spotify"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\SpotifyClient
+        # composer require kerox/oauth2-spotify
+        spotify:
+            # must be "spotify" - it activates that type!
+            type: spotify
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_SPOTIFY_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_SPOTIFY_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_spotify_check
             redirect_params: {}
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
