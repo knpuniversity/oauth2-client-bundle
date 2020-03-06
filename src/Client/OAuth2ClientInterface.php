@@ -39,7 +39,7 @@ interface OAuth2ClientInterface
      * @throws \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException   If token cannot be fetched
      */
-    public function getAccessToken();
+    public function getAccessToken(array $options = []);
 
     /**
      * Returns the "User" information (called a resource owner).

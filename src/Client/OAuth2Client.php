@@ -86,7 +86,7 @@ class OAuth2Client implements OAuth2ClientInterface
      * @throws MissingAuthorizationCodeException
      * @throws IdentityProviderException         If token cannot be fetched
      */
-    public function getAccessToken()
+    public function getAccessToken(array $options = [])
     {
         if (!$this->isStateless) {
             $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
@@ -102,9 +102,10 @@ class OAuth2Client implements OAuth2ClientInterface
             throw new MissingAuthorizationCodeException('No "code" parameter was found (usually this is a query parameter)!');
         }
 
-        return $this->provider->getAccessToken('authorization_code', [
-            'code' => $code,
-        ]);
+        return $this->provider->getAccessToken(
+            'authorization_code',
+            array_merge(['code' => $code], $options)
+        );
     }
 
     /**

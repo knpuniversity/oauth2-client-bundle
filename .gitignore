@@ -2,3 +2,4 @@
 /vendor/*
 /tests/app/cache
 /.php_cs.cache
+/.phpunit.result.cache

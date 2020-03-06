@@ -137,6 +137,26 @@ class OAuth2ClientTest extends TestCase
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 
+    public function testGetAccessTokenWithOptions()
+    {
+        $this->request->query->set('state', 'THE_STATE');
+        $this->request->query->set('code', 'CODE_ABC');
+
+        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+            ->willReturn('THE_STATE');
+
+        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $this->provider->getAccessToken('authorization_code', ['code' => 'CODE_ABC', 'redirect_uri' => 'https://some.url'])
+            ->willReturn($expectedToken->reveal());
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+        $actualToken = $client->getAccessToken(['redirect_uri' => 'https://some.url']);
+        $this->assertSame($expectedToken->reveal(), $actualToken);
+    }
+
     public function testGetAccessTokenFromPOST()
     {
         $this->request->request->set('code', 'CODE_ABC');
