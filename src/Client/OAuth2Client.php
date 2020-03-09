@@ -80,6 +80,8 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * Call this after the user is redirected back to get the access token.
      *
+     * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
+     *
      * @return AccessToken|\League\OAuth2\Client\Token\AccessTokenInterface
      *
      * @throws InvalidStateException
