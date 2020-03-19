@@ -28,7 +28,7 @@ class SocialAuthenticatorTest extends TestCase
     {
         $authenticator = new StubSocialAuthenticator();
         $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken()
+        $client->getAccessToken([])
             ->willReturn('expected_access_token');
 
         $actualToken = $authenticator->doFetchAccessToken($client->reveal());
@@ -40,7 +40,7 @@ class SocialAuthenticatorTest extends TestCase
         $this->expectException(NoAuthCodeAuthenticationException::class);
         $authenticator = new StubSocialAuthenticator();
         $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken()
+        $client->getAccessToken([])
             ->willThrow(new MissingAuthorizationCodeException());
 
         $authenticator->doFetchAccessToken($client->reveal());

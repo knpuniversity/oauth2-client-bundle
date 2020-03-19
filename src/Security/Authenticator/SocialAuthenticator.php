@@ -29,10 +29,10 @@ abstract class SocialAuthenticator extends AbstractGuardAuthenticator
     use PreviousUrlHelper;
     use SaveAuthFailureMessage;
 
-    protected function fetchAccessToken(OAuth2ClientInterface $client)
+    protected function fetchAccessToken(OAuth2ClientInterface $client, array $options = [])
     {
         try {
-            return $client->getAccessToken();
+            return $client->getAccessToken($options);
         } catch (MissingAuthorizationCodeException $e) {
             throw new NoAuthCodeAuthenticationException();
         } catch (IdentityProviderException $e) {

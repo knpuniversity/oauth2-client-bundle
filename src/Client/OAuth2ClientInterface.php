@@ -33,13 +33,15 @@ interface OAuth2ClientInterface
     /**
      * Call this after the user is redirected back to get the access token.
      *
+     * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
+     *
      * @return \League\OAuth2\Client\Token\AccessToken
      *
      * @throws \KnpU\OAuth2ClientBundle\Exception\InvalidStateException
      * @throws \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException   If token cannot be fetched
      */
-    public function getAccessToken();
+    public function getAccessToken(array $options = []);
 
     /**
      * Returns the "User" information (called a resource owner).

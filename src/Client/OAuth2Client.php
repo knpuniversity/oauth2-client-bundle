@@ -80,13 +80,15 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * Call this after the user is redirected back to get the access token.
      *
+     * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
+     *
      * @return AccessToken|\League\OAuth2\Client\Token\AccessTokenInterface
      *
      * @throws InvalidStateException
      * @throws MissingAuthorizationCodeException
      * @throws IdentityProviderException         If token cannot be fetched
      */
-    public function getAccessToken()
+    public function getAccessToken(array $options = [])
     {
         if (!$this->isStateless) {
             $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
@@ -102,9 +104,10 @@ class OAuth2Client implements OAuth2ClientInterface
             throw new MissingAuthorizationCodeException('No "code" parameter was found (usually this is a query parameter)!');
         }
 
-        return $this->provider->getAccessToken('authorization_code', [
-            'code' => $code,
-        ]);
+        return $this->provider->getAccessToken(
+            'authorization_code',
+            array_merge(['code' => $code], $options)
+        );
     }
 
     /**
