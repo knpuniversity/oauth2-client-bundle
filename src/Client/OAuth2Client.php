@@ -67,7 +67,7 @@ class OAuth2Client implements OAuth2ClientInterface
         $url = $this->provider->getAuthorizationUrl($options);
 
         // set the state (unless we're stateless)
-        if (!$this->isStateless) {
+        if (!$this->isStateless()) {
             $this->getSession()->set(
                 self::OAUTH2_SESSION_STATE_KEY,
                 $this->provider->getState()
@@ -90,7 +90,7 @@ class OAuth2Client implements OAuth2ClientInterface
      */
     public function getAccessToken(array $options = [])
     {
-        if (!$this->isStateless) {
+        if (!$this->isStateless()) {
             $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
             $actualState = $this->getCurrentRequest()->query->get('state');
             if (!$actualState || ($actualState !== $expectedState)) {
@@ -144,6 +144,11 @@ class OAuth2Client implements OAuth2ClientInterface
     public function getOAuth2Provider()
     {
         return $this->provider;
+    }
+
+    protected function isStateless(): bool
+    {
+        return $this->isStateless;
     }
 
     /**
