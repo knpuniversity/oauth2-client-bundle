@@ -3,12 +3,12 @@
     "type": "symfony-bundle",
     "description": "Integration with league/oauth2-client to provide services",
     "keywords": ["oauth", "oauth2"],
-    "homepage": "http://knpuniversity.com",
+    "homepage": "https://symfonycasts.com",
     "license": "MIT",
     "authors": [
         {
             "name": "Ryan Weaver",
-            "email": "ryan@knpuniversity.com"
+            "email": "ryan@symfonycasts.com"
         }
     ],
     "require": {
