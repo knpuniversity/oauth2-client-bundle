@@ -10,15 +10,15 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
-use Kerox\OAuth2\Client\Provider\SpotifyResourceOwner;
+use Buddy\OAuth2\Client\Provider\BuddyResourceOwner;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 
-class SpotifyClient extends OAuth2Client
+class BuddyClient extends OAuth2Client
 {
     /**
-     * @return SpotifyResourceOwner|ResourceOwnerInterface
+     * @return BuddyResourceOwner|ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +26,7 @@ class SpotifyClient extends OAuth2Client
     }
 
     /**
-     * @return SpotifyResourceOwner|ResourceOwnerInterface
+     * @return BuddyResourceOwner|ResourceOwnerInterface
      */
     public function fetchUser()
     {

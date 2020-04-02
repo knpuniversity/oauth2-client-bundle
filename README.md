@@ -63,6 +63,7 @@ via Composer:
 | [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure            |
 | [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket     |
 | [Box](https://github.com/stevenmaguire/oauth2-box)                    | composer require stevenmaguire/oauth2-box           |
+| [Buddy](https://github.com/buddy-works/oauth2-client)                 | composer require buddy-works/oauth2-client          |
 | [Buffer](https://github.com/tgallice/oauth2-buffer)                   | composer require tgallice/oauth2-buffer             |
 | [CanvasLMS](https://github.com/smtech/oauth2-canvaslms)               | composer require smtech/oauth2-canvaslms            |
 | [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever         |
@@ -579,6 +580,23 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_box_check
             redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.buddy"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\BuddyClient
+        # composer require buddy-works/oauth2-client
+        buddy:
+            # must be "buddy" - it activates that type!
+            type: buddy
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_BUDDY_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_BUDDY_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_buddy_check
+            redirect_params: {}
+            # Base API URL, modify this for self-hosted instances
+            # base_api_url: https://api.buddy.works
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
