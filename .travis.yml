@@ -13,14 +13,13 @@ php:
 matrix:
     include:
         - php: 7.3
-          env: DEPENDENCIES=dev LINT=1
+          env: LINT=1
         - php: 7.1
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
 
 before_install:
     - phpenv config-rm xdebug.ini || true
     - composer self-update
-    - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 

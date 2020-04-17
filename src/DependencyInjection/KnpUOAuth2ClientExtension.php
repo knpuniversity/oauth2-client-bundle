@@ -17,6 +17,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\Auth0ProviderConfigura
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\AzureProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BitbucketProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BoxProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BuddyProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\BufferProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\CanvasLMSProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\CleverProviderConfigurator;
@@ -94,6 +95,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'azure' => AzureProviderConfigurator::class,
         'bitbucket' => BitbucketProviderConfigurator::class,
         'box' => BoxProviderConfigurator::class,
+        'buddy' => BuddyProviderConfigurator::class,
         'buffer' => BufferProviderConfigurator::class,
         'canvas_lms' => CanvasLMSProviderConfigurator::class,
         'clever' => CleverProviderConfigurator::class,
