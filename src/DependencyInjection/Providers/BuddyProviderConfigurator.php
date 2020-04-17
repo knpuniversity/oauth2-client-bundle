@@ -18,9 +18,9 @@ class BuddyProviderConfigurator implements ProviderConfiguratorInterface
     {
         $node
             ->scalarNode('base_api_url')
-            ->info('Base API URL, modify this for self-hosted instances')
-            ->defaultValue('https://api.buddy.works')
-            ->cannotBeEmpty()
+                ->info('Base API URL, modify this for self-hosted instances')
+                ->defaultValue('https://api.buddy.works')
+                ->cannotBeEmpty()
             ->end();
     }
 
