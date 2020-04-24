@@ -14,7 +14,7 @@ This bundle integrates with [league/oauth2-client](http://oauth2-client.thephple
 ## Requirements
 
 * PHP 7.1.3 or higher
-* Symfony 4.4 or higher
+* Symfony 4.4 or higher (use version 1 of the bundle for earlier support)
 
 ## This bundle or HWIOAuthBundle?
 
