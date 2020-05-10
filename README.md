@@ -1245,6 +1245,21 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
+        # will create service: "knpu.oauth2.client.wave"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\WaveClient
+        # composer require qdequippe/oauth2-wave
+        wave:
+            # must be "wave" - it activates that type!
+            type: wave
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_WAVE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_WAVE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_wave_check
+            redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
         # will create service: "knpu.oauth2.client.yahoo"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\YahooClient
         # composer require hayageek/oauth2-yahoo
