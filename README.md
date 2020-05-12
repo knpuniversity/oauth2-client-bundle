@@ -105,6 +105,7 @@ via Composer:
 | [Unsplash](https://github.com/hughbertd/oauth2-unsplash)              | composer require hughbertd/oauth2-unsplash          |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo                |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte               |
+| [Wave](https://github.com/qdequippe/oauth2-wave)                      | composer require qdequippe/oauth2-wave              |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo              |
 | [Yandex](https://github.com/rakeev/oauth2-yandex)                     | composer require aego/oauth2-yandex                 |
 | [Zendesk](https://github.com/stevenmaguire/oauth2-zendesk)            | composer require stevenmaguire/oauth2-zendesk       |
@@ -1240,6 +1241,21 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_VKONTAKTE_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_vkontakte_check
+            redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.wave"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\WaveClient
+        # composer require qdequippe/oauth2-wave
+        wave:
+            # must be "wave" - it activates that type!
+            type: wave
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_WAVE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_WAVE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_wave_check
             redirect_params: {}
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
