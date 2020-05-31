@@ -57,6 +57,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SlackProviderConfigura
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SpotifyProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StravaProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\StripeProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\SymfonyConnectProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\UberProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\UnsplashProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
@@ -131,6 +132,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'salesforce' => SalesforceProviderConfigurator::class,
         'slack' => SlackProviderConfigurator::class,
         'spotify' => SpotifyProviderConfigurator::class,
+        'symfony_connect' => SymfonyConnectProviderConfigurator::class,
         'strava' => StravaProviderConfigurator::class,
         'stripe' => StripeProviderConfigurator::class,
         'uber' => UberProviderConfigurator::class,
