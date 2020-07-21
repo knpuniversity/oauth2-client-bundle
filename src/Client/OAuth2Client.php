@@ -92,7 +92,7 @@ class OAuth2Client implements OAuth2ClientInterface
     {
         if (!$this->isStateless()) {
             $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
-            $actualState = $this->getCurrentRequest()->query->get('state');
+            $actualState = $this->getCurrentRequest()->get('state');
             if (!$actualState || ($actualState !== $expectedState)) {
                 throw new InvalidStateException('Invalid state');
             }
