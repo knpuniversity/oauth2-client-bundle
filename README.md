@@ -191,9 +191,8 @@ class FacebookController extends Controller
             ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
             ->redirect([
 	    	'public_profile', 'email' // the scopes you want to access
-            ])
-        ;
-	}
+            ]);
+    }
 
     /**
      * After going to Facebook, you're redirected back here
@@ -325,7 +324,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
 
         // 2) do we have a matching user by email?
         $user = $this->em->getRepository(User::class)
-                    ->findOneBy(['email' => $email]);
+            ->findOneBy(['email' => $email]);
 
         // 3) Maybe you just want to "register" them by creating
         // a User object
