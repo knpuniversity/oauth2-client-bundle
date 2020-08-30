@@ -54,7 +54,9 @@ class OAuth2Client implements OAuth2ClientInterface
      * OAuth2 server (e.g. send them to Facebook).
      *
      * @param array $scopes  The scopes you want (leave empty to use default)
-     * @param array $options Extra options to pass to the "Provider" class
+     * @param array $options Extra options to pass to the Provider's getAuthorizationUrl()
+     *                       method. For example, <code>scope</code> is a common option.
+     *                       Generally, these become query parameters when redirecting.
      *
      * @return RedirectResponse
      */
