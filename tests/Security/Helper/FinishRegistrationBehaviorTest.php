@@ -55,10 +55,7 @@ class FinishRegistrationBehaviorTest extends TestCase
         $this->traitObject->getUserInfoFromSession($request->reveal());
     }
 
-    /**
-     * @test
-     */
-    public function shouldThrowExceptionIfSessionDoesNotExist()
+    public function testShouldThrowExceptionIfSessionDoesNotExist()
     {
         $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $mockRequest->method("hasSession")->willReturn(false);
@@ -70,10 +67,7 @@ class FinishRegistrationBehaviorTest extends TestCase
         $testFailureMessage->callSaveUserInfoToSession($mockRequest, $mockAuthException);
     }
 
-    /**
-     * @test
-     */
-    public function shouldThrowExceptionIfSessionExistsButNotSessionInterface()
+    public function testShouldThrowExceptionIfSessionExistsButNotSessionInterface()
     {
         $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $mockRequest->method("hasSession")->willReturn(true);
@@ -86,10 +80,7 @@ class FinishRegistrationBehaviorTest extends TestCase
         $testFailureMessage->callSaveUserInfoToSession($mockRequest, $mockAuthException);
     }
 
-    /**
-     * @test
-     */
-    public function shouldUpdateSessionDataIfSessionExists()
+    public function testShouldUpdateSessionDataIfSessionExists()
     {
         $mockSession = $this->getMockBuilder(SessionInterface::class)->getMock();
         $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();

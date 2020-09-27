@@ -18,10 +18,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SaveAuthFailureMessageTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function shouldThrowExceptionIfSessionDoesNotExist()
+    public function testShouldThrowExceptionIfSessionDoesNotExist()
     {
         $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $mockRequest->method("hasSession")->willReturn(false);
@@ -33,10 +30,7 @@ class SaveAuthFailureMessageTest extends TestCase
         $testFailureMessage->callSaveAuthenticationErrorToSession($mockRequest, $mockAuthException);
     }
 
-    /**
-     * @test
-     */
-    public function shouldThrowExceptionIfExistsButIsNotSessionInterface()
+    public function testShouldThrowExceptionIfExistsButIsNotSessionInterface()
     {
         $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $mockRequest->method("hasSession")->willReturn(true);
@@ -49,10 +43,7 @@ class SaveAuthFailureMessageTest extends TestCase
         $testFailureMessage->callSaveAuthenticationErrorToSession($mockRequest, $mockAuthException);
     }
 
-    /**
-     * @test
-     */
-    public function shouldUpdateSessionErrorIfSessionExists()
+    public function testShouldUpdateSessionErrorIfSessionExists()
     {
         $mockSession = $this->getMockBuilder(SessionInterface::class)->getMock();
         $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();

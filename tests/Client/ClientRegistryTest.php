@@ -17,10 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ClientRegistryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function shouldKnowWhatServicesAreConfigured()
+    public function testShouldKnowWhatServicesAreConfigured()
     {
         $mockServiceMap = [
             'facebook' => 'knpu.oauth2.client.facebook',
@@ -39,10 +36,7 @@ class ClientRegistryTest extends TestCase
         ], $results);
     }
 
-    /**
-     * @test
-     */
-    public function shouldThrowExceptionIfClientDoesNotExist()
+    public function testShouldThrowExceptionIfClientDoesNotExist()
     {
         $mockServiceMap = [
             'facebook' => 'knpu.oauth2.client.facebook',
@@ -58,10 +52,7 @@ class ClientRegistryTest extends TestCase
         $testClientRegistry->getClient("unknownClient");
     }
 
-    /**
-     * @test
-     */
-    public function shouldThrowExceptionIfClientExistsButNotOAuth2Client()
+    public function testShouldThrowExceptionIfClientExistsButNotOAuth2Client()
     {
         $mockServiceMap = [
             'facebook' => 'knpu.oauth2.client.facebook',
@@ -79,10 +70,7 @@ class ClientRegistryTest extends TestCase
         $testClientRegistry->getClient("invalid");
     }
 
-    /**
-     * @test
-     */
-    public function shouldReturnValidClient()
+    public function testShouldReturnValidClient()
     {
         $mockServiceMap = [
             'facebook' => 'knpu.oauth2.client.facebook',

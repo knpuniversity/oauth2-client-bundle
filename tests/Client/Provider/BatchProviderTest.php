@@ -22,6 +22,8 @@ class BatchProviderTest extends TestCase
 {
     public function testProviders()
     {
+        // This is basically just validating that the clients are sane/implemeting OAuth2Client
+
         $mockAccessToken = $this->getMockBuilder(AccessToken::class)->disableOriginalConstructor()->getMock();
         $mockProvider = $this->getMockBuilder(AbstractProvider::class)->getMock();
         $mockProvider->method("getResourceOwner")->willReturn($this->getMockBuilder(ResourceOwnerInterface::class)->getMock());
