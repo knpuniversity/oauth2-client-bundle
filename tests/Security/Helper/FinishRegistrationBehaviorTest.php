@@ -8,21 +8,20 @@
  * file that was distributed with this source code.
  */
 
-namespace KnpU\OAuth2ClientBundle\tests\Security\Helper;
+namespace KnpU\OAuth2ClientBundle\Tests\Security\Helper;
 
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
 use LogicException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @author Serghei Luchianenco (s@luchianenco.com)
  */
 class FinishRegistrationBehaviorTest extends TestCase
 {
+    use HelperTestMockBuilderTrait;
     private $traitObject;
 
     public function setUp(): void
@@ -57,8 +56,7 @@ class FinishRegistrationBehaviorTest extends TestCase
 
     public function testShouldThrowExceptionIfSessionDoesNotExist()
     {
-        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $mockRequest->method("hasSession")->willReturn(false);
+        $mockRequest = $this->getMockRequest(false);
         $mockAuthException = new FinishRegistrationException(['id' => '1', 'name' => 'testUser']);
 
         $testFailureMessage = new FinishRegistrationBehaviorTester();
@@ -69,9 +67,8 @@ class FinishRegistrationBehaviorTest extends TestCase
 
     public function testShouldThrowExceptionIfSessionExistsButNotSessionInterface()
     {
-        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $mockRequest->method("hasSession")->willReturn(true);
-        $mockRequest->method("getSession")->willReturn(\stdClass::class);
+        $mockRequest = $this->getMockRequest(true);
+
         $mockAuthException = new FinishRegistrationException(['id' => '1', 'name' => 'testUser']);
 
         $testFailureMessage = new FinishRegistrationBehaviorTester();
@@ -82,10 +79,8 @@ class FinishRegistrationBehaviorTest extends TestCase
 
     public function testShouldUpdateSessionDataIfSessionExists()
     {
-        $mockSession = $this->getMockBuilder(SessionInterface::class)->getMock();
-        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $mockRequest->method("hasSession")->willReturn(true);
-        $mockRequest->method("getSession")->willReturn($mockSession);
+        $mockSession = $this->getMockBuilder(Session::class)->getMock();
+        $mockRequest = $this->getMockRequest(true, $mockSession);
 
         $userInfo = ['id' => '1', 'name' => 'testUser'];
         $mockAuthException = new FinishRegistrationException($userInfo);
@@ -104,7 +99,7 @@ class FinishRegistrationBehaviorTest extends TestCase
 class FinishRegistrationBehaviorTester
 {
     use FinishRegistrationBehavior;
-    public function callSaveUserInfoToSession(Request $request, FinishRegistrationException $exception): void
+    public function callSaveUserInfoToSession($request, $exception): void
     {
         $this->saveUserInfoToSession($request, $exception);
     }

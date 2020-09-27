@@ -12,16 +12,16 @@ namespace KnpU\OAuth2ClientBundle\Tests\Security\Helper;
 
 use KnpU\OAuth2ClientBundle\Security\Helper\SaveAuthFailureMessage;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SaveAuthFailureMessageTest extends TestCase
 {
+    use HelperTestMockBuilderTrait;
+
     public function testShouldThrowExceptionIfSessionDoesNotExist()
     {
-        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $mockRequest->method("hasSession")->willReturn(false);
+        $mockRequest = $this->getMockRequest(false);
         $mockAuthException = new AuthenticationException();
 
         $testFailureMessage = new SaveAuthFailureMessageTester();
@@ -32,9 +32,7 @@ class SaveAuthFailureMessageTest extends TestCase
 
     public function testShouldThrowExceptionIfExistsButIsNotSessionInterface()
     {
-        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $mockRequest->method("hasSession")->willReturn(true);
-        $mockRequest->method("getSession")->willReturn(\stdClass::class);
+        $mockRequest = $this->getMockRequest(true);
         $mockAuthException = new AuthenticationException();
 
         $testFailureMessage = new SaveAuthFailureMessageTester();
@@ -46,9 +44,8 @@ class SaveAuthFailureMessageTest extends TestCase
     public function testShouldUpdateSessionErrorIfSessionExists()
     {
         $mockSession = $this->getMockBuilder(SessionInterface::class)->getMock();
-        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $mockRequest->method("hasSession")->willReturn(true);
-        $mockRequest->method("getSession")->willReturn($mockSession);
+        $mockRequest = $this->getMockRequest(true, $mockSession);
+
         $mockAuthException = new AuthenticationException();
 
         $testFailureMessage = new SaveAuthFailureMessageTester();
@@ -65,7 +62,7 @@ class SaveAuthFailureMessageTest extends TestCase
 class SaveAuthFailureMessageTester
 {
     use SaveAuthFailureMessage;
-    public function callSaveAuthenticationErrorToSession(Request $request, AuthenticationException $exception): void
+    public function callSaveAuthenticationErrorToSession($request, $exception): void
     {
         $this->saveAuthenticationErrorToSession($request, $exception);
     }
