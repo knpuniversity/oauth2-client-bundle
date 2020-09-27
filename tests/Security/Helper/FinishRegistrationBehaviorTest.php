@@ -10,9 +10,13 @@
 
 namespace KnpU\OAuth2ClientBundle\tests\Security\Helper;
 
+use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
+use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
 use LogicException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @author Serghei Luchianenco (s@luchianenco.com)
@@ -49,5 +53,68 @@ class FinishRegistrationBehaviorTest extends TestCase
 
         $this->expectException(LogicException::class);
         $this->traitObject->getUserInfoFromSession($request->reveal());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldThrowExceptionIfSessionDoesNotExist()
+    {
+        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $mockRequest->method("hasSession")->willReturn(false);
+        $mockAuthException = new FinishRegistrationException(['id' => '1', 'name' => 'testUser']);
+
+        $testFailureMessage = new FinishRegistrationBehaviorTester();
+
+        $this->expectException(\LogicException::class);
+        $testFailureMessage->callSaveUserInfoToSession($mockRequest, $mockAuthException);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldThrowExceptionIfSessionExistsButNotSessionInterface()
+    {
+        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $mockRequest->method("hasSession")->willReturn(true);
+        $mockRequest->method("getSession")->willReturn(\stdClass::class);
+        $mockAuthException = new FinishRegistrationException(['id' => '1', 'name' => 'testUser']);
+
+        $testFailureMessage = new FinishRegistrationBehaviorTester();
+
+        $this->expectException(\LogicException::class);
+        $testFailureMessage->callSaveUserInfoToSession($mockRequest, $mockAuthException);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldUpdateSessionDataIfSessionExists()
+    {
+        $mockSession = $this->getMockBuilder(SessionInterface::class)->getMock();
+        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $mockRequest->method("hasSession")->willReturn(true);
+        $mockRequest->method("getSession")->willReturn($mockSession);
+
+        $userInfo = ['id' => '1', 'name' => 'testUser'];
+        $mockAuthException = new FinishRegistrationException($userInfo);
+
+        $testFailureMessage = new FinishRegistrationBehaviorTester();
+
+        $mockSession->expects($this->once())->method("set")
+            ->with(
+                $this->equalTo('guard.finish_registration.user_information'),
+                $this->equalTo($userInfo)
+            );
+        $testFailureMessage->callSaveUserInfoToSession($mockRequest, $mockAuthException);
+    }
+}
+
+class FinishRegistrationBehaviorTester
+{
+    use FinishRegistrationBehavior;
+    public function callSaveUserInfoToSession(Request $request, FinishRegistrationException $exception): void
+    {
+        $this->saveUserInfoToSession($request, $exception);
     }
 }
