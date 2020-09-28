@@ -17,8 +17,7 @@ use Wohali\OAuth2\Client\Provider\DiscordResourceOwner;
 class DiscordClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return DiscordResourceOwner
+     * @return DiscordResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class DiscordClient extends OAuth2Client
     }
 
     /**
-     * @return DiscordResourceOwner
+     * @return DiscordResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

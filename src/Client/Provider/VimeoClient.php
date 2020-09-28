@@ -17,8 +17,7 @@ use Saf33r\OAuth2\Client\Provider\VimeoResourceOwner;
 class VimeoClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return VimeoResourceOwner
+     * @return VimeoResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class VimeoClient extends OAuth2Client
     }
 
     /**
-     * @return VimeoResourceOwner
+     * @return VimeoResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

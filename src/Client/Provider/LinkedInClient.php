@@ -11,14 +11,13 @@
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
-use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Provider\LinkedInResourceOwner;
+use League\OAuth2\Client\Token\AccessToken;
 
 class LinkedInClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return LinkedInResourceOwner
+     * @return LinkedInResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class LinkedInClient extends OAuth2Client
     }
 
     /**
-     * @return LinkedInResourceOwner
+     * @return LinkedInResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

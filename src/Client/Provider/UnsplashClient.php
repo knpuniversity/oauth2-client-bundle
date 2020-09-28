@@ -17,8 +17,7 @@ use Unsplash\OAuth2\Client\Provide\UnsplashResourceOwner;
 class UnsplashClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return UnsplashResourceOwner
+     * @return UnsplashResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class UnsplashClient extends OAuth2Client
     }
 
     /**
-     * @return UnsplashResourceOwner
+     * @return UnsplashResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

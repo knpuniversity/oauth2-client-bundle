@@ -24,7 +24,10 @@ interface OAuth2ClientInterface
      * OAuth2 server (e.g. send them to Facebook).
      *
      * @param array $scopes  The scopes you want (leave empty to use default)
-     * @param array $options Extra options to pass to the "Provider" class
+     * @param array $options Extra options to pass to the Provider's getAuthorizationUrl()
+     *                       method. For example, <code>scope</code> is a common option.
+     *                       Generally, these become query parameters when redirecting.
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirect(array $scopes, array $options);
@@ -32,18 +35,19 @@ interface OAuth2ClientInterface
     /**
      * Call this after the user is redirected back to get the access token.
      *
+     * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
+     *
      * @return \League\OAuth2\Client\Token\AccessToken
      *
      * @throws \KnpU\OAuth2ClientBundle\Exception\InvalidStateException
      * @throws \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException If token cannot be fetched
+     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException   If token cannot be fetched
      */
-    public function getAccessToken();
+    public function getAccessToken(array $options = []);
 
     /**
      * Returns the "User" information (called a resource owner).
      *
-     * @param AccessToken $accessToken
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken);

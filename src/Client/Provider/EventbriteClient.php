@@ -17,8 +17,7 @@ use Stevenmaguire\OAuth2\Client\Provider\EventbriteResourceOwner;
 class EventbriteClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return EventbriteResourceOwner
+     * @return EventbriteResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class EventbriteClient extends OAuth2Client
     }
 
     /**
-     * @return EventbriteResourceOwner
+     * @return EventbriteResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

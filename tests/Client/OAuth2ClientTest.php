@@ -11,6 +11,8 @@
 namespace KnpU\OAuth2ClientBundle\tests\Client;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
+use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
+use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use League\OAuth2\Client\Provider\FacebookUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -24,7 +26,7 @@ class OAuth2ClientTest extends TestCase
     private $session;
     private $provider;
 
-    public function setup()
+    public function setup(): void
     {
         $this->requestStack = new RequestStack();
         $this->session = $this->prophesize('Symfony\Component\HttpFoundation\Session\SessionInterface');
@@ -135,6 +137,26 @@ class OAuth2ClientTest extends TestCase
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 
+    public function testGetAccessTokenWithOptions()
+    {
+        $this->request->query->set('state', 'THE_STATE');
+        $this->request->query->set('code', 'CODE_ABC');
+
+        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
+            ->willReturn('THE_STATE');
+
+        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $this->provider->getAccessToken('authorization_code', ['code' => 'CODE_ABC', 'redirect_uri' => 'https://some.url'])
+            ->willReturn($expectedToken->reveal());
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+        $actualToken = $client->getAccessToken(['redirect_uri' => 'https://some.url']);
+        $this->assertSame($expectedToken->reveal(), $actualToken);
+    }
+
     public function testGetAccessTokenFromPOST()
     {
         $this->request->request->set('code', 'CODE_ABC');
@@ -152,11 +174,9 @@ class OAuth2ClientTest extends TestCase
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 
-    /**
-     * @expectedException \KnpU\OAuth2ClientBundle\Exception\InvalidStateException
-     */
     public function testGetAccessTokenThrowsInvalidStateException()
     {
+        $this->expectException(InvalidStateException::class);
         $this->request->query->set('state', 'ACTUAL_STATE');
         $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
             ->willReturn('OTHER_STATE');
@@ -168,11 +188,9 @@ class OAuth2ClientTest extends TestCase
         $client->getAccessToken();
     }
 
-    /**
-     * @expectedException \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
-     */
     public function testGetAccessTokenThrowsMissingAuthCodeException()
     {
+        $this->expectException(MissingAuthorizationCodeException::class);
         $this->request->query->set('state', 'ACTUAL_STATE');
         $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
            ->willReturn('ACTUAL_STATE');

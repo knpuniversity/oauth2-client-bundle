@@ -17,8 +17,7 @@ use Stevenmaguire\OAuth2\Client\Provider\HerokuResourceOwner;
 class HerokuClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return HerokuResourceOwner
+     * @return HerokuResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class HerokuClient extends OAuth2Client
     }
 
     /**
-     * @return HerokuResourceOwner
+     * @return HerokuResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

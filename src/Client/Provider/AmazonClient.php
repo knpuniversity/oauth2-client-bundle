@@ -17,8 +17,7 @@ use Luchianenco\OAuth2\Client\Provider\AmazonResourceOwner;
 class AmazonClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return AmazonResourceOwner
+     * @return AmazonResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class AmazonClient extends OAuth2Client
     }
 
     /**
-     * @return AmazonResourceOwner
+     * @return AmazonResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

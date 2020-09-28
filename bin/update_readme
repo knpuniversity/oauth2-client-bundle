@@ -38,9 +38,9 @@ $sectionTemplate = <<<EOF
         %PROVIDER_NAME%:
             # must be "%PROVIDER_NAME%" - it activates that type!
             type: %PROVIDER_NAME%
-            # add and configure client_id and client_secret in parameters.yml
+            # add and set these environment variables in your .env files
             client_id: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_SECRET)%'
+            %CLIENT_SECRET%
             # a route name you'll create
             redirect_route: connect_%PROVIDER_NAME%_check
             redirect_params: {}
@@ -62,8 +62,10 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
         continue;
     }
 
-    $tree = new TreeBuilder();
-    $configNode = $tree->root('generating_readme');
+    $tree = new TreeBuilder('knpu_oauth2_client');
+    $configNode = method_exists($tree, 'getRootNode')
+        ? $tree->getRootNode()
+        : $tree->root('knpu_oauth2_client');
     $configurator = $extension->getConfigurator($type);
     $configurator->buildConfiguration($configNode->children());
 
@@ -120,14 +122,30 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
         $customKeys[] = $keyPrefix . $example;
     }
 
-    $newSection = str_replace('%UCPROVIDER_NAME%', strtoupper($type), $sectionTemplate);
+    $newSection = $sectionTemplate;
+
+    if (KnpUOAuth2ClientExtension::configuratorNeedsClientSecret($configurator)) {
+        $newSection = str_replace(
+            '%CLIENT_SECRET%',
+            "client_secret: '%env(OAUTH_%UCPROVIDER_NAME%_CLIENT_SECRET)%'",
+            $newSection
+        );
+    } else {
+        $newSection = str_replace(
+            '            %CLIENT_SECRET%'.PHP_EOL,
+            '',
+            $newSection
+        );
+    }
+
+    $newSection = str_replace('%UCPROVIDER_NAME%', strtoupper($type), $newSection);
     $newSection = str_replace('%PROVIDER_NAME%', $type, $newSection);
     $newSection = str_replace('%CLIENT_CLASS%', $configurator->getClientClass(array()), $newSection);
     $newSection = str_replace('%PACKAGE_NAME%', $configurator->getPackagistName(), $newSection);
 
     if (empty($customKeys)) {
         $newSection = str_replace(
-            '            %ADDITIONAL_CONFIG%',
+            '            %ADDITIONAL_CONFIG%'.PHP_EOL,
             '',
             $newSection
         );
@@ -225,13 +243,13 @@ Below is the configuration for *all* of the supported OAuth2 providers.
 any provider.
 
 ```yml
-# app/config/config.yml
+# config/packages/knpu_oauth2_client.yaml
 knpu_oauth2_client:
     # can be set to the service id of a service that implements Guzzle\ClientInterface
     # http_client: null
 
     # options to configure the default http client
-    # http_client_options
+    # http_client_options:
     #     timeout: 0
     #     proxy: null
     #     Use only with proxy option set

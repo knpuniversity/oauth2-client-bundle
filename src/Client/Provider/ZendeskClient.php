@@ -17,8 +17,7 @@ use Stevenmaguire\OAuth2\Client\Provider\ZendeskResourceOwner;
 class ZendeskClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return ZendeskResourceOwner
+     * @return ZendeskResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class ZendeskClient extends OAuth2Client
     }
 
     /**
-     * @return ZendeskResourceOwner
+     * @return ZendeskResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

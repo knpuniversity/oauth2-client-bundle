@@ -17,8 +17,7 @@ use TheNetworg\OAuth2\Client\Provider\AzureResourceOwner;
 class AzureClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return AzureResourceOwner
+     * @return AzureResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class AzureClient extends OAuth2Client
     }
 
     /**
-     * @return AzureResourceOwner
+     * @return AzureResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

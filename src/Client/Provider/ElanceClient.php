@@ -17,8 +17,7 @@ use Stevenmaguire\OAuth2\Client\Provider\ElanceResourceOwner;
 class ElanceClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return ElanceResourceOwner
+     * @return ElanceResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class ElanceClient extends OAuth2Client
     }
 
     /**
-     * @return ElanceResourceOwner
+     * @return ElanceResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

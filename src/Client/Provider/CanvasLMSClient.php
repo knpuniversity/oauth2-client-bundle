@@ -17,8 +17,7 @@ use smtech\OAuth2\Client\Provider\CanvasLMSResourceOwner;
 class CanvasLMSClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return CanvasLMSResourceOwner
+     * @return CanvasLMSResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class CanvasLMSClient extends OAuth2Client
     }
 
     /**
-     * @return CanvasLMSResourceOwner
+     * @return CanvasLMSResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

@@ -25,7 +25,7 @@ class CanvasLMSProviderConfigurator implements ProviderConfiguratorInterface
                 ->defaultValue('')
                 ->info(
                     'This can be used to help the user identify which instance of an application this token is '
-                    . 'for. For example, a mobile device application could provide the name of the device.'
+                    .'for. For example, a mobile device application could provide the name of the device.'
                 )
 
             ->end()

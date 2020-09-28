@@ -17,8 +17,7 @@ use Stevenmaguire\OAuth2\Client\Provider\KeycloakResourceOwner;
 class KeycloakClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return KeycloakResourceOwner
+     * @return KeycloakResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class KeycloakClient extends OAuth2Client
     }
 
     /**
-     * @return KeycloakResourceOwner
+     * @return KeycloakResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

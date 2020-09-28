@@ -17,8 +17,7 @@ use Stevenmaguire\OAuth2\Client\Provider\FoursquareResourceOwner;
 class FoursquareClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return FoursquareResourceOwner
+     * @return FoursquareResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class FoursquareClient extends OAuth2Client
     }
 
     /**
-     * @return FoursquareResourceOwner
+     * @return FoursquareResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

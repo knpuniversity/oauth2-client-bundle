@@ -1,0 +1,31 @@
+parameters:
+	level: max
+	inferPrivatePropertyTypeFromConstructor: true
+	paths:
+		- ./src/
+	excludes_analyse:
+		- */cache/*
+	ignoreErrors:
+		# False positive: clients are not dependencies of this project.
+		-
+			message: '#Return typehint of method KnpU\\OAuth2ClientBundle\\Client\\Provider\\[a-zA-Z0-9\\_]+::fetchUserFromToken\(\) has invalid type [a-zA-Z0-9\\_]#'
+			path: ./src/Client/Provider
+		-
+			message: '#Return typehint of method KnpU\\OAuth2ClientBundle\\Client\\Provider\\[a-zA-Z0-9\\_]+::fetchUser\(\) has invalid type [a-zA-Z0-9\\_]#'
+			path: ./src/Client/Provider
+		# False positive: using `::class` is not an error for those providers `::getProviderClass()` method.
+		-
+			message: '#Class [a-zA-Z0-9\\_]+ not found#'
+			path: ./src/DependencyInjection/Providers
+
+		# The DependencyInjection returns are very complex to deal with
+		-
+			message: '#.*NodeParentInterface|null.*#'
+			path: ./src/DependencyInjection/Providers
+		-
+			message: '#.*NodeDefinition::children.*#'
+			path: ./src/DependencyInjection
+		# Searches for root(), for backward compatibility with Symfony <4.2. Removed in 5.0
+		-
+			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder::root\(\)\.#'
+			path: ./src/DependencyInjection

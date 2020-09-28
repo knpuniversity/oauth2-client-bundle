@@ -11,6 +11,7 @@
 namespace KnpU\OAuth2ClientBundle\Security\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 
@@ -18,6 +19,10 @@ trait SaveAuthFailureMessage
 {
     protected function saveAuthenticationErrorToSession(Request $request, AuthenticationException $exception)
     {
+        if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
+            throw new \LogicException('In order to save an authentication error, you must have a session available.');
+        }
+
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
     }
 }

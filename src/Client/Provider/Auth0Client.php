@@ -17,8 +17,7 @@ use Riskio\OAuth2\Client\Provider\Auth0ResourceOwner;
 class Auth0Client extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return Auth0ResourceOwner
+     * @return Auth0ResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class Auth0Client extends OAuth2Client
     }
 
     /**
-     * @return Auth0ResourceOwner
+     * @return Auth0ResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

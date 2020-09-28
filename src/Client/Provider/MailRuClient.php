@@ -10,15 +10,14 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
+use Aego\OAuth2\Client\Provider\MailruResourceOwner;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use Aego\OAuth2\Client\Provider\MailruResourceOwner;
 
 class MailRuClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return MailruResourceOwner
+     * @return MailruResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class MailRuClient extends OAuth2Client
     }
 
     /**
-     * @return MailruResourceOwner
+     * @return MailruResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

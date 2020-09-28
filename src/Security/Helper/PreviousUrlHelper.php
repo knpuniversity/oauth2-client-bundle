@@ -11,14 +11,14 @@
 namespace KnpU\OAuth2ClientBundle\Security\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 trait PreviousUrlHelper
 {
     /**
      * Returns the URL (if any) the user visited that forced them to login.
      *
-     * @param Request        $request
-     * @param string         $providerKey
+     * @param string $providerKey
      *
      * @return string
      */
@@ -26,6 +26,10 @@ trait PreviousUrlHelper
     {
         // if the user hit a secure page and start() was called, this was
         // the URL they were on, and probably where you want to redirect to
-        return $request->getSession()->get('_security.' . $providerKey . '.target_path');
+        if ($request->hasSession() && $request->getSession() instanceof SessionInterface) {
+            return $request->getSession()->get('_security.'.$providerKey.'.target_path');
+        }
+
+        return '';
     }
 }

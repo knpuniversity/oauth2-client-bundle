@@ -10,18 +10,18 @@
 
 namespace KnpU\OAuth2ClientBundle\Security\Authenticator;
 
+use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
+use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use KnpU\OAuth2ClientBundle\Security\Exception\IdentityProviderAuthenticationException;
 use KnpU\OAuth2ClientBundle\Security\Exception\InvalidStateAuthenticationException;
 use KnpU\OAuth2ClientBundle\Security\Exception\NoAuthCodeAuthenticationException;
-use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
 use KnpU\OAuth2ClientBundle\Security\Helper\PreviousUrlHelper;
 use KnpU\OAuth2ClientBundle\Security\Helper\SaveAuthFailureMessage;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 
 abstract class SocialAuthenticator extends AbstractGuardAuthenticator
 {
@@ -29,10 +29,10 @@ abstract class SocialAuthenticator extends AbstractGuardAuthenticator
     use PreviousUrlHelper;
     use SaveAuthFailureMessage;
 
-    protected function fetchAccessToken(OAuth2ClientInterface $client)
+    protected function fetchAccessToken(OAuth2ClientInterface $client, array $options = [])
     {
         try {
-            return $client->getAccessToken();
+            return $client->getAccessToken($options);
         } catch (MissingAuthorizationCodeException $e) {
             throw new NoAuthCodeAuthenticationException();
         } catch (IdentityProviderException $e) {
@@ -42,13 +42,13 @@ abstract class SocialAuthenticator extends AbstractGuardAuthenticator
         }
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         // do nothing - the fact that the access token works is enough
         return true;
     }
 
-    public function supportsRememberMe()
+    public function supportsRememberMe(): bool
     {
         return true;
     }

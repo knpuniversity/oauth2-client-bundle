@@ -28,17 +28,17 @@ class OAuthUser implements UserInterface
         return $this->roles;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return '';
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }

@@ -40,11 +40,10 @@ class OAuthUserProviderTest extends TestCase
 
     public function testRefreshOtherUser()
     {
+        $this->expectException(UnsupportedUserException::class);
         $userProvider = new OAuthUserProvider();
 
-        $this->setExpectedException(UnsupportedUserException::class);
-
-        $userProvider->refreshUser($this->getMock(UserInterface::class));
+        $userProvider->refreshUser($this->createMock(UserInterface::class));
     }
 
     /**

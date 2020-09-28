@@ -11,14 +11,13 @@
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
-use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Provider\GeocachingResourceOwner;
+use League\OAuth2\Client\Token\AccessToken;
 
 class GeocachingClient extends OAuth2Client
 {
     /**
-     * @param AccessToken $accessToken
-     * @return GeocachingResourceOwner
+     * @return GeocachingResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +25,7 @@ class GeocachingClient extends OAuth2Client
     }
 
     /**
-     * @return GeocachingResourceOwner
+     * @return GeocachingResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {

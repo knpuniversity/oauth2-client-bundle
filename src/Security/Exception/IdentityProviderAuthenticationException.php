@@ -23,7 +23,7 @@ class IdentityProviderAuthenticationException extends AuthenticationException
         parent::__construct($e->getMessage(), $e->getCode(), $e);
     }
 
-    public function getMessageKey()
+    public function getMessageKey(): string
     {
         return 'Error fetching OAuth credentials: "%error%".';
     }

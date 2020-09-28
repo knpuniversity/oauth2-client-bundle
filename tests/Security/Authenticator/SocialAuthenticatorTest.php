@@ -13,7 +13,9 @@ namespace KnpU\OAuth2ClientBundle\Tests\Security\Authenticator;
 use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
+use KnpU\OAuth2ClientBundle\Security\Exception\NoAuthCodeAuthenticationException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,21 +28,19 @@ class SocialAuthenticatorTest extends TestCase
     {
         $authenticator = new StubSocialAuthenticator();
         $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken()
+        $client->getAccessToken([])
             ->willReturn('expected_access_token');
 
         $actualToken = $authenticator->doFetchAccessToken($client->reveal());
         $this->assertEquals('expected_access_token', $actualToken);
     }
 
-    /**
-     * @expectedException \KnpU\OAuth2ClientBundle\Security\Exception\NoAuthCodeAuthenticationException
-     */
     public function testFetchAccessTokenThrowsAuthenticationException()
     {
+        $this->expectException(NoAuthCodeAuthenticationException::class);
         $authenticator = new StubSocialAuthenticator();
         $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken()
+        $client->getAccessToken([])
             ->willThrow(new MissingAuthorizationCodeException());
 
         $authenticator->doFetchAccessToken($client->reveal());
@@ -67,19 +67,22 @@ class StubSocialAuthenticator extends SocialAuthenticator
         return $this->fetchAccessToken($client);
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): Response
+    {
+    }
+    public function supports(Request $request): bool
     {
     }
     public function getCredentials(Request $request)
     {
     }
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
     }
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
     }
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
     {
     }
 }
@@ -90,15 +93,15 @@ class SomeUser implements UserInterface
     {
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
     }
 

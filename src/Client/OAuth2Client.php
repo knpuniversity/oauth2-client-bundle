@@ -17,6 +17,7 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OAuth2Client implements OAuth2ClientInterface
 {
@@ -33,9 +34,6 @@ class OAuth2Client implements OAuth2ClientInterface
 
     /**
      * OAuth2Client constructor.
-     *
-     * @param AbstractProvider $provider
-     * @param RequestStack $requestStack
      */
     public function __construct(AbstractProvider $provider, RequestStack $requestStack)
     {
@@ -56,7 +54,10 @@ class OAuth2Client implements OAuth2ClientInterface
      * OAuth2 server (e.g. send them to Facebook).
      *
      * @param array $scopes  The scopes you want (leave empty to use default)
-     * @param array $options Extra options to pass to the "Provider" class
+     * @param array $options Extra options to pass to the Provider's getAuthorizationUrl()
+     *                       method. For example, <code>scope</code> is a common option.
+     *                       Generally, these become query parameters when redirecting.
+     *
      * @return RedirectResponse
      */
     public function redirect(array $scopes = [], array $options = [])
@@ -68,7 +69,7 @@ class OAuth2Client implements OAuth2ClientInterface
         $url = $this->provider->getAuthorizationUrl($options);
 
         // set the state (unless we're stateless)
-        if (!$this->isStateless) {
+        if (!$this->isStateless()) {
             $this->getSession()->set(
                 self::OAUTH2_SESSION_STATE_KEY,
                 $this->provider->getState()
@@ -81,17 +82,19 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * Call this after the user is redirected back to get the access token.
      *
-     * @return \League\OAuth2\Client\Token\AccessToken
+     * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
+     *
+     * @return AccessToken|\League\OAuth2\Client\Token\AccessTokenInterface
      *
      * @throws InvalidStateException
      * @throws MissingAuthorizationCodeException
-     * @throws IdentityProviderException If token cannot be fetched
+     * @throws IdentityProviderException         If token cannot be fetched
      */
-    public function getAccessToken()
+    public function getAccessToken(array $options = [])
     {
-        if (!$this->isStateless) {
+        if (!$this->isStateless()) {
             $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
-            $actualState = $this->getCurrentRequest()->query->get('state');
+            $actualState = $this->getCurrentRequest()->get('state');
             if (!$actualState || ($actualState !== $expectedState)) {
                 throw new InvalidStateException('Invalid state');
             }
@@ -103,15 +106,15 @@ class OAuth2Client implements OAuth2ClientInterface
             throw new MissingAuthorizationCodeException('No "code" parameter was found (usually this is a query parameter)!');
         }
 
-        return $this->provider->getAccessToken('authorization_code', [
-            'code' => $code,
-        ]);
+        return $this->provider->getAccessToken(
+            'authorization_code',
+            array_merge(['code' => $code], $options)
+        );
     }
 
     /**
      * Returns the "User" information (called a resource owner).
      *
-     * @param AccessToken $accessToken
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
@@ -129,6 +132,7 @@ class OAuth2Client implements OAuth2ClientInterface
      */
     public function fetchUser()
     {
+        /** @var AccessToken $token */
         $token = $this->getAccessToken();
 
         return $this->fetchUserFromToken($token);
@@ -142,6 +146,11 @@ class OAuth2Client implements OAuth2ClientInterface
     public function getOAuth2Provider()
     {
         return $this->provider;
+    }
+
+    protected function isStateless(): bool
+    {
+        return $this->isStateless;
     }
 
     /**
@@ -159,16 +168,14 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
-     * @return null|\Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return SessionInterface
      */
     private function getSession()
     {
-        $session = $this->getCurrentRequest()->getSession();
-
-        if (!$session) {
+        if (!$this->getCurrentRequest()->hasSession()) {
             throw new \LogicException('In order to use "state", you must have a session. Set the OAuth2Client to stateless to avoid state');
         }
 
-        return $session;
+        return $this->getCurrentRequest()->getSession();
     }
 }
