@@ -245,7 +245,7 @@ class KnpUOAuth2ClientExtension extends Extension
     private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators)
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
-            if ("generic" === $providerType) {
+            if ('generic' === $providerType) {
                 throw new \LogicException(sprintf('The provider class `%s` must exist in order to use with the "%s" OAuth provider.', $providerClass, $providerType));
             }
             throw new \LogicException(sprintf('Run `composer require %s` in order to use the "%s" OAuth provider.', $packageName, $providerType));
