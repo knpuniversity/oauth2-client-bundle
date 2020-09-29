@@ -58,6 +58,11 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
                 ->example('auth_with_resource: true')
                 ->info('Send resource field with auth-request')
                 ->defaultTrue()
+            ->end()
+            ->scalarNode('default_end_point_version')
+                ->example("default_end_point_version: '1.0'")
+                ->info('The endpoint version to run against')
+                ->defaultValue('1.0')
             ->end();
     }
 
@@ -80,6 +85,7 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
             'resource' => $config['resource'],
             'API_VERSION' => $config['api_version'],
             'authWithResource' => $config['auth_with_resource'],
+            'defaultEndPointVersion' => $config['default_end_point_version'],
         ];
     }
 
