@@ -10,10 +10,14 @@
 
 namespace KnpU\OAuth2ClientBundle\Tests\Security\Authenticator;
 
+use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
 use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
+use KnpU\OAuth2ClientBundle\Security\Exception\IdentityProviderAuthenticationException;
+use KnpU\OAuth2ClientBundle\Security\Exception\InvalidStateAuthenticationException;
 use KnpU\OAuth2ClientBundle\Security\Exception\NoAuthCodeAuthenticationException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -42,6 +46,28 @@ class SocialAuthenticatorTest extends TestCase
         $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
         $client->getAccessToken([])
             ->willThrow(new MissingAuthorizationCodeException());
+
+        $authenticator->doFetchAccessToken($client->reveal());
+    }
+
+    public function testFetchAccessTokenThrowsIdentityProviderException()
+    {
+        $this->expectException(IdentityProviderAuthenticationException::class);
+        $authenticator = new StubSocialAuthenticator();
+        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
+        $client->getAccessToken([])
+            ->willThrow(new IdentityProviderException("message", 42, "response"));
+
+        $authenticator->doFetchAccessToken($client->reveal());
+    }
+
+    public function testFetchAccessTokenThrowsInvalidStateException()
+    {
+        $this->expectException(InvalidStateAuthenticationException::class);
+        $authenticator = new StubSocialAuthenticator();
+        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
+        $client->getAccessToken([])
+            ->willThrow(new InvalidStateException());
 
         $authenticator->doFetchAccessToken($client->reveal());
     }

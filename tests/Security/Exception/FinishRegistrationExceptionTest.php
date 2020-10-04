@@ -24,5 +24,6 @@ class FinishRegistrationExceptionTest extends TestCase
         $e = new FinishRegistrationException($userInfo, '', 0);
 
         $this->assertEquals($e->getUserInformation(), $userInfo);
+        $this->assertEquals($e->getMessageKey(), 'You need to finish registration to login.');
     }
 }
