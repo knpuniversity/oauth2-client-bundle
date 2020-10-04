@@ -286,6 +286,49 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
         return $tests;
     }
 
+    public function testShouldThrowExceptionIfKnownProviderClassNotInstalled()
+    {
+        $this->configuration = new ContainerBuilder();
+        $loader = new KnpUOAuth2ClientExtension(true);
+        $config = ['clients' => [
+            "fitbit" => [
+                'type' => 'fitbit',
+                'client_id' => 'abc',
+                'client_secret' => '123',
+                'redirect_route' => 'foo_bar_route',
+                'redirect_params' => []
+            ]
+        ]];
+
+        try {
+            $loader->load([$config], $this->configuration);
+        } catch (\Exception $e) {
+            $this->assertEquals('Run `composer require djchen/oauth2-fitbit` in order to use the "fitbit" OAuth provider.', $e->getMessage());
+        }
+    }
+
+    public function testShouldThrowSpecificErrorMessageIfProviderMissingForGenericClient()
+    {
+        $this->configuration = new ContainerBuilder();
+        $loader = new KnpUOAuth2ClientExtension(true);
+        $config = ['clients' => [
+            "custom_provider" => [
+                'type' => 'generic',
+                'provider_class' => 'Some\Provider\That\Doesnt\Exist',
+                'client_id' => 'abc',
+                'client_secret' => '123',
+                'redirect_route' => 'foo_bar_route',
+                'redirect_params' => [],
+            ]
+        ]];
+
+        try {
+            $loader->load([$config], $this->configuration);
+        } catch (\Exception $e) {
+            $this->assertEquals('The provider class `Some\Provider\That\Doesnt\Exist` must exist in order to use with the "generic" OAuth provider.', $e->getMessage());
+        }
+    }
+
     public function testGetAllSupportedTypes()
     {
         $types = KnpUOAuth2ClientExtension::getAllSupportedTypes();
