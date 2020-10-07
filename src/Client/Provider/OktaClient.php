@@ -18,7 +18,7 @@ class OktaClient extends OAuth2Client
 {
     /**
      * @param AccessToken $accessToken
-     * @return OktaUser
+     * @return OktaUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -26,7 +26,7 @@ class OktaClient extends OAuth2Client
     }
 
     /**
-     * @return OktaUser
+     * @return OktaUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {
