@@ -13,6 +13,7 @@ namespace KnpU\OAuth2ClientBundle\tests\Client;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
 use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
+use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\FacebookUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -232,5 +233,56 @@ class OAuth2ClientTest extends TestCase
 
         $this->assertInstanceOf('League\OAuth2\Client\Provider\FacebookUser', $user);
         $this->assertEquals('testUser', $user->getName());
+    }
+
+    public function testShouldReturnProviderObject()
+    {
+        $testClient = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+
+        $result = $testClient->getOAuth2Provider();
+
+        $this->assertInstanceOf(AbstractProvider::class, $result);
+    }
+
+    public function testShouldThrowExceptionOnRedirectIfNoSessionAndNotRunningStateless()
+    {
+        $this->requestStack = new RequestStack();
+        $this->requestStack->push(new Request());
+
+        $testClient = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+
+        $this->expectException(\LogicException::class);
+        $testClient->redirect();
+    }
+
+    public function testShouldThrowExceptionOnGetAccessTokenIfNoSessionAndNotRunningStateless()
+    {
+        $this->requestStack = new RequestStack();
+        $this->requestStack->push(new Request());
+
+        $testClient = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+
+        $this->expectException(\LogicException::class);
+        $testClient->getAccessToken();
+    }
+
+    public function testShouldThrowExceptionIfThereIsNoRequestInTheStack()
+    {
+        $testClient = new OAuth2Client(
+            $this->provider->reveal(),
+            new RequestStack()
+        );
+
+        $this->expectException(\LogicException::class);
+        $testClient->getAccessToken();
     }
 }

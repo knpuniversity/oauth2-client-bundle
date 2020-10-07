@@ -554,6 +554,8 @@ knpu_oauth2_client:
             # api_version: '1.6'
             # Send resource field with auth-request
             # auth_with_resource: true
+            # The endpoint version to run against
+            # default_end_point_version: '1.0'
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
