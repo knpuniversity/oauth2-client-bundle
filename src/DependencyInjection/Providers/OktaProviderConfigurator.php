@@ -39,7 +39,6 @@ class OktaProviderConfigurator implements ProviderConfiguratorInterface
         if ($config['issuer']) {
             $options['issuer'] = $config['issuer'];
         }
-        
         return $options;
     }
 
