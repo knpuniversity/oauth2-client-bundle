@@ -48,6 +48,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MailRuProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MicrosoftProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MollieProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OdnoklassnikiProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\OktaProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\PaypalProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderWithoutClientSecretConfiguratorInterface;
@@ -128,6 +129,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'microsoft' => MicrosoftProviderConfigurator::class,
         'mollie' => MollieProviderConfigurator::class,
         'odnoklassniki' => OdnoklassnikiProviderConfigurator::class,
+        'okta' => OktaProviderConfigurator::class,
         'paypal' => PaypalProviderConfigurator::class,
         'psn' => PsnProviderConfigurator::class,
         'salesforce' => SalesforceProviderConfigurator::class,
