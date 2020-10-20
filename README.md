@@ -1403,8 +1403,8 @@ knpu_oauth2_client:
             client_secret: '%env(foo_bar_client_secret)%'
             redirect_route: connect_facebook_check
             redirect_params: {}
-	    # whether to check OAuth2 "state": defaults to true
-	    # use_state: true
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
 ```
 
 That's it! Now you'll have a `knpu.oauth2.client.foo_bar_oauth` service
