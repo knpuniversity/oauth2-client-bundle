@@ -53,6 +53,7 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
             ->scalarNode('api_version')
                 ->example("api_version: '1.6'")
                 ->info('The API version to run against')
+                ->defaultValue('1.6')
             ->end()
             ->booleanNode('auth_with_resource')
                 ->example('auth_with_resource: true')
