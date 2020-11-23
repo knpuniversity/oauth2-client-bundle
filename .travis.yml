@@ -9,7 +9,8 @@ cache:
 php:
     - 7.1
     - 7.2
-    - 7.3
+    - 7.4
+    - 8.0snapshot
 matrix:
     include:
         - php: 7.3
@@ -20,6 +21,7 @@ matrix:
 before_install:
     - phpenv config-rm xdebug.ini || true
     - composer self-update
+    - if [ "$LINT" != 1 ]; then composer remove --dev --no-update phpstan/phpstan; fi;
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 

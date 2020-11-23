@@ -98,9 +98,9 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
      */
     public function testProviderConfiguratorsAreFullyImplemented(ProviderConfiguratorInterface $providerConfigurator)
     {
-        $this->assertRegexp('#^[ \w]+$#', $providerConfigurator->getProviderDisplayName());
+        $this->assertMatchesRegularExpression('#^[ \w]+$#', $providerConfigurator->getProviderDisplayName());
         if ('Generic' !== $providerConfigurator->getProviderDisplayName()) {
-            $this->assertRegexp('#^[\w-]+/[\w-]+$#', $providerConfigurator->getPackagistName());
+            $this->assertMatchesRegularExpression('#^[\w-]+/[\w-]+$#', $providerConfigurator->getPackagistName());
             $this->assertNotFalse(filter_var($providerConfigurator->getLibraryHomepage(), FILTER_VALIDATE_URL));
             $this->assertTrue(class_exists($providerConfigurator->getClientClass([])));
         }
