@@ -10,7 +10,6 @@
 
 namespace KnpU\OAuth2ClientBundle\Client;
 
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
