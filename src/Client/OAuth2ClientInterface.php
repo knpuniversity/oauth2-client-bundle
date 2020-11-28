@@ -14,6 +14,9 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
+/**
+ * @method AccessToken refreshAccessToken(AccessTokenInterface $accessToken, array $options = []) Refresh the access token, passing options to the underlying provider
+ */
 interface OAuth2ClientInterface
 {
     /**
@@ -46,17 +49,6 @@ interface OAuth2ClientInterface
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException   If token cannot be fetched
      */
     public function getAccessToken(array $options = []);
-
-    /**
-     * Refresh the given AccessToken.
-     *
-     * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
-     *
-     * @return AccessToken|\League\OAuth2\Client\Token\AccessTokenInterface
-     *
-     * @throws IdentityProviderException If token cannot be fetched
-     */
-    public function refreshAccessToken(AccessTokenInterface $accessToken, array $options = []);
 
     /**
      * Returns the "User" information (called a resource owner).

@@ -430,6 +430,29 @@ public function getUser($credentials, UserProviderInterface $userProvider)
 The logged-in user will be an instance of `KnpU\OAuth2ClientBundle\Security\User\OAuthUser` and will
 have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
 
+## Refresh Tokens
+
+If you store your access tokens for use at a later time, you should check that it's not expired before you use it again.
+If it is expired, you can easily refresh it:
+
+```php
+// Load the access token from wherever you have store it (eg. user session, database, etc)
+$accessToken = $tokenStorage->retrieveAccessToken();
+
+if ($accessToken->hasExpired()) {
+    $accessToken = $client->refreshAccessToken($accessToken);
+
+    // Update the stored access token for next time
+    $tokenStorage->updateAccessToken($accesStoken);
+}
+```
+
+Depending on your OAuth2 provider, you may need to pass some parameters when refreshing the token:
+
+```php
+$accessToken = $client->refreshAccessToken($accessToken, ['scopes' => 'offline_access']);
+```
+
 ## Configuration
 
 Below is the configuration for *all* of the supported OAuth2 providers.
