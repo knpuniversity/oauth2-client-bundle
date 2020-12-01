@@ -436,7 +436,7 @@ If you store your access tokens for use at a later time, you should check that i
 If it is expired, you can easily refresh it:
 
 ```php
-// Load the access token from wherever you have store it (eg. user session, database, etc)
+// Load the access token from persistence (eg. user session, database, etc)
 $accessToken = $tokenStorage->retrieveAccessToken();
 
 if ($accessToken->hasExpired()) {
