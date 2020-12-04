@@ -430,21 +430,38 @@ public function getUser($credentials, UserProviderInterface $userProvider)
 The logged-in user will be an instance of `KnpU\OAuth2ClientBundle\Security\User\OAuthUser` and will
 have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
 
-## Refresh Tokens
+## Storing and refreshing tokens
 
-If you store your access tokens for use at a later time, you should check that it's not expired before you use it again.
-If it is expired, you can easily refresh it:
+You have a couple of options to store access tokens for use at a later time:
 
-```php
-// Load the access token from persistence (eg. user session, database, etc)
-$accessToken = $tokenStorage->retrieveAccessToken();
+1. Store the `AccessToken` object (eg. serializing into the session), this allows you to check expiry before refreshing
+    ```php
+    // Fetch and store the AccessToken
+    $accessToken = $client->getAccessToken();
+    $session->set('access_token', $accessToken);
 
-if ($accessToken->hasExpired()) {
-    $accessToken = $client->refreshAccessToken($accessToken);
+    // Load the access token from the session, and refresh if required
+    $accessToken = $session->get('access_token');
 
-    // Update the stored access token for next time
-    $tokenStorage->updateAccessToken($accesStoken);
-}
+    if ($accessToken->hasExpired()) {
+        $accessToken = $client->refreshAccessToken($accessToken);
+
+        // Update the stored access token for next time
+        $session->set('access_token', $accessToken);
+    }
+    ```
+
+2. Store just the refresh token string (eg. in the dabatase `user.refresh_token`), this means you must always refresh
+    ```php
+    // Fetch the AccessToken and store the refresh token
+    $accessToken = $client->getAccessToken();
+    $user->setRefreshToken($accessToken->getRefreshToken());
+    $entityManager->flush();
+
+    // Get a new AccessToken from the refresh token, and store the new refresh token for next time
+    $accessToken = $client->refreshAccessToken($user->getRefreshToken);
+    $user->setRefreshToken($accessToken->getRefreshToken());
+    $entityManager->flush();
 ```
 
 Depending on your OAuth2 provider, you may need to pass some parameters when refreshing the token:

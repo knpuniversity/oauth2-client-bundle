@@ -14,7 +14,7 @@ use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
 /**
- * @method AccessToken refreshAccessToken(AccessTokenInterface $accessToken, array $options = []) Refresh the access token, passing options to the underlying provider
+ * @method AccessToken refreshAccessToken(string $refreshToken, array $options = []) Get a new AccessToken from a refresh token., passing options to the underlying provider
  */
 interface OAuth2ClientInterface
 {

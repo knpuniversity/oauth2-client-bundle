@@ -114,7 +114,7 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
-     * Refresh the given AccessToken.
+     * Get a new AccessToken from a refresh token.
      *
      * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
      *
@@ -122,11 +122,11 @@ class OAuth2Client implements OAuth2ClientInterface
      *
      * @throws IdentityProviderException If token cannot be fetched
      */
-    public function refreshAccessToken(AccessTokenInterface $accessToken, array $options = [])
+    public function refreshAccessToken(string $refreshToken, array $options = [])
     {
         return $this->provider->getAccessToken(
             'refresh_token',
-            array_merge(['refresh_token' => $accessToken->getRefreshToken()], $options)
+            array_merge(['refresh_token' => $refreshToken], $options)
         );
     }
 

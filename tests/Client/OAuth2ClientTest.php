@@ -188,7 +188,7 @@ class OAuth2ClientTest extends TestCase
             $this->provider->reveal(),
             $this->requestStack
         );
-        $actualToken = $client->refreshAccessToken($existingToken->reveal());
+        $actualToken = $client->refreshAccessToken($existingToken->reveal()->getRefreshToken());
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 
@@ -205,7 +205,7 @@ class OAuth2ClientTest extends TestCase
             $this->provider->reveal(),
             $this->requestStack
         );
-        $actualToken = $client->refreshAccessToken($existingToken->reveal(), ['redirect_uri' => 'https://some.url']);
+        $actualToken = $client->refreshAccessToken($existingToken->reveal()->getRefreshToken(), ['redirect_uri' => 'https://some.url']);
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 
