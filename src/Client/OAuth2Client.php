@@ -113,6 +113,23 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
+     * Get a new AccessToken from a refresh token.
+     *
+     * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
+     *
+     * @return AccessToken|\League\OAuth2\Client\Token\AccessTokenInterface
+     *
+     * @throws IdentityProviderException If token cannot be fetched
+     */
+    public function refreshAccessToken(string $refreshToken, array $options = [])
+    {
+        return $this->provider->getAccessToken(
+            'refresh_token',
+            array_merge(['refresh_token' => $refreshToken], $options)
+        );
+    }
+
+    /**
      * Returns the "User" information (called a resource owner).
      *
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface

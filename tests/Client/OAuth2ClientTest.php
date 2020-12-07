@@ -175,6 +175,40 @@ class OAuth2ClientTest extends TestCase
         $this->assertSame($expectedToken->reveal(), $actualToken);
     }
 
+    public function testRefreshAccessToken()
+    {
+        $existingToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $existingToken->getRefreshToken()->willReturn('TOKEN_ABC');
+
+        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $this->provider->getAccessToken('refresh_token', ['refresh_token' => 'TOKEN_ABC'])
+            ->willReturn($expectedToken->reveal());
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+        $actualToken = $client->refreshAccessToken($existingToken->reveal()->getRefreshToken());
+        $this->assertSame($expectedToken->reveal(), $actualToken);
+    }
+
+    public function testRefreshAccessTokenWithOptions()
+    {
+        $existingToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $existingToken->getRefreshToken()->willReturn('TOKEN_ABC');
+
+        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
+        $this->provider->getAccessToken('refresh_token', ['refresh_token' => 'TOKEN_ABC', 'redirect_uri' => 'https://some.url'])
+            ->willReturn($expectedToken->reveal());
+
+        $client = new OAuth2Client(
+            $this->provider->reveal(),
+            $this->requestStack
+        );
+        $actualToken = $client->refreshAccessToken($existingToken->reveal()->getRefreshToken(), ['redirect_uri' => 'https://some.url']);
+        $this->assertSame($expectedToken->reveal(), $actualToken);
+    }
+
     public function testGetAccessTokenThrowsInvalidStateException()
     {
         $this->expectException(InvalidStateException::class);

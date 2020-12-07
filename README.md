@@ -430,6 +430,51 @@ public function getUser($credentials, UserProviderInterface $userProvider)
 The logged-in user will be an instance of `KnpU\OAuth2ClientBundle\Security\User\OAuthUser` and will
 have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
 
+## Storing and refreshing tokens
+
+You have a couple of options to store access tokens for use at a later time:
+
+1. Store the `AccessToken` object (eg. serializing into the session), this allows you to check expiry before refreshing
+    ```php
+    // Fetch and store the AccessToken
+    $accessToken = $client->getAccessToken();
+    $session->set('access_token', $accessToken);
+
+    // Load the access token from the session, and refresh if required
+    $accessToken = $session->get('access_token');
+
+    if ($accessToken->hasExpired()) {
+        $accessToken = $client->refreshAccessToken($accessToken->getRefreshToken);
+
+        // Update the stored access token for next time
+        $session->set('access_token', $accessToken);
+    }
+    ```
+
+2. Store the refresh token string (eg. in the dabatase `user.refresh_token`), this means you must always refresh. 
+    You can also store the access token and expiration and then avoid the refresh until the access token is actually expired.
+    ```php
+    // Fetch the AccessToken and store the refresh token
+    $accessToken = $client->getAccessToken();
+    $user->setRefreshToken($accessToken->getRefreshToken());
+    $entityManager->flush();
+
+    // Get a new AccessToken from the refresh token, and store the new refresh token for next time
+    $accessToken = $client->refreshAccessToken($user->getRefreshToken);
+    $user->setRefreshToken($accessToken->getRefreshToken());
+    $entityManager->flush();
+```
+
+Depending on your OAuth2 provider, you may need to pass some parameters when initially creating and/or refreshing the token:
+
+```php
+// Some providers may require special parameters when creating the token in order to allow refreshing
+$accessToken = $client->getAccessToken(['scopes' => 'offline_access']);
+
+// They may also require special parameters when refreshing the token
+$accessToken = $client->refreshAccessToken($accessToken->getRefreshtoken(), ['scopes' => 'offline_access']);
+```
+
 ## Configuration
 
 Below is the configuration for *all* of the supported OAuth2 providers.

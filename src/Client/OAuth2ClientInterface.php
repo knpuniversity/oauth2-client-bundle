@@ -12,6 +12,9 @@ namespace KnpU\OAuth2ClientBundle\Client;
 
 use League\OAuth2\Client\Token\AccessToken;
 
+/**
+ * @method AccessToken refreshAccessToken(string $refreshToken, array $options = []) Get a new AccessToken from a refresh token., passing options to the underlying provider
+ */
 interface OAuth2ClientInterface
 {
     /**
