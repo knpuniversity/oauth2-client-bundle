@@ -1,0 +1,27 @@
+name: OAuth2 Client Tests
+
+on:
+    push:
+#        branches:
+#            - master
+    pull_request:
+    release:
+
+#env:
+#    PHPUNIT_FLAGS: '-v'
+#    SYMFONY_REQUIRE: '>=2.8'
+
+jobs:
+    composer-validate:
+        name: Validate composer.json
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Set PHP Version
+                run: sudo update-alternatives --set php /usr/bin/php7.4
+
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Validate
+                run: composer validate --strict
