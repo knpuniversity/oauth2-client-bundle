@@ -1,27 +1,43 @@
-name: OAuth2 Client Tests
+name: CI
 
 on:
-    push:
-#        branches:
-#            - master
     pull_request:
-    release:
-
-#env:
-#    PHPUNIT_FLAGS: '-v'
-#    SYMFONY_REQUIRE: '>=2.8'
+    push:
+        branches: [ master ]
 
 jobs:
-    composer-validate:
-        name: Validate composer.json
-        runs-on: ubuntu-latest
+    run:
+        runs-on: ubuntu-18.04
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - '7.1'
+                    - '7.2'
+                    - '7.3'
+                    - '7.4'
+                    - '8.0'
 
+        name: PHP ${{ matrix.php }} ${{ matrix.description }}
         steps:
-            -   name: Set PHP Version
-                run: sudo update-alternatives --set php /usr/bin/php7.4
+            - name: Checkout
+              uses: actions/checkout@v2
 
-            -   name: Checkout
-                uses: actions/checkout@v2
+            - uses: actions/cache@v2
+              with:
+                  path: ~/.composer/cache/files
+                  key: ${{ matrix.php }}
 
-            -   name: Validate
-                run: composer validate --strict
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+
+            - name: Validate composer.json
+              run: composer validate --no-check-publish
+
+            - name: Install dependencies
+              run: composer install
+
+            - name: Run PHPUnit tests
+              run: ./vendor/bin/simple-phpunit

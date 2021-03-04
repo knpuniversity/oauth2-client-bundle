@@ -1,5 +1,5 @@
 parameters:
-	level: max
+	level: 5
 	inferPrivatePropertyTypeFromConstructor: true
 	paths:
 		- ./src/
@@ -20,7 +20,11 @@ parameters:
 
 		# The DependencyInjection returns are very complex to deal with
 		-
-			message: '#.*NodeParentInterface|null.*#'
+			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.#'
+			path: ./src/DependencyInjection/Providers
+
+		-
+			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::arrayNode\(\)\.#'
 			path: ./src/DependencyInjection/Providers
 		-
 			message: '#.*NodeDefinition::children.*#'
