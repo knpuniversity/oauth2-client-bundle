@@ -1,4 +1,4 @@
-name: CI
+name: OAuth2 Client Tests
 
 on:
     pull_request:
@@ -32,9 +32,6 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-
-            - name: Validate composer.json
-              run: composer validate --no-check-publish
 
             - name: Install dependencies
               run: composer install
