@@ -9,8 +9,6 @@ Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 
 This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/).
 
-[![Build Status](https://travis-ci.org/knpuniversity/oauth2-client-bundle.svg)](http://travis-ci.org/knpuniversity/oauth2-client-bundle)
-
 ## Requirements
 
 * PHP 7.1.3 or higher
