@@ -429,8 +429,12 @@ The logged-in user will be an instance of `KnpU\OAuth2ClientBundle\Security\User
 have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
 
 ## Using the new Symfony Authenticator
-Now you can use the new Symfony Authenticator system (available **since Symfony 5.2**, don't you use it before this version) to login in your app.
-### Step 1) Using the new Oauth2Authenticator class
+
+Now you can use the new Symfony Authenticator system (available **since Symfony 5.2**, don't
+use it before this version) to login in your app.
+
+### Step 1) Using the new OAuth2Authenticator class
+
 ```php
 namespace App\Security;
 
@@ -460,18 +464,12 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
         $this->router = $router;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function supports(Request $request): ?bool
     {
         // continue ONLY if the current ROUTE matches the check ROUTE
         return $request->attributes->get('_route') === 'connect_facebook_check';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function authenticate(Request $request): PassportInterface
     {
         $credentials = $this->fetchAccessToken($this->clientRegistry->getClient('facebook_main'));
@@ -504,9 +502,6 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
         );
     }
 
-    /**
-     * @inheritDoc
-     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // change "app_homepage" to some route in your app
@@ -518,22 +513,20 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
         //return null;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $message = strtr($exception->getMessageKey(), $exception->getMessageData());
 
         return new Response($message, Response::HTTP_FORBIDDEN);
     }
-    
-    // ...
 }
 ```
 ### Step 2) Configuring the security
-Next, enable the new authenticator manager and then register your authenticator in `security.yaml` under the `guard` section:
-```yaml
+
+Next, enable the new authenticator manager and then register your authenticator
+in `security.yaml` under the `custom_authenticators` section:
+
+```diff
 # app/config/packages/security.yaml
 security:
     # ...
@@ -543,13 +536,10 @@ security:
         # ...
         main:
         # ...
-+           entry_point: MyAppAuthenticator
 +           custom_authenticators:
 +               - App\Security\MyFacebookAuthenticator
 ```
 
-### Important
-When you use the new authenticator, you no longer have anonymous user when `User` is `null`. So if you use the role `IS_AUTHENTICATED_ANONYMOUSLY` in your project, you must replace it with `PUBLIC_ACCESS`.
 ## Storing and refreshing tokens
 
 You have a couple of options to store access tokens for use at a later time:

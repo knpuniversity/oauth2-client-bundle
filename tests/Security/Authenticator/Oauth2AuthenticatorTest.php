@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 
-class Oauth2AuthenticatorTest extends TestCase
+class OAuth2AuthenticatorTest extends TestCase
 {
     public function setUp(): void
     {
