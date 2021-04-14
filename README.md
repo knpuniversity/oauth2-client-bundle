@@ -1526,7 +1526,7 @@ that you can use: See [Provider Client Libraries](http://oauth2-client.thephplea
 
 If you found one there, awesome! Install it. If not, you'll need
 to create your own Provider class. See the
-[Provider Guide](https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDER-GUIDE.md)
+[Provider Guide](https://oauth2-client.thephpleague.com/providers/implementing/)
 about this.
 
 Either way, after this step, you *should* have a provider "class"
