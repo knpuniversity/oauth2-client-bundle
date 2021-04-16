@@ -36,9 +36,9 @@ class FusionAuthProviderConfigurator implements ProviderConfiguratorInterface
         return [
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
-            'urlAuthorize' => $auth_server_url . '/oauth2/authorize',
-            'urlAccessToken' => $auth_server_url . '/oauth2/token',
-            'urlResourceOwnerDetails' => $auth_server_url . '/oauth2/userinfo',
+            'urlAuthorize' => $auth_server_url.'/oauth2/authorize',
+            'urlAccessToken' => $auth_server_url.'/oauth2/token',
+            'urlResourceOwnerDetails' => $auth_server_url.'/oauth2/userinfo',
         ];
     }
 
