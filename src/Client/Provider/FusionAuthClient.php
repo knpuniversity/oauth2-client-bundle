@@ -10,9 +10,9 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
+use JerryHopper\OAuth2\Client\Provider\FusionAuthResourceOwner;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use JerryHopper\OAuth2\Client\Provider\FusionAuthResourceOwner;
 
 class FusionAuthClient extends OAuth2Client
 {
