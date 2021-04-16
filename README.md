@@ -1006,7 +1006,7 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_fusion_auth_check
             redirect_params: {}
-            # FusionAuth server URL
+            # FusionAuth server URL, like http://localhost:9011
             auth_server_url: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
