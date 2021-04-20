@@ -10,6 +10,8 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use JerryHopper\OAuth2\Client\Provider\FusionAuth;
+use KnpU\OAuth2ClientBundle\Client\Provider\FusionAuthClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class FusionAuthProviderConfigurator implements ProviderConfiguratorInterface
@@ -26,7 +28,7 @@ class FusionAuthProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderClass(array $config)
     {
-        return 'JerryHopper\OAuth2\Client\Provider\FusionAuth';
+        return FusionAuth::class;
     }
 
     public function getProviderOptions(array $config)
@@ -59,6 +61,6 @@ class FusionAuthProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\FusionAuthClient';
+        return FusionAuthClient::class;
     }
 }
