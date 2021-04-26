@@ -33,6 +33,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfi
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FitbitProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FoursquareProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FusionAuthProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GeocachingProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator;
@@ -115,6 +116,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'facebook' => FacebookProviderConfigurator::class,
         'fitbit' => FitbitProviderConfigurator::class,
         'four_square' => FoursquareProviderConfigurator::class,
+        'fusion_auth' => FusionAuthProviderConfigurator::class,
         'geocaching' => GeocachingProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,

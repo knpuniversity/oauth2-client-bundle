@@ -78,6 +78,7 @@ via Composer:
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)            | composer require league/oauth2-facebook             |
 | [Fitbit](https://github.com/djchen/oauth2-fitbit)                      | composer require djchen/oauth2-fitbit               |
 | [Foursquare](https://github.com/stevenmaguire/oauth2-foursquare)       | composer require stevenmaguire/oauth2-foursquare    |
+| [FusionAuth](https://github.com/jerryhopper/oauth2-fusionauth)         | composer require jerryhopper/oauth2-fusionauth      |
 | [Geocaching](https://github.com/surfoo/oauth2-geocaching)              | composer require surfoo/oauth2-geocaching           |
 | [GitHub](https://github.com/thephpleague/oauth2-github)                | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                      | composer require omines/oauth2-gitlab               |
@@ -990,6 +991,23 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_four_square_check
             redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.fusionauth"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FusionAuthClient
+        # composer require jerryhopper/oauth2-fusionauth
+        fusion_auth:
+            # must be "fusion_auth" - it activates that type!
+            type: fusion_auth
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_FUSIONAUTH_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_FUSIONAUTH_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_fusion_auth_check
+            redirect_params: {}
+            # FusionAuth server URL, like http://localhost:9011
+            auth_server_url: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
