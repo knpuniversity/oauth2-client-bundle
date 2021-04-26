@@ -473,12 +473,12 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
 
     public function authenticate(Request $request): PassportInterface
     {
-        $credentials = $this->fetchAccessToken($this->clientRegistry->getClient('facebook_main'));
+        $accessToken = $this->fetchAccessToken($this->clientRegistry->getClient('facebook_main'));
 
         return new SelfValidatingPassport(
-            new UserBadge($credentials, function($credentials) {
+            new UserBadge($accessToken, function() {
                 /** @var FacebookUser $facebookUser */
-                $facebookUser = $this->clientRegistry->getClient('facebook_main')->fetchUserFromToken($credentials);
+                $facebookUser = $this->clientRegistry->getClient('facebook_main')->fetchUserFromToken($accessToken);
 
                 $email = $facebookUser->getEmail();
 
