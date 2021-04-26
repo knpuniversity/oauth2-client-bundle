@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by fliespl at 2021-04-26T18:24:36Z
+
+@weaverryan actually what you did is just changing variable names - it doesn't fix the main issue :)
+
+I had no better idea how to get around, so what I did in my case is following (notice $accessToken & $client passed in "use"):
+
+```
+        $accessToken = $this->fetchAccessToken($client);
+
+        return new SelfValidatingPassport(
+            new UserBadge($accessToken->getToken(), function ($notUsedTokenCauseWePassObject) use ($client, $accessToken) {
+                // fetch user
+                $externalUser = $client->fetchUserFromToken($accessToken);
+
+                // create local user
+                $user = new User();
+                $user->setExternalId($externalUser->getId());
+                $user->setType('xxx');
+                $user->setAccessToken($accessToken->jsonSerialize()); // whole access token object
+                // persist & flush
+
+                return $user;
+            })
+        );
+```
+
+For you example to work, it would need to be like:
+
+```
+$facebookUser = $this->clientRegistry->getClient('facebook_main')->fetchUserFromToken(new AccessToken(['access_token' => $accessToken]));
+```
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-04-26T18:29:23Z
+
+Ah, thank you @fliespl! Your strategy was exactly what I was trying to do, but I forgot the `use` (so it would not have worked). I also like how you created a `$client` variable so you can re-use it. I've just adapted the PR :). Let me know how it looks to you.
+
+---------------------------------------------------------------------------
+
+by fliespl at 2021-04-26T18:31:35Z
+
+Cool! That will work now :)
