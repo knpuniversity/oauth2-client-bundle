@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OAuth2Client implements OAuth2ClientInterface
 {
-    const OAUTH2_SESSION_STATE_KEY = 'knpu.oauth2_client_state';
+    public const OAUTH2_SESSION_STATE_KEY = 'knpu.oauth2_client_state';
 
     /** @var AbstractProvider */
     private $provider;
