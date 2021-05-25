@@ -10,14 +10,14 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
-use AdamPaterson\OAuth2\Client\Provider\TwitchResourceOwner;
+use Depotwarehouse\OAuth2\Client\Twitch\Entity\TwitchUser;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
 
 class TwitchClient extends OAuth2Client
 {
     /**
-     * @return TwitchResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
+     * @return TwitchUser
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -25,7 +25,7 @@ class TwitchClient extends OAuth2Client
     }
 
     /**
-     * @return TwitchResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
+     * @return TwitchUser
      */
     public function fetchUser()
     {
