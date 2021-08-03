@@ -17,7 +17,7 @@ use League\OAuth2\Client\Token\AccessToken;
 class TwitchClient extends OAuth2Client
 {
     /**
-     * @return TwitchUser
+     * @return TwitchUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -25,7 +25,7 @@ class TwitchClient extends OAuth2Client
     }
 
     /**
-     * @return TwitchUser
+     * @return TwitchUser|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {
