@@ -478,7 +478,7 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
         $accessToken = $this->fetchAccessToken($client);
 
         return new SelfValidatingPassport(
-            new UserBadge($accessToken, function() use ($accessToken, $client) {
+            new UserBadge($accessToken->getToken(), function() use ($accessToken, $client) {
                 /** @var FacebookUser $facebookUser */
                 $facebookUser = $client->fetchUserFromToken($accessToken);
 
