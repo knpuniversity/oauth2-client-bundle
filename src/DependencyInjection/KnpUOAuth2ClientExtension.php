@@ -165,7 +165,7 @@ class KnpUOAuth2ClientExtension extends Extension
     /**
      * Load the bundle configuration.
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $configuration = new Configuration();
@@ -246,7 +246,7 @@ class KnpUOAuth2ClientExtension extends Extension
      *
      * @return string The client service id
      */
-    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators)
+    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators): string
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
             if ('generic' === $providerType) {
@@ -306,17 +306,15 @@ class KnpUOAuth2ClientExtension extends Extension
         return $clientServiceKey;
     }
 
-    public static function getAllSupportedTypes()
+    public static function getAllSupportedTypes(): array
     {
         return array_keys(self::$supportedProviderTypes);
     }
 
     /**
      * @param string $type
-     *
-     * @return ProviderConfiguratorInterface
      */
-    public function getConfigurator($type)
+    public function getConfigurator($type): ProviderConfiguratorInterface
     {
         if (!isset($this->configurators[$type])) {
             $class = self::$supportedProviderTypes[$type];
@@ -329,10 +327,8 @@ class KnpUOAuth2ClientExtension extends Extension
 
     /**
      * Overridden so the alias isn't "knp_uo_auth2_client".
-     *
-     * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'knpu_oauth2_client';
     }
