@@ -564,7 +564,7 @@ You have a couple of options to store access tokens for use at a later time:
     }
     ```
 
-2. Store the refresh token string (eg. in the dabatase `user.refresh_token`), this means you must always refresh. 
+2. Store the refresh token string (eg. in the database `user.refresh_token`), this means you must always refresh. 
     You can also store the access token and expiration and then avoid the refresh until the access token is actually expired.
     ```php
     // Fetch the AccessToken and store the refresh token
