@@ -38,6 +38,14 @@ class OAuthUser implements UserInterface
         return null;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @deprecated use getUserIdentifier instead
+     */
     public function getUsername(): string
     {
         return $this->username;

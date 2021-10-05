@@ -42,4 +42,11 @@ class OAuthUserTest extends TestCase
 
         $this->assertSame('username', $user->getUsername());
     }
+
+    public function testUserIdentifier()
+    {
+        $user = new OAuthUser('username', ['role 1', 'role 2']);
+
+        $this->assertSame('username', $user->getUserIdentifier());
+    }
 }
