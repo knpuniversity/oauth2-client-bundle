@@ -127,7 +127,7 @@ class SomeUser implements UserInterface
     {
     }
 
-    // to be removed when Symfony 6 is supported
+    // to be removed when Symfony 5.2 supported is dropped
     public function getUsername(): string
     {
     }
