@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by DonCallisto at 2021-10-05T22:52:23Z
+
+Should resolve https://github.com/knpuniversity/oauth2-client-bundle/issues/323
+
+---------------------------------------------------------------------------
+
+by DonCallisto at 2021-10-05T22:54:26Z
+
+Last deprecation detected in tests (https://github.com/knpuniversity/oauth2-client-bundle/runs/3808912774) is about the old authenticator, so is perfectly fine as long as older symfony versions are supported.
