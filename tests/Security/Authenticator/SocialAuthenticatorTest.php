@@ -26,16 +26,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group legacy
+ */
 class SocialAuthenticatorTest extends TestCase
 {
     public function testFetchAccessTokenSimplyReturns()
     {
         $authenticator = new StubSocialAuthenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
             ->willReturn('expected_access_token');
 
-        $actualToken = $authenticator->doFetchAccessToken($client->reveal());
+        $actualToken = $authenticator->doFetchAccessToken($client);
         $this->assertEquals('expected_access_token', $actualToken);
     }
 
@@ -43,33 +47,36 @@ class SocialAuthenticatorTest extends TestCase
     {
         $this->expectException(NoAuthCodeAuthenticationException::class);
         $authenticator = new StubSocialAuthenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
-            ->willThrow(new MissingAuthorizationCodeException());
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
+            ->willThrowException(new MissingAuthorizationCodeException());
 
-        $authenticator->doFetchAccessToken($client->reveal());
+        $authenticator->doFetchAccessToken($client);
     }
 
     public function testFetchAccessTokenThrowsIdentityProviderException()
     {
         $this->expectException(IdentityProviderAuthenticationException::class);
         $authenticator = new StubSocialAuthenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
-            ->willThrow(new IdentityProviderException("message", 42, "response"));
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
+            ->willThrowException(new IdentityProviderException("message", 42, "response"));
 
-        $authenticator->doFetchAccessToken($client->reveal());
+        $authenticator->doFetchAccessToken($client);
     }
 
     public function testFetchAccessTokenThrowsInvalidStateException()
     {
         $this->expectException(InvalidStateAuthenticationException::class);
         $authenticator = new StubSocialAuthenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
-            ->willThrow(new InvalidStateException());
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
+            ->willThrowException(new InvalidStateException());
 
-        $authenticator->doFetchAccessToken($client->reveal());
+        $authenticator->doFetchAccessToken($client);
     }
 
     public function testCheckCredentials()
@@ -99,6 +106,8 @@ class StubSocialAuthenticator extends SocialAuthenticator
     public function supports(Request $request): bool
     {
     }
+
+    /** @return mixed */
     public function getCredentials(Request $request)
     {
     }
@@ -115,7 +124,7 @@ class StubSocialAuthenticator extends SocialAuthenticator
 
 class SomeUser implements UserInterface
 {
-    public function getRoles()
+    public function getRoles(): array
     {
     }
 

@@ -3,6 +3,21 @@
 *We intend to follow [Semantic Versioning 2.0.0](https://semver.org/), if you
 find a change that break's semver, please create an issue.*
 
+## [v2.9.0](https://github.com/symfony/maker-bundle/releases/tag/v2.9.0)
+
+*Nov 21st, 2021*
+
+### Feature
+
+- [#341](https://github.com/knpuniversity/oauth2-client-bundle/pull/341) - Enhancing test matrix, Symfony 6 support, dropping PHP 7.1, client 1.0 - *@weaverryan*
+- [#330](https://github.com/knpuniversity/oauth2-client-bundle/pull/330) - add symfony 6 return types - *@jrushlow*
+- [#335](https://github.com/knpuniversity/oauth2-client-bundle/pull/335) - Removed some deprecations introduced in Symfony 5.x - *@DonCallisto*
+- [#310](https://github.com/knpuniversity/oauth2-client-bundle/pull/310) - Adding FusionAuth provider - *@mooreds*
+
+### Bug Fix
+
+- [#309](https://github.com/knpuniversity/oauth2-client-bundle/pull/309) - Update TwitchClient configuration - *@chypriote*
+
 ## [v2.8.0](https://github.com/symfony/maker-bundle/releases/tag/v2.8.0)
 
 *March 23rd, 2021*

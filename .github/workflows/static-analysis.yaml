@@ -26,11 +26,11 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
 
-            - name: Install dependencies
-              run: composer install
+            - name: Install PHP-CS-Fixer
+              run: composer global require friendsofphp/php-cs-fixer --prefer-dist --no-progress
 
             - name: Run script
-              run: vendor/bin/php-cs-fixer  fix --verbose --diff --dry-run
+              run: $HOME/.composer/vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
 
     phpstan:
         name: PHPStan
@@ -42,7 +42,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  key: '7.3'
+                  php-version: '8.0'
 
             - name: Install dependencies
               run: composer install

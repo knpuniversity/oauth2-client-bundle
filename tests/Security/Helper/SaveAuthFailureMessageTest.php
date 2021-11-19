@@ -22,47 +22,33 @@ class SaveAuthFailureMessageTest extends TestCase
 
     public function testShouldThrowExceptionIfSessionDoesNotExist()
     {
-        $mockRequest = $this->getMockRequest(false);
+        $request = $this->createRequest(false);
         $mockAuthException = new AuthenticationException();
 
         $testFailureMessage = new SaveAuthFailureMessageTester();
 
         $this->expectException(\LogicException::class);
-        $testFailureMessage->callSaveAuthenticationErrorToSession($mockRequest, $mockAuthException);
-    }
-
-    public function testShouldThrowExceptionIfExistsButIsNotSessionInterface()
-    {
-        $mockRequest = $this->getMockRequest(true);
-        $mockAuthException = new AuthenticationException();
-
-        $testFailureMessage = new SaveAuthFailureMessageTester();
-
-        $this->expectException(\LogicException::class);
-        $testFailureMessage->callSaveAuthenticationErrorToSession($mockRequest, $mockAuthException);
+        $testFailureMessage->callSaveAuthenticationErrorToSession($request, $mockAuthException);
     }
 
     public function testShouldUpdateSessionErrorIfSessionExists()
     {
-        $mockSession = $this->getMockBuilder(SessionInterface::class)->getMock();
-        $mockRequest = $this->getMockRequest(true, $mockSession);
+        $request = $this->createRequest();
 
         $mockAuthException = new AuthenticationException();
 
         $testFailureMessage = new SaveAuthFailureMessageTester();
 
-        $mockSession->expects($this->once())->method("set")
-            ->with(
-                $this->equalTo(Security::AUTHENTICATION_ERROR),
-                $this->isInstanceOf(AuthenticationException::class)
-            );
-        $testFailureMessage->callSaveAuthenticationErrorToSession($mockRequest, $mockAuthException);
+        $testFailureMessage->callSaveAuthenticationErrorToSession($request, $mockAuthException);
+        $session = $request->getSession();
+        $this->assertInstanceOf(AuthenticationException::class, $session->get(Security::AUTHENTICATION_ERROR));
     }
 }
 
 class SaveAuthFailureMessageTester
 {
     use SaveAuthFailureMessage;
+
     public function callSaveAuthenticationErrorToSession($request, $exception): void
     {
         $this->saveAuthenticationErrorToSession($request, $exception);

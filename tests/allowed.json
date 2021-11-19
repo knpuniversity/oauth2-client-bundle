@@ -1,0 +1,7 @@
+[
+    {
+        "location": "KnpU\\OAuth2ClientBundle\\Tests\\Client\\ClientRegistryTest::testShouldKnowWhatServicesAreConfigured",
+        "message": "The \"KnpU\\OAuth2ClientBundle\\Security\\Authenticator\\SocialAuthenticator\" class extends \"Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator\" that is deprecated since Symfony 5.3, use the new authenticator system instead.",
+        "count": 1
+    }
+]

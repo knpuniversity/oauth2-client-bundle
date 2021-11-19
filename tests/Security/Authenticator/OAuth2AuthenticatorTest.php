@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
-use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 class OAuth2AuthenticatorTest extends TestCase
 {
@@ -31,11 +31,12 @@ class OAuth2AuthenticatorTest extends TestCase
     public function testFetchAccessTokenSimplyReturns()
     {
         $authenticator = new StubOauth2Authenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
             ->willReturn('expected_access_token');
 
-        $actualToken = $authenticator->doFetchAccessToken($client->reveal());
+        $actualToken = $authenticator->doFetchAccessToken($client);
         $this->assertEquals('expected_access_token', $actualToken);
     }
 
@@ -43,33 +44,36 @@ class OAuth2AuthenticatorTest extends TestCase
     {
         $this->expectException(NoAuthCodeAuthenticationException::class);
         $authenticator = new StubOauth2Authenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
-            ->willThrow(new MissingAuthorizationCodeException());
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
+            ->willThrowException(new MissingAuthorizationCodeException());
 
-        $authenticator->doFetchAccessToken($client->reveal());
+        $authenticator->doFetchAccessToken($client);
     }
 
     public function testFetchAccessTokenThrowsIdentityProviderException()
     {
         $this->expectException(IdentityProviderAuthenticationException::class);
         $authenticator = new StubOauth2Authenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
-            ->willThrow(new IdentityProviderException("message", 42, "response"));
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
+            ->willThrowException(new IdentityProviderException("message", 42, "response"));
 
-        $authenticator->doFetchAccessToken($client->reveal());
+        $authenticator->doFetchAccessToken($client);
     }
 
     public function testFetchAccessTokenThrowsInvalidStateException()
     {
         $this->expectException(InvalidStateAuthenticationException::class);
         $authenticator = new StubOauth2Authenticator();
-        $client = $this->prophesize('KnpU\OAuth2ClientBundle\Client\OAuth2Client');
-        $client->getAccessToken([])
-            ->willThrow(new InvalidStateException());
+        $client = $this->createMock(OAuth2Client::class);
+        $client->method('getAccessToken')
+            ->with([])
+            ->willThrowException(new InvalidStateException());
 
-        $authenticator->doFetchAccessToken($client->reveal());
+        $authenticator->doFetchAccessToken($client);
     }
 }
 
@@ -85,7 +89,7 @@ if (class_exists(AbstractAuthenticator::class)) {
         {
         }
 
-        public function authenticate(Request $request): PassportInterface
+        public function authenticate(Request $request): Passport
         {
         }
 

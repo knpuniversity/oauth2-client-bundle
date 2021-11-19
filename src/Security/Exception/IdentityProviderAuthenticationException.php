@@ -28,7 +28,7 @@ class IdentityProviderAuthenticationException extends AuthenticationException
         return 'Error fetching OAuth credentials: "%error%".';
     }
 
-    public function getMessageData()
+    public function getMessageData(): array
     {
         return [
             '%error%' => $this->getMessage(),
