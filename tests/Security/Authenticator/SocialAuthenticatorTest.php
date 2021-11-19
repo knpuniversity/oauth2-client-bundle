@@ -127,11 +127,16 @@ class SomeUser implements UserInterface
     {
     }
 
+    // to be removed when Symfony 6 is supported
     public function getUsername(): string
     {
     }
 
     public function eraseCredentials()
+    {
+    }
+
+    public function getUserIdentifier(): string
     {
     }
 }

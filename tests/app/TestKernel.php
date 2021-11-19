@@ -41,6 +41,7 @@ class TestKernel extends Kernel
                 'secret' => 'this is a cool bundle. Shhh..., it\'s a secret...',
                 'router' => [
                     'resource' => __DIR__ . '/routing.yml',
+                    'utf8' => true,
                 ],
                 // turn this off - otherwise we need doctrine/annotation
                 // the change that required this was in Symfony 3.2.0
