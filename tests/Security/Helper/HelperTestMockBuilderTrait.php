@@ -11,14 +11,18 @@
 namespace KnpU\OAuth2ClientBundle\Tests\Security\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 trait HelperTestMockBuilderTrait
 {
-    private function getMockRequest($hasSessionReturn, $getSessionReturn = \stdClass::class)
+    private function createRequest(bool $withSession = true): Request
     {
-        $mockRequest = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $mockRequest->method("hasSession")->willReturn($hasSessionReturn);
-        $mockRequest->method("getSession")->willReturn($getSessionReturn);
-        return $mockRequest;
+        $request = Request::create('/');
+        if ($withSession) {
+            $request->setSession(new Session(new MockArraySessionStorage()));
+        }
+
+        return $request;
     }
 }

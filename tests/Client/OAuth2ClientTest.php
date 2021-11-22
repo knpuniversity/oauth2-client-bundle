@@ -15,9 +15,14 @@ use KnpU\OAuth2ClientBundle\Exception\InvalidStateException;
 use KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\FacebookUser;
+use League\OAuth2\Client\Token\AccessToken;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class OAuth2ClientTest extends TestCase
 {
@@ -30,27 +35,25 @@ class OAuth2ClientTest extends TestCase
     public function setup(): void
     {
         $this->requestStack = new RequestStack();
-        $this->session = $this->prophesize('Symfony\Component\HttpFoundation\Session\SessionInterface');
-        $this->provider = $this->prophesize('League\OAuth2\Client\Provider\AbstractProvider');
+        $this->session = new Session(new MockArraySessionStorage());
+        $this->provider = $this->createMock(AbstractProvider::class);
 
         $this->request = new Request();
-        $this->request->setSession($this->session->reveal());
+        $this->request->setSession($this->session);
 
         $this->requestStack->push($this->request);
     }
 
     public function testRedirectWithState()
     {
-        $this->provider->getAuthorizationUrl(['scope' => ['scope1', 'scope2']])
+        $this->provider->method('getAuthorizationUrl')
+            ->with(['scope' => ['scope1', 'scope2']])
             ->willReturn('http://coolOAuthServer.com/authorize');
-        $this->provider->getState()
+        $this->provider->method('getState')
             ->willReturn('SOME_RANDOM_STATE');
 
-        $this->session->set(OAuth2Client::OAUTH2_SESSION_STATE_KEY, 'SOME_RANDOM_STATE')
-            ->shouldBeCalled();
-
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
 
@@ -63,21 +66,23 @@ class OAuth2ClientTest extends TestCase
             'http://coolOAuthServer.com/authorize',
             $response->getTargetUrl()
         );
+        $this->assertSame('SOME_RANDOM_STATE', $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY));
     }
 
     public function testRedirectWithoutState()
     {
-        $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock(RequestStack::class);
 
-        $requestStack->getCurrentRequest()
-            ->shouldNotBeCalled();
+        $requestStack->expects($this->never())
+            ->method('getCurrentRequest');
 
-        $this->provider->getAuthorizationUrl([])
+        $this->provider->method('getAuthorizationUrl')
+            ->with([])
             ->willReturn('http://example.com');
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
-            $requestStack->reveal()
+            $this->provider,
+            $requestStack
         );
         $client->setAsStateless();
 
@@ -85,24 +90,23 @@ class OAuth2ClientTest extends TestCase
         // don't need other checks - the fact that it didn't fail
         // by asking for the request and session is enough
         $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\RedirectResponse',
+            RedirectResponse::class,
             $response
         );
     }
 
     public function testRedirectWithOptions()
     {
-        $requestStack = $this->prophesize('Symfony\Component\HttpFoundation\RequestStack');
-
-        $this->provider->getAuthorizationUrl([
-            'scope' => ['scopeA'],
-            'optionA' => 'FOO',
-        ])
+        $this->provider->method('getAuthorizationUrl')
+            ->with([
+                'scope' => ['scopeA'],
+                'optionA' => 'FOO',
+            ])
             ->willReturn('http://example.com');
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
-            $requestStack->reveal()
+            $this->provider,
+            new RequestStack()
         );
         $client->setAsStateless();
 
@@ -113,7 +117,7 @@ class OAuth2ClientTest extends TestCase
         // don't need other checks - the assertion above when
         // mocking getAuthorizationUrl is enough
         $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\RedirectResponse',
+            RedirectResponse::class,
             $response
         );
     }
@@ -123,19 +127,18 @@ class OAuth2ClientTest extends TestCase
         $this->request->query->set('state', 'THE_STATE');
         $this->request->query->set('code', 'CODE_ABC');
 
-        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
-            ->willReturn('THE_STATE');
+        $this->session->set(OAuth2Client::OAUTH2_SESSION_STATE_KEY, 'THE_STATE');
 
-        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $this->provider->getAccessToken('authorization_code', ['code' => 'CODE_ABC'])
-            ->willReturn($expectedToken->reveal());
+        $expectedToken = new AccessToken(['access_token' => 'foo']);
+        $this->provider->method('getAccessToken')
+            ->with('authorization_code', ['code' => 'CODE_ABC'])
+            ->willReturn($expectedToken);
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
-        $actualToken = $client->getAccessToken();
-        $this->assertSame($expectedToken->reveal(), $actualToken);
+        $this->assertSame($expectedToken, $client->getAccessToken());
     }
 
     public function testGetAccessTokenWithOptions()
@@ -143,81 +146,86 @@ class OAuth2ClientTest extends TestCase
         $this->request->query->set('state', 'THE_STATE');
         $this->request->query->set('code', 'CODE_ABC');
 
-        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
-            ->willReturn('THE_STATE');
+        $this->session->set(OAuth2Client::OAUTH2_SESSION_STATE_KEY, 'THE_STATE');
 
-        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $this->provider->getAccessToken('authorization_code', ['code' => 'CODE_ABC', 'redirect_uri' => 'https://some.url'])
-            ->willReturn($expectedToken->reveal());
+        $expectedToken = new AccessToken(['access_token' => 'foo']);
+        $this->provider->method('getAccessToken')
+            ->with('authorization_code', ['code' => 'CODE_ABC', 'redirect_uri' => 'https://some.url'])
+            ->willReturn($expectedToken);
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
         $actualToken = $client->getAccessToken(['redirect_uri' => 'https://some.url']);
-        $this->assertSame($expectedToken->reveal(), $actualToken);
+        $this->assertSame($expectedToken, $actualToken);
     }
 
     public function testGetAccessTokenFromPOST()
     {
         $this->request->request->set('code', 'CODE_ABC');
 
-        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $this->provider->getAccessToken('authorization_code', ['code' => 'CODE_ABC'])
-            ->willReturn($expectedToken->reveal());
+        $expectedToken = new AccessToken(['access_token' => 'foo']);
+        $this->provider->method('getAccessToken')
+            ->with('authorization_code', ['code' => 'CODE_ABC'])
+            ->willReturn($expectedToken);
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
         $client->setAsStateless();
-        $actualToken = $client->getAccessToken();
-        $this->assertSame($expectedToken->reveal(), $actualToken);
+        $this->assertSame($expectedToken, $client->getAccessToken());
     }
 
     public function testRefreshAccessToken()
     {
-        $existingToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $existingToken->getRefreshToken()->willReturn('TOKEN_ABC');
+        $existingToken = new AccessToken([
+            'access_token' => 'existing',
+            'refresh_token' => 'TOKEN_ABC',
+        ]);
 
-        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $this->provider->getAccessToken('refresh_token', ['refresh_token' => 'TOKEN_ABC'])
-            ->willReturn($expectedToken->reveal());
+        $expectedToken = new AccessToken(['access_token' => 'new_one']);
+        $this->provider->method('getAccessToken')
+            ->with('refresh_token', ['refresh_token' => 'TOKEN_ABC'])
+            ->willReturn($expectedToken);
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
-        $actualToken = $client->refreshAccessToken($existingToken->reveal()->getRefreshToken());
-        $this->assertSame($expectedToken->reveal(), $actualToken);
+        $actualToken = $client->refreshAccessToken($existingToken->getRefreshToken());
+        $this->assertSame($expectedToken, $actualToken);
     }
 
     public function testRefreshAccessTokenWithOptions()
     {
-        $existingToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $existingToken->getRefreshToken()->willReturn('TOKEN_ABC');
+        $existingToken = new AccessToken([
+            'access_token' => 'existing',
+            'refresh_token' => 'TOKEN_ABC',
+        ]);
 
-        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $this->provider->getAccessToken('refresh_token', ['refresh_token' => 'TOKEN_ABC', 'redirect_uri' => 'https://some.url'])
-            ->willReturn($expectedToken->reveal());
+        $expectedToken = new AccessToken(['access_token' => 'new_one']);
+        $this->provider->method('getAccessToken')
+            ->with('refresh_token', ['refresh_token' => 'TOKEN_ABC', 'redirect_uri' => 'https://some.url'])
+            ->willReturn($expectedToken);
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
-        $actualToken = $client->refreshAccessToken($existingToken->reveal()->getRefreshToken(), ['redirect_uri' => 'https://some.url']);
-        $this->assertSame($expectedToken->reveal(), $actualToken);
+        $actualToken = $client->refreshAccessToken($existingToken->getRefreshToken(), ['redirect_uri' => 'https://some.url']);
+        $this->assertSame($expectedToken, $actualToken);
     }
 
     public function testGetAccessTokenThrowsInvalidStateException()
     {
         $this->expectException(InvalidStateException::class);
         $this->request->query->set('state', 'ACTUAL_STATE');
-        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
-            ->willReturn('OTHER_STATE');
+        $this->session->set(OAuth2Client::OAUTH2_SESSION_STATE_KEY, 'OTHER_STATE');
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
         $client->getAccessToken();
@@ -227,12 +235,11 @@ class OAuth2ClientTest extends TestCase
     {
         $this->expectException(MissingAuthorizationCodeException::class);
         $this->request->query->set('state', 'ACTUAL_STATE');
-        $this->session->get(OAuth2Client::OAUTH2_SESSION_STATE_KEY)
-           ->willReturn('ACTUAL_STATE');
+        $this->session->set(OAuth2Client::OAUTH2_SESSION_STATE_KEY, 'ACTUAL_STATE');
 
         // don't set a code query parameter
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
         $client->getAccessToken();
@@ -242,12 +249,13 @@ class OAuth2ClientTest extends TestCase
     {
         $this->request->request->set('code', 'CODE_ABC');
 
-        $expectedToken = $this->prophesize('League\OAuth2\Client\Token\AccessToken');
-        $this->provider->getAccessToken('authorization_code', ['code' => 'CODE_ABC'])
-            ->willReturn($expectedToken->reveal());
+        $expectedToken = new AccessToken(['access_token' => 'expected']);
+        $this->provider->method('getAccessToken')
+            ->with('authorization_code', ['code' => 'CODE_ABC'])
+            ->willReturn($expectedToken);
 
         $client = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
 
@@ -262,17 +270,19 @@ class OAuth2ClientTest extends TestCase
             'email' => 'john@doe.com',
         ]);
 
-        $this->provider->getResourceOwner($actualToken)->willReturn($resourceOwner);
+        $this->provider->method('getResourceOwner')
+            ->with($actualToken)
+            ->willReturn($resourceOwner);
         $user = $client->fetchUser($actualToken);
 
-        $this->assertInstanceOf('League\OAuth2\Client\Provider\FacebookUser', $user);
+        $this->assertInstanceOf(FacebookUser::class, $user);
         $this->assertEquals('testUser', $user->getName());
     }
 
     public function testShouldReturnProviderObject()
     {
         $testClient = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
 
@@ -287,7 +297,7 @@ class OAuth2ClientTest extends TestCase
         $this->requestStack->push(new Request());
 
         $testClient = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
 
@@ -301,7 +311,7 @@ class OAuth2ClientTest extends TestCase
         $this->requestStack->push(new Request());
 
         $testClient = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             $this->requestStack
         );
 
@@ -312,7 +322,7 @@ class OAuth2ClientTest extends TestCase
     public function testShouldThrowExceptionIfThereIsNoRequestInTheStack()
     {
         $testClient = new OAuth2Client(
-            $this->provider->reveal(),
+            $this->provider,
             new RequestStack()
         );
 

@@ -25,7 +25,12 @@ class OAuthUserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username): UserInterface
     {
-        return new OAuthUser($username, $this->roles);
+        return $this->loadUserByIdentifier($username);
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return new OAuthUser($identifier, $this->roles);
     }
 
     public function refreshUser(UserInterface $user): UserInterface
@@ -34,7 +39,9 @@ class OAuthUserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->loadUserByUsername(
+            method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername()
+        );
     }
 
     public function supportsClass($class): bool

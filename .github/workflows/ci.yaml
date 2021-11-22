@@ -1,41 +1,49 @@
-name: OAuth2 Client Tests
-
+name: Bundle CI
 on:
-    pull_request:
-    push:
-        branches: [ master ]
+  push:
+    branches: ['main']
+  pull_request:
+  schedule:
+    - cron: '0 */12 * * *'
 
 jobs:
-    run:
-        runs-on: ubuntu-18.04
-        strategy:
-            fail-fast: false
-            matrix:
-                php:
-                    - '7.1'
-                    - '7.2'
-                    - '7.3'
-                    - '7.4'
-                    - '8.0'
-                    - '8.1'
 
-        name: PHP ${{ matrix.php }} ${{ matrix.description }}
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v2
+  tests:
+    name: "Tests ${{ matrix.php-version }} ${{ matrix.dependency-versions }} deps ${{ matrix.dependency-versions }}"
+    runs-on: ubuntu-18.04
 
-            - uses: actions/cache@v2
-              with:
-                  path: ~/.composer/cache/files
-                  key: ${{ matrix.php }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # normal, highest, non-dev installs
+        php-version: ['7.3', '7.4', '8.0', '8.1']
+        composer-options: ['--prefer-stable']
+        dependency-versions: ['highest']
+        include:
+          # testing lowest php with lowest dependencies
+          - php-version: '7.2'
+            dependency-versions: 'lowest'
+            composer-options: '--prefer-lowest'
+          # testing dev versions with highest PHP
+          - php-version: '8.0'
+            dependency-versions: 'highest'
+            composer-options: '' # allow dev deps
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v2"
 
-            - name: Install dependencies
-              run: composer install
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+            coverage: "none"
+            php-version: "${{ matrix.php-version }}"
 
-            - name: Run PHPUnit tests
-              run: ./vendor/bin/simple-phpunit
+      - name: "Composer install"
+        uses: "ramsey/composer-install@v1"
+        with:
+            dependency-versions: "${{ matrix.dependency-versions }}"
+            composer-options: "--prefer-dist --no-progress"
+
+      - name: Run PHPUnit tests
+        run: "SYMFONY_PHPUNIT_VERSION=${{ matrix.phpunit-version }} ./vendor/bin/simple-phpunit"

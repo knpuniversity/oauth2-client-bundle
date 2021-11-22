@@ -450,7 +450,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 class MyFacebookAuthenticator extends OAuth2Authenticator
@@ -472,7 +472,7 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
         return $request->attributes->get('_route') === 'connect_facebook_check';
     }
 
-    public function authenticate(Request $request): PassportInterface
+    public function authenticate(Request $request): Passport
     {
         $client = $this->clientRegistry->getClient('facebook_main');
         $accessToken = $this->fetchAccessToken($client);
@@ -996,19 +996,19 @@ knpu_oauth2_client:
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
-        # will create service: "knpu.oauth2.client.fusionauth"
+        # will create service: "knpu.oauth2.client.fusion_auth"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FusionAuthClient
         # composer require jerryhopper/oauth2-fusionauth
         fusion_auth:
             # must be "fusion_auth" - it activates that type!
             type: fusion_auth
             # add and set these environment variables in your .env files
-            client_id: '%env(OAUTH_FUSIONAUTH_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_FUSIONAUTH_CLIENT_SECRET)%'
+            client_id: '%env(OAUTH_FUSION_AUTH_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_FUSION_AUTH_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_fusion_auth_check
             redirect_params: {}
-            # FusionAuth server URL, like http://localhost:9011
+            # FusionAuth Server URL, no trailing slash
             auth_server_url: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true

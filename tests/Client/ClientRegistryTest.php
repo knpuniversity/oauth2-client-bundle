@@ -61,7 +61,7 @@ class ClientRegistryTest extends TestCase
             'invalid' => 'knpu.oauth2.client.invalid'
         ];
         $mockContainer = $this->getMockBuilder(ContainerInterface::class)->disableOriginalConstructor()->getMock();
-        $mockContainer->method("get")->willReturn(\stdClass::class);
+        $mockContainer->method("get")->willReturn(new \stdClass());
 
         $testClientRegistry = new ClientRegistry($mockContainer, $mockServiceMap);
 
