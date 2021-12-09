@@ -603,6 +603,7 @@ knpu_oauth2_client:
     # options to configure the default http client
     # http_client_options:
     #     timeout: 0
+    # if you want to disable the proxy (local gitlab oauth for example) set proxy to false
     #     proxy: null
     #     Use only with proxy option set
     #     verify: false
