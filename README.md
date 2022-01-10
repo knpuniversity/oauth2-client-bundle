@@ -557,7 +557,7 @@ You have a couple of options to store access tokens for use at a later time:
     $accessToken = $session->get('access_token');
 
     if ($accessToken->hasExpired()) {
-        $accessToken = $client->refreshAccessToken($accessToken->getRefreshToken);
+        $accessToken = $client->refreshAccessToken($accessToken->getRefreshToken());
 
         // Update the stored access token for next time
         $session->set('access_token', $accessToken);
@@ -573,7 +573,7 @@ You have a couple of options to store access tokens for use at a later time:
     $entityManager->flush();
 
     // Get a new AccessToken from the refresh token, and store the new refresh token for next time
-    $accessToken = $client->refreshAccessToken($user->getRefreshToken);
+    $accessToken = $client->refreshAccessToken($user->getRefreshToken());
     $user->setRefreshToken($accessToken->getRefreshToken());
     $entityManager->flush();
 ```
