@@ -111,7 +111,7 @@ via Composer:
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                      | composer require hayageek/oauth2-yahoo              |
 | [Yandex](https://github.com/rakeev/oauth2-yandex)                      | composer require aego/oauth2-yandex                 |
 | [Zendesk](https://github.com/stevenmaguire/oauth2-zendesk)             | composer require stevenmaguire/oauth2-zendesk       |
-| generic                                                                | configure any unsupported provider                  |
+| [Generic](#configuring-a-generic-provider)                             | configure any unsupported provider                  |
 
 <span name="end-client-downloader-table"></span>
 
