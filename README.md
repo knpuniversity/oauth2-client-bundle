@@ -6,6 +6,7 @@ Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 * "Connect with Facebook" type of functionality
 * Fetching access keys via OAuth2 to be used with an API
 * Doing OAuth2 authentication with [Symfony Custom Authenticator](https://symfonycasts.com/screencast/symfony-security)
+  (or [Guard Authenticator](https://symfonycasts.com/screencast/symfony-security) for legacy applications)
 
 This bundle integrates with [league/oauth2-client](https://oauth2-client.thephpleague.com/).
 
@@ -190,7 +191,7 @@ class FacebookController extends AbstractController
         return $clientRegistry
             ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
             ->redirect([
-	    	'public_profile', 'email' // the scopes you want to access
+                'public_profile', 'email' // the scopes you want to access
             ]);
     }
 
@@ -216,7 +217,7 @@ class FacebookController extends AbstractController
             $user = $client->fetchUser();
 
             // do something with all this new power!
-	    // e.g. $name = $user->getFirstName();
+            // e.g. $name = $user->getFirstName();
             var_dump($user); die;
             // ...
         } catch (IdentityProviderException $e) {
@@ -256,7 +257,7 @@ their access token and user information.
 But often, you will want to actually authenticate that user: log
 them into your system. In that case, instead of putting all of
 the logic in `connectCheckAction` as shown above, you'll leave that
-blank and create a [Guard authenticator](https://symfonycasts.com/screencast/symfony-security),
+blank and create a [Guard Authenticator](https://symfonycasts.com/screencast/symfony-security),
 which will hold similar logic.
 
 A `SocialAuthenticator` base class exists to help with a few things:
@@ -286,7 +287,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
     {
         $this->clientRegistry = $clientRegistry;
         $this->em = $em;
-	$this->router = $router;
+        $this->router = $router;
     }
 
     public function supports(Request $request)
@@ -343,7 +344,7 @@ class MyFacebookAuthenticator extends SocialAuthenticator
         return $this->clientRegistry
             // "facebook_main" is the key used in config/packages/knpu_oauth2_client.yaml
             ->getClient('facebook_main');
-	}
+    }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
@@ -386,9 +387,9 @@ Next, register your authenticator in `security.yaml` under the `guard` section:
 security:
     # ...
     firewalls:
-    	# ...
+        # ...
         main:
-	    # ...
+        # ...
 +            guard:
 +                authenticators:
 +                    - App\Security\MyFacebookAuthenticator
