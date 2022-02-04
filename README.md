@@ -115,7 +115,11 @@ via Composer:
 
 <span name="end-client-downloader-table"></span>
 
-### Step 2) Configure the provider
+Don't see a provider you need in this list? Please, check the full list of third-party provider
+clients from [league/oauth2-client](https://oauth2-client.thephpleague.com/providers/thirdparty/).
+Otherwise, consider creating a [generic](#configuring-a-generic-provider) client yourself.
+
+### Step 2) Configure the Provider
 
 Awesome! Now, you'll configure your provider. For Facebook,
 this will look something like this.
