@@ -103,6 +103,7 @@ via Composer:
 | [Strava](https://github.com/Edwin-Luijten/oauth2-strava)               | composer require edwin-luijten/oauth2-strava        |
 | [Stripe](https://github.com/adam-paterson/oauth2-stripe)               | composer require adam-paterson/oauth2-stripe        |
 | [Twitch](https://github.com/tpavlek/oauth2-twitch)                     | composer require depotwarehouse/oauth2-twitch       |
+| [Twitch (Helix)](https://github.com/vertisan/oauth2-twitch-helix)      | composer require vertisan/oauth2-twitch-helix       |
 | [Uber](https://github.com/stevenmaguire/oauth2-uber)                   | composer require stevenmaguire/oauth2-uber          |
 | [Unsplash](https://github.com/hughbertd/oauth2-unsplash)               | composer require hughbertd/oauth2-unsplash          |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                        | composer require saf33r/oauth2-vimeo                |
