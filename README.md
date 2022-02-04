@@ -257,7 +257,7 @@ their access token and user information.
 But often, you will want to actually authenticate that user: log
 them into your system. In that case, instead of putting all of
 the logic in `connectCheckAction()` as shown above, you'll leave that
-blank and create an Authenticator which will hold similar logic.
+blank and create an authenticator which will hold similar logic.
 
 Now you can use the new Symfony Authenticator system (available **since Symfony 5.2**, don't
 use it before this version) to login in your app. For legacy Symfony versions, use
