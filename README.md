@@ -14,7 +14,7 @@ This bundle integrates with [league/oauth2-client](http://oauth2-client.thephple
 * PHP 7.1.3 or higher
 * Symfony 4.4 or higher (use version 1 of the bundle for earlier support)
 
-## This bundle or HWIOAuthBundle?
+## This Bundle or HWIOAuthBundle?
 
 In addition to this bundle, another OAuth bundle exists for Symfony: [hwi/oauth-bundle](https://github.com/hwi/HWIOAuthBundle).
 You might be wondering "why are there two popular OAuth bundles?".
@@ -46,7 +46,7 @@ Awesome! Now, you'll want to configure a client.
 You'll need to configure *one* client for *each* OAuth2 server
 (GitHub, Facebook, etc) that you want to talk to.
 
-### Step 1) Download the client library
+### Step 1) Download the Client Library
 
 Choose the one you want from this list and install it
 via Composer:
@@ -54,7 +54,7 @@ via Composer:
 <a name="client-downloader-table"></a>
 
 | OAuth2 Provider                                                        | Install                                             |
-| ---------------------------------------------------------------------- | ------------------------------------------------------- |
+| ---------------------------------------------------------------------- | --------------------------------------------------- |
 | [Amazon](https://github.com/luchianenco/oauth2-amazon)                 | composer require luchianenco/oauth2-amazon          |
 | [AppID](https://github.com/Jampire/oauth2-appid)                       | composer require jampire/oauth2-appid               |
 | [Apple](https://github.com/patrickbussmann/oauth2-apple)               | composer require patrickbussmann/oauth2-apple       |
@@ -115,10 +115,10 @@ via Composer:
 
 <span name="end-client-downloader-table"></span>
 
-### Step 2) Configure the provider
+### Step 2) Configure the Provider
 
 Awesome! Now, you'll configure your provider. For Facebook,
-this will look something like this.
+this will look something like this:
 
 ```yml
 # config/packages/knpu_oauth2_client.yaml
@@ -140,7 +140,7 @@ knpu_oauth2_client:
 
 Notice the two `'%env(var)%'`calls? Add these anywhere in your `.env` and `.env.dist` files.
 These are the credentials for the OAuth provider. For Facebook, you'll get these by registering
-your app on [developers.facebook.com](https://developers.facebook.com/apps/).
+your app on [developers.facebook.com](https://developers.facebook.com/apps/):
 
 ```bash
 # .env
@@ -255,7 +255,7 @@ their access token and user information.
 
 But often, you will want to actually authenticate that user: log
 them into your system. In that case, instead of putting all of
-the logic in `connectCheckAction` as shown above, you'll leave that
+the logic in `connectCheckAction()` as shown above, you'll leave that
 blank and create a [Guard authenticator](https://symfonycasts.com/screencast/symfony-security),
 which will hold similar logic.
 
@@ -396,19 +396,19 @@ security:
 
 For more details: see http://symfony.com/doc/current/cookbook/security/guard-authentication.html#step-2-configure-the-authenticator.
 
-**CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
+> **CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
 into your authenticator instead of the `ClientRegistry`. However, this may cause
 circular reference issues and degrades performance (because authenticators are instantiated
 on every request, even though you *rarely* need the `FacebookClient` to be created).
 The `ClientRegistry` lazily creates the client objects.
 
-### Authenticating any OAuth user
+### Authenticating any OAuth User
 
 If you don't need to fetch/persist any information about the user, you can use the
 `OAuthUserProvider` service to quickly authenticate them in your application (if you're
-using Doctrine, use the normal [entity user provider](http://symfony.com/doc/current/security/entity_provider.html)).
+using Doctrine, use the normal [entity user provider](https://symfony.com/doc/current/security/user_providers.html#entity-user-provider)).
 
-First define the user provider in your `security.yaml` file:
+First, define the user provider in your `security.yaml` file:
 
 ```yml
 security:
@@ -434,7 +434,7 @@ have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
 Now you can use the new Symfony Authenticator system (available **since Symfony 5.2**, don't
 use it before this version) to login in your app.
 
-### Step 1) Using the new OAuth2Authenticator class
+### Step 1) Using the new OAuth2Authenticator Class
 
 ```php
 namespace App\Security;
@@ -524,7 +524,8 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
     }
 }
 ```
-### Step 2) Configuring the security
+
+### Step 2) Configuring the Security
 
 Next, enable the new authenticator manager and then register your authenticator
 in `security.yaml` under the `custom_authenticators` section:
@@ -543,11 +544,11 @@ security:
 +               - App\Security\MyFacebookAuthenticator
 ```
 
-## Storing and refreshing tokens
+## Storing and Refreshing Tokens
 
 You have a couple of options to store access tokens for use at a later time:
 
-1. Store the `AccessToken` object (eg. serializing into the session), this allows you to check expiry before refreshing
+1. Store the `AccessToken` object (e.g. serializing into the session), this allows you to check expiry before refreshing:
     ```php
     // Fetch and store the AccessToken
     $accessToken = $client->getAccessToken();
@@ -564,8 +565,8 @@ You have a couple of options to store access tokens for use at a later time:
     }
     ```
 
-2. Store the refresh token string (eg. in the database `user.refresh_token`), this means you must always refresh. 
-    You can also store the access token and expiration and then avoid the refresh until the access token is actually expired.
+2. Store the refresh token string (e.g. in the database `user.refresh_token`), this means you must always refresh. 
+    You can also store the access token and expiration and then avoid the refresh until the access token is actually expired:
     ```php
     // Fetch the AccessToken and store the refresh token
     $accessToken = $client->getAccessToken();
@@ -576,7 +577,7 @@ You have a couple of options to store access tokens for use at a later time:
     $accessToken = $client->refreshAccessToken($user->getRefreshToken());
     $user->setRefreshToken($accessToken->getRefreshToken());
     $entityManager->flush();
-```
+    ```
 
 Depending on your OAuth2 provider, you may need to pass some parameters when initially creating and/or refreshing the token:
 
@@ -592,7 +593,7 @@ $accessToken = $client->refreshAccessToken($accessToken->getRefreshtoken(), ['sc
 
 Below is the configuration for *all* of the supported OAuth2 providers.
 **Don't see the one you need?** Use the `generic` provider to configure
-any provider.
+any provider:
 
 ```yml
 # config/packages/knpu_oauth2_client.yaml
@@ -1542,7 +1543,7 @@ You can configure a custom "provider" using the `generic` type.
 ### 1) Find / Create your Provider Library
 
 First, see if your OAuth server already has a "provider library"
-that you can use: See [Provider Client Libraries](http://oauth2-client.thephpleague.com/providers/league/).
+that you can use: See [Provider Client Libraries](https://oauth2-client.thephpleague.com/providers/league/).
 
 If you found one there, awesome! Install it. If not, you'll need
 to create your own Provider class. See the
@@ -1585,11 +1586,11 @@ knpu_oauth2_client:
 That's it! Now you'll have a `knpu.oauth2.client.foo_bar_oauth` service
 you can use.
 
-## Extending/Decorating Client Classes
+## Extending / Decorating Client Classes
 
 Maybe you need some extra services inside your client class? No problem! You can
 decorate existing client class with your own implementation. All you need is
-new class that implement OAuth2ClientInterface:
+a new class that implements `OAuth2ClientInterface`:
 
 ```php
 namespace App\Client;
@@ -1613,7 +1614,7 @@ class CacheableAzureClient implements OAuth2ClientInterface
 }
 ```
 
-and configure it:
+And configure it:
 
 ```yml
 # config/services.yaml
