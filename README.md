@@ -5,9 +5,9 @@ Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 * "Social" authentication / login
 * "Connect with Facebook" type of functionality
 * Fetching access keys via OAuth2 to be used with an API
-* Doing OAuth2 authentication with [Guard](https://knpuniversity.com/screencast/guard)
+* Doing OAuth2 authentication with [Symfony Custom Authenticator](https://symfonycasts.com/screencast/symfony-security)
 
-This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/).
+This bundle integrates with [league/oauth2-client](https://oauth2-client.thephpleague.com/).
 
 ## Requirements
 
