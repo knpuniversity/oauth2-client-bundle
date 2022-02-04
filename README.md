@@ -5,9 +5,10 @@ Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 * "Social" authentication / login
 * "Connect with Facebook" type of functionality
 * Fetching access keys via OAuth2 to be used with an API
-* Doing OAuth2 authentication with [Guard](https://knpuniversity.com/screencast/guard)
+* Doing OAuth2 authentication with [Symfony Custom Authenticator](https://symfonycasts.com/screencast/symfony-security)
+  (or [Guard Authenticator](https://symfonycasts.com/screencast/symfony-security) for legacy applications)
 
-This bundle integrates with [league/oauth2-client](http://oauth2-client.thephpleague.com/).
+This bundle integrates with [league/oauth2-client](https://oauth2-client.thephpleague.com/).
 
 ## Requirements
 
@@ -190,7 +191,7 @@ class FacebookController extends AbstractController
         return $clientRegistry
             ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
             ->redirect([
-	    	'public_profile', 'email' // the scopes you want to access
+                'public_profile', 'email' // the scopes you want to access
             ]);
     }
 
@@ -216,7 +217,7 @@ class FacebookController extends AbstractController
             $user = $client->fetchUser();
 
             // do something with all this new power!
-	    // e.g. $name = $user->getFirstName();
+            // e.g. $name = $user->getFirstName();
             var_dump($user); die;
             // ...
         } catch (IdentityProviderException $e) {
@@ -247,7 +248,7 @@ $provider = $client->getOAuth2Provider();
 $longLivedToken = $provider->getLongLivedAccessToken($accessToken);
 ```
 
-## Authenticating with Guard
+## Authenticating with the new Symfony Authenticator
 
 At this point, you now have a nice service that allows you to
 redirect your user to an OAuth server (e.g. Facebook) and fetch
@@ -255,186 +256,14 @@ their access token and user information.
 
 But often, you will want to actually authenticate that user: log
 them into your system. In that case, instead of putting all of
-the logic in `connectCheckAction` as shown above, you'll leave that
-blank and create a [Guard authenticator](https://symfonycasts.com/screencast/symfony-security),
-which will hold similar logic.
-
-A `SocialAuthenticator` base class exists to help with a few things:
-
-```php
-namespace App\Security;
-
-use App\Entity\User; // your user entity
-use Doctrine\ORM\EntityManagerInterface;
-use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
-use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
-use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-
-class MyFacebookAuthenticator extends SocialAuthenticator
-{
-    private $clientRegistry;
-    private $em;
-    private $router;
-
-    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
-    {
-        $this->clientRegistry = $clientRegistry;
-        $this->em = $em;
-	$this->router = $router;
-    }
-
-    public function supports(Request $request)
-    {
-        // continue ONLY if the current ROUTE matches the check ROUTE
-        return $request->attributes->get('_route') === 'connect_facebook_check';
-    }
-
-    public function getCredentials(Request $request)
-    {
-        // this method is only called if supports() returns true
-
-        // For Symfony lower than 3.4 the supports method need to be called manually here:
-        // if (!$this->supports($request)) {
-        //     return null;
-        // }
-
-        return $this->fetchAccessToken($this->getFacebookClient());
-    }
-
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
-        /** @var FacebookUser $facebookUser */
-        $facebookUser = $this->getFacebookClient()
-            ->fetchUserFromToken($credentials);
-
-        $email = $facebookUser->getEmail();
-
-        // 1) have they logged in with Facebook before? Easy!
-        $existingUser = $this->em->getRepository(User::class)
-            ->findOneBy(['facebookId' => $facebookUser->getId()]);
-        if ($existingUser) {
-            return $existingUser;
-        }
-
-        // 2) do we have a matching user by email?
-        $user = $this->em->getRepository(User::class)
-            ->findOneBy(['email' => $email]);
-
-        // 3) Maybe you just want to "register" them by creating
-        // a User object
-        $user->setFacebookId($facebookUser->getId());
-        $this->em->persist($user);
-        $this->em->flush();
-
-        return $user;
-    }
-
-    /**
-     * @return FacebookClient
-     */
-    private function getFacebookClient()
-    {
-        return $this->clientRegistry
-            // "facebook_main" is the key used in config/packages/knpu_oauth2_client.yaml
-            ->getClient('facebook_main');
-	}
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-    {
-        // change "app_homepage" to some route in your app
-        $targetUrl = $this->router->generate('app_homepage');
-
-        return new RedirectResponse($targetUrl);
-    
-        // or, on success, let the request continue to be handled by the controller
-        //return null;
-    }
-
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
-    {
-        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
-
-        return new Response($message, Response::HTTP_FORBIDDEN);
-    }
-
-    /**
-     * Called when authentication is needed, but it's not sent.
-     * This redirects to the 'login'.
-     */
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-        return new RedirectResponse(
-            '/connect/', // might be the site, where users choose their oauth provider
-            Response::HTTP_TEMPORARY_REDIRECT
-        );
-    }
-
-    // ...
-}
-```
-
-Next, register your authenticator in `security.yaml` under the `guard` section:
-
-```diff
-# app/config/packages/security.yaml
-security:
-    # ...
-    firewalls:
-    	# ...
-        main:
-	    # ...
-+            guard:
-+                authenticators:
-+                    - App\Security\MyFacebookAuthenticator
-```
-
-For more details: see http://symfony.com/doc/current/cookbook/security/guard-authentication.html#step-2-configure-the-authenticator.
-
-**CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
-into your authenticator instead of the `ClientRegistry`. However, this may cause
-circular reference issues and degrades performance (because authenticators are instantiated
-on every request, even though you *rarely* need the `FacebookClient` to be created).
-The `ClientRegistry` lazily creates the client objects.
-
-### Authenticating any OAuth user
-
-If you don't need to fetch/persist any information about the user, you can use the
-`OAuthUserProvider` service to quickly authenticate them in your application (if you're
-using Doctrine, use the normal [entity user provider](http://symfony.com/doc/current/security/entity_provider.html)).
-
-First define the user provider in your `security.yaml` file:
-
-```yml
-security:
-    providers:
-        oauth:
-            id: knpu.oauth2.user_provider
-```
-
-Then in your Guard authenticator, use the user provider to easily fetch the user:
-
-```php
-public function getUser($credentials, UserProviderInterface $userProvider)
-{
-    return $userProvider->loadUserByUsername($this->getClient()->fetchUserFromToken($credentials)->getId());
-}
-```
-
-The logged-in user will be an instance of `KnpU\OAuth2ClientBundle\Security\User\OAuthUser` and will
-have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
-
-## Using the new Symfony Authenticator
+the logic in `connectCheckAction()` as shown above, you'll leave that
+blank and create an authenticator which will hold similar logic.
 
 Now you can use the new Symfony Authenticator system (available **since Symfony 5.2**, don't
-use it before this version) to login in your app.
+use it before this version) to login in your app. For legacy Symfony versions, use
+[Guard Authenticator](#authenticating-with-guard) below.
 
-### Step 1) Using the new OAuth2Authenticator class
+### Step 1) Using the new OAuth2Authenticator Class
 
 ```php
 namespace App\Security;
@@ -524,7 +353,8 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
     }
 }
 ```
-### Step 2) Configuring the security
+
+### Step 2) Configuring the Security
 
 Next, enable the new authenticator manager and then register your authenticator
 in `security.yaml` under the `custom_authenticators` section:
@@ -542,6 +372,179 @@ security:
 +           custom_authenticators:
 +               - App\Security\MyFacebookAuthenticator
 ```
+
+**CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
+into your authenticator instead of the `ClientRegistry`. However, this may cause
+circular reference issues and degrades performance (because authenticators are instantiated
+on every request, even though you *rarely* need the `FacebookClient` to be created).
+The `ClientRegistry` lazily creates the client objects.
+
+## Authenticating with Guard
+
+Create a [Guard Authenticator](https://symfonycasts.com/screencast/symfony-security).
+A `SocialAuthenticator` base class exists to help with a few things:
+
+```php
+namespace App\Security;
+
+use App\Entity\User; // your user entity
+use Doctrine\ORM\EntityManagerInterface;
+use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
+use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+
+class MyFacebookAuthenticator extends SocialAuthenticator
+{
+    private $clientRegistry;
+    private $em;
+    private $router;
+
+    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
+    {
+        $this->clientRegistry = $clientRegistry;
+        $this->em = $em;
+        $this->router = $router;
+    }
+
+    public function supports(Request $request)
+    {
+        // continue ONLY if the current ROUTE matches the check ROUTE
+        return $request->attributes->get('_route') === 'connect_facebook_check';
+    }
+
+    public function getCredentials(Request $request)
+    {
+        // this method is only called if supports() returns true
+
+        // For Symfony lower than 3.4 the supports method need to be called manually here:
+        // if (!$this->supports($request)) {
+        //     return null;
+        // }
+
+        return $this->fetchAccessToken($this->getFacebookClient());
+    }
+
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        /** @var FacebookUser $facebookUser */
+        $facebookUser = $this->getFacebookClient()
+            ->fetchUserFromToken($credentials);
+
+        $email = $facebookUser->getEmail();
+
+        // 1) have they logged in with Facebook before? Easy!
+        $existingUser = $this->em->getRepository(User::class)
+            ->findOneBy(['facebookId' => $facebookUser->getId()]);
+        if ($existingUser) {
+            return $existingUser;
+        }
+
+        // 2) do we have a matching user by email?
+        $user = $this->em->getRepository(User::class)
+            ->findOneBy(['email' => $email]);
+
+        // 3) Maybe you just want to "register" them by creating
+        // a User object
+        $user->setFacebookId($facebookUser->getId());
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
+    }
+
+    /**
+     * @return FacebookClient
+     */
+    private function getFacebookClient()
+    {
+        return $this->clientRegistry
+            // "facebook_main" is the key used in config/packages/knpu_oauth2_client.yaml
+            ->getClient('facebook_main');
+    }
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
+        // change "app_homepage" to some route in your app
+        $targetUrl = $this->router->generate('app_homepage');
+
+        return new RedirectResponse($targetUrl);
+    
+        // or, on success, let the request continue to be handled by the controller
+        //return null;
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
+        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
+
+        return new Response($message, Response::HTTP_FORBIDDEN);
+    }
+
+    /**
+     * Called when authentication is needed, but it's not sent.
+     * This redirects to the 'login'.
+     */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        return new RedirectResponse(
+            '/connect/', // might be the site, where users choose their oauth provider
+            Response::HTTP_TEMPORARY_REDIRECT
+        );
+    }
+
+    // ...
+}
+```
+
+Next, register your authenticator in `security.yaml` under the `guard` section:
+
+```diff
+# app/config/packages/security.yaml
+security:
+    # ...
+    firewalls:
+        # ...
+        main:
+        # ...
++            guard:
++                authenticators:
++                    - App\Security\MyFacebookAuthenticator
+```
+
+For more details: see http://symfony.com/doc/current/cookbook/security/guard-authentication.html#step-2-configure-the-authenticator.
+
+### Authenticating any OAuth user
+
+If you don't need to fetch/persist any information about the user, you can use the
+`OAuthUserProvider` service to quickly authenticate them in your application (if you're
+using Doctrine, use the normal [entity user provider](http://symfony.com/doc/current/security/entity_provider.html)).
+
+First define the user provider in your `security.yaml` file:
+
+```yml
+security:
+    providers:
+        oauth:
+            id: knpu.oauth2.user_provider
+```
+
+Then in your Guard authenticator, use the user provider to easily fetch the user:
+
+```php
+public function getUser($credentials, UserProviderInterface $userProvider)
+{
+    return $userProvider->loadUserByUsername($this->getClient()->fetchUserFromToken($credentials)->getId());
+}
+```
+
+The logged-in user will be an instance of `KnpU\OAuth2ClientBundle\Security\User\OAuthUser` and will
+have the roles `ROLE_USER` and `ROLE_OAUTH_USER`.
 
 ## Storing and refreshing tokens
 
@@ -576,7 +579,7 @@ You have a couple of options to store access tokens for use at a later time:
     $accessToken = $client->refreshAccessToken($user->getRefreshToken());
     $user->setRefreshToken($accessToken->getRefreshToken());
     $entityManager->flush();
-```
+    ```
 
 Depending on your OAuth2 provider, you may need to pass some parameters when initially creating and/or refreshing the token:
 
