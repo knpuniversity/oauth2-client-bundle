@@ -51,6 +51,6 @@ class TwitchHelixProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\TwitchClient';
+        return 'KnpU\OAuth2ClientBundle\Client\Provider\TwitchHelixClient';
     }
 }
