@@ -10,11 +10,6 @@ Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 
 This bundle integrates with [league/oauth2-client](https://oauth2-client.thephpleague.com/).
 
-## Requirements
-
-* PHP 7.1.3 or higher
-* Symfony 4.4 or higher (use version 1 of the bundle for earlier support)
-
 ## This Bundle or HWIOAuthBundle?
 
 In addition to this bundle, another OAuth bundle exists for Symfony: [hwi/oauth-bundle](https://github.com/hwi/HWIOAuthBundle).
