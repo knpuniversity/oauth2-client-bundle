@@ -211,8 +211,8 @@ foreach ($installTreeDetails['types'] as $typeConfig) {
 
 // add generic
 $lines[] = sprintf(
-    '| generic %s | configure any unsupported provider %s |',
-    str_repeat(' ', $longestNameAndUrl - 3),
+    '| [Generic](#configuring-a-generic-provider) %s | configure any unsupported provider %s |',
+    str_repeat(' ', $longestNameAndUrl - 38),
     str_repeat(' ', $longestPackageName - 17)
 );
 
@@ -240,7 +240,7 @@ $configurationText = <<<EOF
 
 Below is the configuration for *all* of the supported OAuth2 providers.
 **Don't see the one you need?** Use the `generic` provider to configure
-any provider.
+any provider:
 
 ```yml
 # config/packages/knpu_oauth2_client.yaml
@@ -251,6 +251,7 @@ knpu_oauth2_client:
     # options to configure the default http client
     # http_client_options:
     #     timeout: 0
+    #     # if you want to disable the proxy (e.g. local GitLab OAuth) - set it to "false"
     #     proxy: null
     #     Use only with proxy option set
     #     verify: false
