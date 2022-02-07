@@ -49,65 +49,65 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-| OAuth2 Provider                                                        | Install                                             |
-| ---------------------------------------------------------------------- | ------------------------------------------------------- |
-| [Amazon](https://github.com/luchianenco/oauth2-amazon)                 | composer require luchianenco/oauth2-amazon          |
-| [AppID](https://github.com/Jampire/oauth2-appid)                       | composer require jampire/oauth2-appid               |
-| [Apple](https://github.com/patrickbussmann/oauth2-apple)               | composer require patrickbussmann/oauth2-apple       |
-| [Auth0](https://github.com/RiskioFr/oauth2-auth0)                      | composer require riskio/oauth2-auth0                |
-| [Azure](https://github.com/thenetworg/oauth2-azure)                    | composer require thenetworg/oauth2-azure            |
-| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)         | composer require stevenmaguire/oauth2-bitbucket     |
-| [Box](https://github.com/stevenmaguire/oauth2-box)                     | composer require stevenmaguire/oauth2-box           |
-| [Buddy](https://github.com/buddy-works/oauth2-client)                  | composer require buddy-works/oauth2-client          |
-| [Buffer](https://github.com/tgallice/oauth2-buffer)                    | composer require tgallice/oauth2-buffer             |
-| [CanvasLMS](https://github.com/smtech/oauth2-canvaslms)                | composer require smtech/oauth2-canvaslms            |
-| [Clever](https://github.com/schoolrunner/oauth2-clever)                | composer require schoolrunner/oauth2-clever         |
-| [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)            | composer require seinopsys/oauth2-deviantart        |
-| [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)   | composer require chrishemmings/oauth2-digitalocean  |
-| [Discord](https://github.com/wohali/oauth2-discord-new)                | composer require wohali/oauth2-discord-new          |
-| [Dribbble](https://github.com/crewlabs/oauth2-dribbble)                | composer require crewlabs/oauth2-dribbble           |
-| [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)             | composer require stevenmaguire/oauth2-dropbox       |
-| [Drupal](https://github.com/chrishemmings/oauth2-drupal)               | composer require chrishemmings/oauth2-drupal        |
-| [Elance](https://github.com/stevenmaguire/oauth2-elance)               | composer require stevenmaguire/oauth2-elance        |
-| [Eve Online](https://github.com/evelabs/oauth2-eveonline)              | composer require evelabs/oauth2-eveonline           |
-| [Eventbrite](https://github.com/stevenmaguire/oauth2-eventbrite)       | composer require stevenmaguire/oauth2-eventbrite    |
-| [Facebook](https://github.com/thephpleague/oauth2-facebook)            | composer require league/oauth2-facebook             |
-| [Fitbit](https://github.com/djchen/oauth2-fitbit)                      | composer require djchen/oauth2-fitbit               |
-| [Foursquare](https://github.com/stevenmaguire/oauth2-foursquare)       | composer require stevenmaguire/oauth2-foursquare    |
-| [FusionAuth](https://github.com/jerryhopper/oauth2-fusionauth)         | composer require jerryhopper/oauth2-fusionauth      |
-| [Geocaching](https://github.com/surfoo/oauth2-geocaching)              | composer require surfoo/oauth2-geocaching           |
-| [GitHub](https://github.com/thephpleague/oauth2-github)                | composer require league/oauth2-github               |
-| [GitLab](https://github.com/omines/oauth2-gitlab)                      | composer require omines/oauth2-gitlab               |
-| [Google](https://github.com/thephpleague/oauth2-google)                | composer require league/oauth2-google               |
-| [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)        | composer require alexmasterov/oauth2-headhunter     |
-| [Heroku](https://github.com/stevenmaguire/oauth2-heroku)               | composer require stevenmaguire/oauth2-heroku        |
-| [Instagram](https://github.com/thephpleague/oauth2-instagram)          | composer require league/oauth2-instagram            |
-| [Jira](https://github.com/mrjoops/oauth2-jira)                         | composer require mrjoops/oauth2-jira                |
-| [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)           | composer require stevenmaguire/oauth2-keycloak      |
-| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)            | composer require league/oauth2-linkedin             |
-| [MailRu](https://github.com/rakeev/oauth2-mailru)                      | composer require aego/oauth2-mailru                 |
-| [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)         | composer require stevenmaguire/oauth2-microsoft     |
-| [Mollie](https://github.com/mollie/oauth2-mollie-php)                  | composer require mollie/oauth2-mollie-php           |
-| [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)        | composer require aego/oauth2-odnoklassniki          |
-| [Okta](https://github.com/foxworth42/oauth2-okta)                      | composer require foxworth42/oauth2-okta             |
-| [Paypal](https://github.com/stevenmaguire/oauth2-paypal)               | composer require stevenmaguire/oauth2-paypal        |
-| [PSN](https://github.com/larabros/oauth2-psn)                          | composer require larabros/oauth2-psn                |
-| [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)       | composer require stevenmaguire/oauth2-salesforce    |
-| [Slack](https://github.com/adam-paterson/oauth2-slack)                 | composer require adam-paterson/oauth2-slack         |
-| [Spotify](https://github.com/ker0x/oauth2-spotify)                     | composer require kerox/oauth2-spotify               |
-| [SymfonyConnect](https://github.com/qdequippe/oauth2-symfony-connect)  | composer require qdequippe/oauth2-symfony-connect   |
-| [Strava](https://github.com/Edwin-Luijten/oauth2-strava)               | composer require edwin-luijten/oauth2-strava        |
-| [Stripe](https://github.com/adam-paterson/oauth2-stripe)               | composer require adam-paterson/oauth2-stripe        |
-| [Twitch](https://github.com/tpavlek/oauth2-twitch)                     | composer require depotwarehouse/oauth2-twitch       |
-| [Uber](https://github.com/stevenmaguire/oauth2-uber)                   | composer require stevenmaguire/oauth2-uber          |
-| [Unsplash](https://github.com/hughbertd/oauth2-unsplash)               | composer require hughbertd/oauth2-unsplash          |
-| [Vimeo](https://github.com/saf33r/oauth2-vimeo)                        | composer require saf33r/oauth2-vimeo                |
-| [VKontakte](https://github.com/j4k/oauth2-vkontakte)                   | composer require j4k/oauth2-vkontakte               |
-| [Wave](https://github.com/qdequippe/oauth2-wave)                       | composer require qdequippe/oauth2-wave              |
-| [Yahoo](https://github.com/hayageek/oauth2-yahoo)                      | composer require hayageek/oauth2-yahoo              |
-| [Yandex](https://github.com/rakeev/oauth2-yandex)                      | composer require aego/oauth2-yandex                 |
-| [Zendesk](https://github.com/stevenmaguire/oauth2-zendesk)             | composer require stevenmaguire/oauth2-zendesk       |
-| [Generic](#configuring-a-generic-provider)                             | configure any unsupported provider                  |
+| OAuth2 Provider                                                       | How to Install                                     |
+| --------------------------------------------------------------------- | -------------------------------------------------- |
+| [Amazon](https://github.com/luchianenco/oauth2-amazon)                | composer require luchianenco/oauth2-amazon         |
+| [AppID](https://github.com/Jampire/oauth2-appid)                      | composer require jampire/oauth2-appid              |
+| [Apple](https://github.com/patrickbussmann/oauth2-apple)              | composer require patrickbussmann/oauth2-apple      |
+| [Auth0](https://github.com/RiskioFr/oauth2-auth0)                     | composer require riskio/oauth2-auth0               |
+| [Azure](https://github.com/thenetworg/oauth2-azure)                   | composer require thenetworg/oauth2-azure           |
+| [Bitbucket](https://github.com/stevenmaguire/oauth2-bitbucket)        | composer require stevenmaguire/oauth2-bitbucket    |
+| [Box](https://github.com/stevenmaguire/oauth2-box)                    | composer require stevenmaguire/oauth2-box          |
+| [Buddy](https://github.com/buddy-works/oauth2-client)                 | composer require buddy-works/oauth2-client         |
+| [Buffer](https://github.com/tgallice/oauth2-buffer)                   | composer require tgallice/oauth2-buffer            |
+| [CanvasLMS](https://github.com/smtech/oauth2-canvaslms)               | composer require smtech/oauth2-canvaslms           |
+| [Clever](https://github.com/schoolrunner/oauth2-clever)               | composer require schoolrunner/oauth2-clever        |
+| [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)           | composer require seinopsys/oauth2-deviantart       |
+| [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean |
+| [Discord](https://github.com/wohali/oauth2-discord-new)               | composer require wohali/oauth2-discord-new         |
+| [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble          |
+| [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox      |
+| [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal       |
+| [Elance](https://github.com/stevenmaguire/oauth2-elance)              | composer require stevenmaguire/oauth2-elance       |
+| [Eve Online](https://github.com/evelabs/oauth2-eveonline)             | composer require evelabs/oauth2-eveonline          |
+| [Eventbrite](https://github.com/stevenmaguire/oauth2-eventbrite)      | composer require stevenmaguire/oauth2-eventbrite   |
+| [Facebook](https://github.com/thephpleague/oauth2-facebook)           | composer require league/oauth2-facebook            |
+| [Fitbit](https://github.com/djchen/oauth2-fitbit)                     | composer require djchen/oauth2-fitbit              |
+| [Foursquare](https://github.com/stevenmaguire/oauth2-foursquare)      | composer require stevenmaguire/oauth2-foursquare   |
+| [FusionAuth](https://github.com/jerryhopper/oauth2-fusionauth)        | composer require jerryhopper/oauth2-fusionauth     |
+| [Geocaching](https://github.com/surfoo/oauth2-geocaching)             | composer require surfoo/oauth2-geocaching          |
+| [GitHub](https://github.com/thephpleague/oauth2-github)               | composer require league/oauth2-github              |
+| [GitLab](https://github.com/omines/oauth2-gitlab)                     | composer require omines/oauth2-gitlab              |
+| [Google](https://github.com/thephpleague/oauth2-google)               | composer require league/oauth2-google              |
+| [HeadHunter](https://github.com/AlexMasterov/oauth2-headhunter)       | composer require alexmasterov/oauth2-headhunter    |
+| [Heroku](https://github.com/stevenmaguire/oauth2-heroku)              | composer require stevenmaguire/oauth2-heroku       |
+| [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram           |
+| [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira               |
+| [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak     |
+| [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin            |
+| [MailRu](https://github.com/rakeev/oauth2-mailru)                     | composer require aego/oauth2-mailru                |
+| [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft    |
+| [Mollie](https://github.com/mollie/oauth2-mollie-php)                 | composer require mollie/oauth2-mollie-php          |
+| [Odnoklassniki](https://github.com/rakeev/oauth2-odnoklassniki)       | composer require aego/oauth2-odnoklassniki         |
+| [Okta](https://github.com/foxworth42/oauth2-okta)                     | composer require foxworth42/oauth2-okta            |
+| [Paypal](https://github.com/stevenmaguire/oauth2-paypal)              | composer require stevenmaguire/oauth2-paypal       |
+| [PSN](https://github.com/larabros/oauth2-psn)                         | composer require larabros/oauth2-psn               |
+| [Salesforce](https://github.com/stevenmaguire/oauth2-salesforce)      | composer require stevenmaguire/oauth2-salesforce   |
+| [Slack](https://github.com/adam-paterson/oauth2-slack)                | composer require adam-paterson/oauth2-slack        |
+| [Spotify](https://github.com/ker0x/oauth2-spotify)                    | composer require kerox/oauth2-spotify              |
+| [SymfonyConnect](https://github.com/qdequippe/oauth2-symfony-connect) | composer require qdequippe/oauth2-symfony-connect  |
+| [Strava](https://github.com/Edwin-Luijten/oauth2-strava)              | composer require edwin-luijten/oauth2-strava       |
+| [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe       |
+| [Twitch](https://github.com/tpavlek/oauth2-twitch)                    | composer require depotwarehouse/oauth2-twitch      |
+| [Uber](https://github.com/stevenmaguire/oauth2-uber)                  | composer require stevenmaguire/oauth2-uber         |
+| [Unsplash](https://github.com/hughbertd/oauth2-unsplash)              | composer require hughbertd/oauth2-unsplash         |
+| [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo               |
+| [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte              |
+| [Wave](https://github.com/qdequippe/oauth2-wave)                      | composer require qdequippe/oauth2-wave             |
+| [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo             |
+| [Yandex](https://github.com/rakeev/oauth2-yandex)                     | composer require aego/oauth2-yandex                |
+| [Zendesk](https://github.com/stevenmaguire/oauth2-zendesk)            | composer require stevenmaguire/oauth2-zendesk      |
+| [Generic](#configuring-a-generic-provider)                            | configure any unsupported provider                 |
 
 <span name="end-client-downloader-table"></span>
 
