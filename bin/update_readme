@@ -211,8 +211,8 @@ foreach ($installTreeDetails['types'] as $typeConfig) {
 
 // add generic
 $lines[] = sprintf(
-    '| generic %s | configure any unsupported provider %s |',
-    str_repeat(' ', $longestNameAndUrl - 3),
+    '| [Generic](#configuring-a-generic-provider) %s | configure any unsupported provider %s |',
+    str_repeat(' ', $longestNameAndUrl - 38),
     str_repeat(' ', $longestPackageName - 17)
 );
 
@@ -251,6 +251,7 @@ knpu_oauth2_client:
     # options to configure the default http client
     # http_client_options:
     #     timeout: 0
+    #     # if you want to disable the proxy (e.g. local GitLab OAuth) - set it to "false"
     #     proxy: null
     #     Use only with proxy option set
     #     verify: false
