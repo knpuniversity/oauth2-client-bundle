@@ -240,7 +240,7 @@ $configurationText = <<<EOF
 
 Below is the configuration for *all* of the supported OAuth2 providers.
 **Don't see the one you need?** Use the `generic` provider to configure
-any provider.
+any provider:
 
 ```yml
 # config/packages/knpu_oauth2_client.yaml

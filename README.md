@@ -55,7 +55,7 @@ via Composer:
 <a name="client-downloader-table"></a>
 
 | OAuth2 Provider                                                        | Install                                             |
-| ---------------------------------------------------------------------- | --------------------------------------------------- |
+| ---------------------------------------------------------------------- | ------------------------------------------------------- |
 | [Amazon](https://github.com/luchianenco/oauth2-amazon)                 | composer require luchianenco/oauth2-amazon          |
 | [AppID](https://github.com/Jampire/oauth2-appid)                       | composer require jampire/oauth2-appid               |
 | [Apple](https://github.com/patrickbussmann/oauth2-apple)               | composer require patrickbussmann/oauth2-apple       |
