@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2022-02-07T08:11:45Z
+
+Now if `bin/update_readme` command will leave repo in a dirty state - Static CI will fail, see this as an example: https://github.com/knpuniversity/oauth2-client-bundle/runs/5089847177?check_suite_focus=true
