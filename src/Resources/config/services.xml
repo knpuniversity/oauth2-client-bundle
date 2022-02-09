@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="knpu.oauth2.provider_factory" class="KnpU\OAuth2ClientBundle\DependencyInjection\ProviderFactory" public="false">
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="knpu.oauth2.registry" class="KnpU\OAuth2ClientBundle\Client\ClientRegistry" public="true">
+            <argument type="service" id="service_container" />
+            <argument /> <!-- argument added dynamically -->
+        </service>
+
+        <service id="knpu.oauth2.user_provider" class="KnpU\OAuth2ClientBundle\Security\User\OAuthUserProvider" public="false" />
+
+        <!-- Add service alias for autowiring -->
+        <service id="KnpU\OAuth2ClientBundle\Client\ClientRegistry" alias="knpu.oauth2.registry" public="false" />
+
+        <!-- Set an alias for easier use -->
+        <service id="oauth2.registry" alias="knpu.oauth2.registry" public="true" />
+    </services>
+</container>

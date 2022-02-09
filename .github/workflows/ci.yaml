@@ -1,0 +1,49 @@
+name: Bundle CI
+on:
+  push:
+    branches: ['main']
+  pull_request:
+  schedule:
+    - cron: '0 */12 * * *'
+
+jobs:
+
+  tests:
+    name: "Tests ${{ matrix.php-version }} ${{ matrix.dependency-versions }} deps ${{ matrix.dependency-versions }}"
+    runs-on: ubuntu-18.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # normal, highest, non-dev installs
+        php-version: ['7.3', '7.4', '8.0', '8.1']
+        composer-options: ['--prefer-stable']
+        dependency-versions: ['highest']
+        include:
+          # testing lowest php with lowest dependencies
+          - php-version: '7.2'
+            dependency-versions: 'lowest'
+            composer-options: '--prefer-lowest'
+          # testing dev versions with highest PHP
+          - php-version: '8.0'
+            dependency-versions: 'highest'
+            composer-options: '' # allow dev deps
+
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v2"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+            coverage: "none"
+            php-version: "${{ matrix.php-version }}"
+
+      - name: "Composer install"
+        uses: "ramsey/composer-install@v1"
+        with:
+            dependency-versions: "${{ matrix.dependency-versions }}"
+            composer-options: "--prefer-dist --no-progress"
+
+      - name: Run PHPUnit tests
+        run: "SYMFONY_PHPUNIT_VERSION=${{ matrix.phpunit-version }} ./vendor/bin/simple-phpunit"
