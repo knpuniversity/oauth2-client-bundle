@@ -1,5 +1,6 @@
 # OAuth / Social Integration for Symfony: KnpUOAuth2ClientBundle
 
+
 Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 
 * "Social" authentication / login
