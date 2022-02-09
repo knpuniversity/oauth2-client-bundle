@@ -51,7 +51,7 @@ via Composer:
 
 <a name="client-downloader-table"></a>
 
-| OAuth2 Provider                                              | Install                                    |
+| OAuth2 Provider                                              | Install                                    
 | ------------------------------------------------------------ | ------------------------------------------ |
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)  | composer require league/oauth2-facebook    |
 | [GitHub](https://github.com/thephpleague/oauth2-github)      | composer require league/oauth2-github      |
