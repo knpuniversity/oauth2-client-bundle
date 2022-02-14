@@ -6,8 +6,6 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @Author Erdem Uyanik
  */
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
@@ -16,6 +14,9 @@ use KnpU\OAuth2ClientBundle\Client\Provider\TwitchHelixClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Vertisan\OAuth2\Client\Provider\TwitchHelix;
 
+/**
+ * @Author Erdem Uyanik
+ */
 class TwitchHelixProviderConfigurator implements ProviderConfiguratorInterface
 {
     public function buildConfiguration(NodeBuilder $node)

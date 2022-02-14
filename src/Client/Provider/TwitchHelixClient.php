@@ -10,9 +10,9 @@
 
 namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
-use Vertisan\OAuth2\Client\Provider\TwitchHelix;
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
+use Vertisan\OAuth2\Client\Provider\TwitchHelix;
 
 class TwitchHelixClient extends OAuth2Client
 {
