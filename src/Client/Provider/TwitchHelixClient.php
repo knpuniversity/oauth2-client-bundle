@@ -12,12 +12,12 @@ namespace KnpU\OAuth2ClientBundle\Client\Provider;
 
 use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use League\OAuth2\Client\Token\AccessToken;
-use Vertisan\OAuth2\Client\Provider\TwitchHelix;
+use Vertisan\OAuth2\Client\Provider\TwitchHelixResourceOwner;
 
 class TwitchHelixClient extends OAuth2Client
 {
     /**
-     * @return TwitchHelix\|\League\OAuth2\Client\Provider\ResourceOwnerInterface
+     * @return TwitchHelixResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUserFromToken(AccessToken $accessToken)
     {
@@ -25,7 +25,7 @@ class TwitchHelixClient extends OAuth2Client
     }
 
     /**
-     * @return TwitchHelix|\League\OAuth2\Client\Provider\ResourceOwnerInterface
+     * @return TwitchHelixResourceOwner|\League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     public function fetchUser()
     {
