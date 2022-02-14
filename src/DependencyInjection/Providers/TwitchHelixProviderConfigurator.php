@@ -12,7 +12,9 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\TwitchHelixClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use Vertisan\OAuth2\Client\Provider\TwitchHelix;
 
 class TwitchHelixProviderConfigurator implements ProviderConfiguratorInterface
 {
@@ -23,7 +25,7 @@ class TwitchHelixProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderClass(array $config)
     {
-        return 'Vertisan\OAuth2\Client\Provider\TwitchHelix';
+        return TwitchHelix::class;
     }
 
     public function getProviderOptions(array $config)
@@ -46,11 +48,11 @@ class TwitchHelixProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderDisplayName()
     {
-        return 'Twitch';
+        return 'Twitch Helix';
     }
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\TwitchHelixClient';
+        return TwitchHelixClient::class;
     }
 }
