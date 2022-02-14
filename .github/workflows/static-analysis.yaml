@@ -49,3 +49,20 @@ jobs:
 
             - name: Run script
               run: vendor/bin/phpstan analyse
+
+    # Fail CI if repo is in dirty state after bin/update_readme
+    update-readme:
+        name: bin/update_readme
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+
+            - name: Install dependencies
+              run: composer install
+
+            - name: Check Status
+              run: ./bin/update_readme && git diff --exit-code README.md

@@ -54,6 +54,8 @@ $configSections = [];
 $installTreeDetails = [
     'longest_name_and_url' => 0,
     'longest_package_name' => 0,
+    'longest_name_and_url_link' => 0,
+    'longest_install_command' => 0,
     'types' => []
 ];
 foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
@@ -80,11 +82,13 @@ foreach (KnpUOAuth2ClientExtension::getAllSupportedTypes() as $type) {
     ];
     if (strlen($configurator->getPackagistName()) > $installTreeDetails['longest_package_name']) {
         $installTreeDetails['longest_package_name'] = strlen($configurator->getPackagistName());
+        $installTreeDetails['longest_install_command'] = $installTreeDetails['longest_package_name'] + 17; // where 17 is the length of Composer command, i.e. "composer require "
     }
 
     $nameAndUrlLength = strlen($configurator->getProviderDisplayName().$configurator->getLibraryHomepage());
     if ($nameAndUrlLength > $installTreeDetails['longest_name_and_url']) {
         $installTreeDetails['longest_name_and_url'] = $nameAndUrlLength;
+        $installTreeDetails['longest_name_and_url_link'] = $nameAndUrlLength + 4; // where 4 is the length of Markdown link syntax, i.e. "[]()"
     }
 
     foreach ($arrayNode->getChildren() as $child) {
@@ -177,24 +181,27 @@ EOF;
 
 $longestNameAndUrl = $installTreeDetails['longest_name_and_url'];
 $longestPackageName = $installTreeDetails['longest_package_name'];
+$longestNameAndUrlLink = $installTreeDetails['longest_name_and_url_link'];
+$longestInstallCommand = $installTreeDetails['longest_install_command'];
 
 // setup the header line
-$installTable = '| OAuth2 Provider';
-$neededSpaces = $longestNameAndUrl - 9;
-$installTable .= str_repeat(' ', $neededSpaces);
-$installTable .= '| Install';
-$neededSpaces = $longestPackageName + 12;
-$installTable .= str_repeat(' ', $neededSpaces);
-$installTable .= '|';
+$columnHeader1 = 'OAuth2 Provider';
+$columnHeader2 = 'How to Install';
+
+$installTable = '| '.$columnHeader1;
+$installTable .= str_repeat(' ', $longestNameAndUrlLink - strlen($columnHeader1));
+$installTable .= ' | '.$columnHeader2;
+$installTable .= str_repeat(' ', $longestInstallCommand - strlen($columnHeader2));
+$installTable .= ' |';
 // adding the next line, with | ---- | ---- |
 $installTable .= "\n";
-$installTable .= '| '.str_repeat('-', $longestNameAndUrl+5).' | ';
-$installTable .= str_repeat('-', $longestNameAndUrl-10).' |';
+$installTable .= '| '.str_repeat('-', $longestNameAndUrlLink).' | ';
+$installTable .= str_repeat('-', $longestInstallCommand).' |';
 
 $lines = [];
 foreach ($installTreeDetails['types'] as $typeConfig) {
     $line = sprintf(
-        '| [%s](%s) _SPACES1_ | composer require %s _SPACES2_ |',
+        '| [%s](%s) _SPACES1_| composer require %s _SPACES2_|',
         $typeConfig['provider_name'],
         $typeConfig['homepage'],
         $typeConfig['package']
@@ -210,10 +217,14 @@ foreach ($installTreeDetails['types'] as $typeConfig) {
 }
 
 // add generic
+$genericProviderLink = '[Generic](#configuring-a-generic-provider)';
+$genericProviderDescription = 'configure any unsupported provider';
 $lines[] = sprintf(
-    '| [Generic](#configuring-a-generic-provider) %s | configure any unsupported provider %s |',
-    str_repeat(' ', $longestNameAndUrl - 38),
-    str_repeat(' ', $longestPackageName - 17)
+    '| %s %s| %s %s|',
+    $genericProviderLink,
+    str_repeat(' ', $longestNameAndUrlLink - strlen($genericProviderLink)),
+    $genericProviderDescription,
+    str_repeat(' ', $longestInstallCommand - strlen($genericProviderDescription))
 );
 
 $installTable .= "\n".implode("\n", $lines);
@@ -240,7 +251,7 @@ $configurationText = <<<EOF
 
 Below is the configuration for *all* of the supported OAuth2 providers.
 **Don't see the one you need?** Use the `generic` provider to configure
-any provider.
+any provider:
 
 ```yml
 # config/packages/knpu_oauth2_client.yaml
