@@ -98,7 +98,8 @@ via Composer:
 | [SymfonyConnect](https://github.com/qdequippe/oauth2-symfony-connect) | composer require qdequippe/oauth2-symfony-connect  |
 | [Strava](https://github.com/Edwin-Luijten/oauth2-strava)              | composer require edwin-luijten/oauth2-strava       |
 | [Stripe](https://github.com/adam-paterson/oauth2-stripe)              | composer require adam-paterson/oauth2-stripe       |
-| [Twitch](https://github.com/tpavlek/oauth2-twitch)                    | composer require depotwarehouse/oauth2-twitch      |
+| [Twitch Deprecated](https://github.com/tpavlek/oauth2-twitch)         | composer require depotwarehouse/oauth2-twitch      |
+| [Twitch Helix](https://github.com/vertisan/oauth2-twitch-helix)       | composer require vertisan/oauth2-twitch-helix      |
 | [Uber](https://github.com/stevenmaguire/oauth2-uber)                  | composer require stevenmaguire/oauth2-uber         |
 | [Unsplash](https://github.com/hughbertd/oauth2-unsplash)              | composer require hughbertd/oauth2-unsplash         |
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo               |
@@ -1410,6 +1411,21 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_TWITCH_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_twitch_check
+            redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.twitch_helix"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\TwitchHelixClient
+        # composer require vertisan/oauth2-twitch-helix
+        twitch_helix:
+            # must be "twitch_helix" - it activates that type!
+            type: twitch_helix
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_TWITCH_HELIX_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_TWITCH_HELIX_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_twitch_helix_check
             redirect_params: {}
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
