@@ -3,6 +3,14 @@
 *We intend to follow [Semantic Versioning 2.0.0](https://semver.org/), if you
 find a change that break's semver, please create an issue.*
 
+## [v2.10.0](https://github.com/knpuniversity/oauth2-client-bundle/releases/tag/v2.10.0)
+
+*February 23rd, 2022*
+
+### Feature
+
+- [#361](https://github.com/knpuniversity/oauth2-client-bundle/pull/361) - Twitch helix support - *@ErdemUyanik*
+
 ## [v2.9.0](https://github.com/symfony/maker-bundle/releases/tag/v2.9.0)
 
 *Nov 21st, 2021*
