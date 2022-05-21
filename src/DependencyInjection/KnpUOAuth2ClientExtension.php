@@ -190,7 +190,7 @@ class KnpUOAuth2ClientExtension extends Extension
             $type = $clientConfig['type'];
             unset($clientConfig['type']);
             if (!isset(self::$supportedProviderTypes[$type])) {
-                throw new InvalidConfigurationException(sprintf('The "knpu_oauth2_client.clients" config "type" key "%s" is not supported. We support (%s)', $type, implode(', ', self::$supportedProviderTypes)));
+                throw new InvalidConfigurationException(sprintf('The "knpu_oauth2_client.clients" config "type" key "%s" is not supported. We support (%s)', $type, implode(', ', array_keys(self::$supportedProviderTypes))));
             }
 
             // process the configuration
