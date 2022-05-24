@@ -3,6 +3,14 @@
 *We intend to follow [Semantic Versioning 2.0.0](https://semver.org/), if you
 find a change that break's semver, please create an issue.*
 
+## [v2.10.1](https://github.com/knpuniversity/oauth2-client-bundle/releases/tag/v2.10.1)
+
+*May 24th, 2022*
+
+### Bug
+
+- [#369](https://github.com/knpuniversity/oauth2-client-bundle/pull/369) - Fix an error message - *@fabpot*
+
 ## [v2.10.0](https://github.com/knpuniversity/oauth2-client-bundle/releases/tag/v2.10.0)
 
 *February 23rd, 2022*
