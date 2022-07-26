@@ -24,7 +24,7 @@ class GeocachingProviderConfigurator implements ProviderConfiguratorInterface
             ->info('dev, staging or production')
             ->example('environment: production')
         ->end()
-    ;
+        ;
     }
 
     public function getProviderClass(array $config)
