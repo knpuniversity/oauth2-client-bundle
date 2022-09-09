@@ -12,11 +12,32 @@ namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
-class AzureProviderConfigurator implements ProviderConfiguratorInterface
+class AzureProviderConfigurator implements ProviderConfiguratorInterface, ProviderWithoutClientSecretConfiguratorInterface
 {
+
+    public function needsClientSecret(): bool
+    {
+      //We define the `client_secret`-node ourselves to make it optional with certificate
+      return false;
+    }
+
     public function buildConfiguration(NodeBuilder $node)
     {
         $node
+            ->scalarNode('client_secret')
+              ->info('The shared client secret')
+              ->defaultValue('')
+            ->end()
+            ->scalarNode('client_certificate_private_key')
+              ->example('-----BEGIN RSA PRIVATE KEY-----\nMIIEog...G82ARGuI=\n-----END RSA PRIVATE KEY-----')
+              ->info('The contents of the client certificate private key')
+              ->defaultValue('')
+            ->end()
+            ->scalarNode('client_certificate_thumbprint')
+              ->example('B4A94A83092455AC4D3AC827F02B61646EAAC43D')
+              ->info('The hexadecimal thumbprint of the client certificate')
+              ->defaultValue('')
+            ->end()
             ->scalarNode('url_login')
                 ->info('Domain to build login URL')
                 ->example("url_login: 'https://login.microsoftonline.com/'")
@@ -65,6 +86,22 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
                 ->info('The endpoint version to run against')
                 ->defaultValue('1.0')
             ->end();
+
+      //Validate that either client_secret or client_certificate_private_key is set:
+      $node
+          ->end()
+            ->validate()
+              ->ifTrue(function($v) {
+                  return empty($v['client_secret']) && empty($v['client_certificate_private_key']);
+              })
+              ->thenInvalid('You have to define either client_secret or client_certificate_private_key')
+            ->end()
+              ->validate()
+              ->ifTrue(function($v) {
+                  return !empty($v['client_certificate_private_key']) && empty($v['client_certificate_thumbprint']);
+              })
+            ->thenInvalid('You have to define the client_certificate_thumbprint when using a certificate')
+          ->end();
     }
 
     public function getProviderClass(array $config)
@@ -75,6 +112,8 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface
     public function getProviderOptions(array $config)
     {
         return [
+            'clientCertificatePrivateKey' => $config['client_certificate_private_key'],
+            'clientCertificateThumbprint' => $config['client_certificate_thumbprint'],
             'clientId' => $config['client_id'],
             'clientSecret' => $config['client_secret'],
             'urlLogin' => $config['url_login'],
