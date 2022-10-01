@@ -694,7 +694,11 @@ knpu_oauth2_client:
             type: azure
             # add and set these environment variables in your .env files
             client_id: '%env(OAUTH_AZURE_CLIENT_ID)%'
+            # client_secret is optional if you use a client certificate
             client_secret: '%env(OAUTH_AZURE_CLIENT_SECRET)%'
+            # Using a client certificate requires thenetworg/oauth2-azure > 2.1.1:
+            # client_certificate_private_key: '%env(OAUTH_AZURE_CLIENT_CERTIFICATE_PRIVATE_KEY)%'
+            # client_certificate_thumbprint: '%env(OAUTH_AZURE_CLIENT_CERTIFICATE_THUMBPRINT)%'
             # a route name you'll create
             redirect_route: connect_azure_check
             redirect_params: {}
