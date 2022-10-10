@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-10-06T12:54:41Z
+
+This looks good to me - except two little code styling things to run:
+
+A) `php-cs-fixer fix --verbose --diff` (once you have `php-cs-fixer` installed - you could even temporarily `composer require` it locally into this repo then just not commit the composer changes)
+
+B) `bin/update_readme` - to regenerate part of the README
+
+Cheers!
