@@ -707,10 +707,15 @@ knpu_oauth2_client:
             type: azure
             # add and set these environment variables in your .env files
             client_id: '%env(OAUTH_AZURE_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_AZURE_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_azure_check
             redirect_params: {}
+            # The shared client secret if you don't use a certificate
+            # client_secret: ''
+            # The contents of the client certificate private key
+            # client_certificate_private_key: '-----BEGIN RSA PRIVATE KEY-----\nMIIEog...G82ARGuI=\n-----END RSA PRIVATE KEY-----'
+            # The hexadecimal thumbprint of the client certificate
+            # client_certificate_thumbprint: 'B4A94A83092455AC4D3AC827F02B61646EAAC43D'
             # Domain to build login URL
             # url_login: 'https://login.microsoftonline.com/'
             # Oauth path to authorize against
