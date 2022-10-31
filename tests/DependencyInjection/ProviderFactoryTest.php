@@ -32,6 +32,19 @@ class ProviderFactoryTest extends TestCase
         $this->assertEquals([], $result->getCollaborators());
     }
 
+    public function testShouldCreateProviderWithNullRedirectUrl()
+    {
+        $mockGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->disableOriginalConstructor()->getMock();
+        $mockGenerator->expects($this->never())->method("generate");
+
+        $testProviderFactory = new ProviderFactory($mockGenerator);
+        $result = $testProviderFactory->createProvider(MockProvider::class, [], null);
+
+        $this->assertInstanceOf(MockProvider::class, $result);
+        $this->assertEquals([], $result->getOptions());
+        $this->assertEquals([], $result->getCollaborators());
+    }
+
     private function getMockGenerator($generateReturn)
     {
         $mockGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->disableOriginalConstructor()->getMock();

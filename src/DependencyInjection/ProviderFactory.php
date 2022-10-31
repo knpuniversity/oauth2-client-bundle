@@ -38,12 +38,14 @@ class ProviderFactory
      *
      * @return mixed
      */
-    public function createProvider($class, array $options, $redirectUri, array $redirectParams = [], array $collaborators = [])
+    public function createProvider($class, array $options, string $redirectUri = null, array $redirectParams = [], array $collaborators = [])
     {
-        $redirectUri = $this->generator
-            ->generate($redirectUri, $redirectParams, UrlGeneratorInterface::ABSOLUTE_URL);
+        if ($redirectUri !== null) {
+            $redirectUri = $this->generator
+                ->generate($redirectUri, $redirectParams, UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $options['redirectUri'] = $redirectUri;
+            $options['redirectUri'] = $redirectUri;
+        }
 
         return new $class($options, $collaborators);
     }
