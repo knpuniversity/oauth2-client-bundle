@@ -40,7 +40,7 @@ class ProviderFactory
      */
     public function createProvider($class, array $options, string $redirectUri = null, array $redirectParams = [], array $collaborators = [])
     {
-        if ($redirectUri !== null) {
+        if (null !== $redirectUri) {
             $redirectUri = $this->generator
                 ->generate($redirectUri, $redirectParams, UrlGeneratorInterface::ABSOLUTE_URL);
 
