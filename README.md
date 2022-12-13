@@ -1189,6 +1189,8 @@ knpu_oauth2_client:
             # encryption_key_path: null
             # Optional: Encryption key, i.e. contents of key or certificate
             # encryption_key: null
+            # Optional: The keycloak version to run against
+            # version: '20.0.1'
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
