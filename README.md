@@ -1191,6 +1191,8 @@ knpu_oauth2_client:
             # encryption_key: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
+            # Optional: Keycloak version, i.e. 20.0.1
+            # version: null
 
         # will create service: "knpu.oauth2.client.linkedin"
         # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\LinkedInClient
