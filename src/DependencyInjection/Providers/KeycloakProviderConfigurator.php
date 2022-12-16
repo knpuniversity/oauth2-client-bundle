@@ -39,7 +39,7 @@ class KeycloakProviderConfigurator implements ProviderConfiguratorInterface
             ->end()
             ->scalarNode('version')
                 ->example("version: '20.0.1'")
-                ->info('The keycloak version to run against')
+                ->info('Optional: The keycloak version to run against')
             ->end()
         ;
     }
