@@ -11,7 +11,6 @@
 namespace KnpU\OAuth2ClientBundle\Security\Helper;
 
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
-use LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -24,13 +23,13 @@ trait FinishRegistrationBehavior
     /**
      * Call this from within your onAuthenticationFailure() method.
      *
-     * @throws LogicException
+     * @throws \LogicException
      */
     protected function saveUserInfoToSession(Request $request, FinishRegistrationException $e)
     {
         // save the user information!
         if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
-            throw new LogicException('In order to save user info, you must have a session available.');
+            throw new \LogicException('In order to save user info, you must have a session available.');
         }
         $session = $request->getSession();
 
@@ -45,12 +44,12 @@ trait FinishRegistrationBehavior
      *
      * @return mixed
      *
-     * @throws LogicException
+     * @throws \LogicException
      */
     public function getUserInfoFromSession(Request $request)
     {
         if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
-            throw new LogicException('In order to have saved user info, you must have a session available.');
+            throw new \LogicException('In order to have saved user info, you must have a session available.');
         }
         $session = $request->getSession();
 
