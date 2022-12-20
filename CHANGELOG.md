@@ -3,6 +3,12 @@
 *We intend to follow [Semantic Versioning 2.0.0](https://semver.org/), if you
 find a change that break's semver, please create an issue.*
 
+## [v2.11.0](https://github.com/knpuniversity/oauth2-client-bundle/releases/tag/v2.11.0)
+
+### Feature
+
+- [#382](https://github.com/knpuniversity/oauth2-client-bundle/pull/382) - Added support to specify keycloak version - *@micbis*
+
 ## [v2.10.1](https://github.com/knpuniversity/oauth2-client-bundle/releases/tag/v2.10.1)
 
 *May 24th, 2022*
