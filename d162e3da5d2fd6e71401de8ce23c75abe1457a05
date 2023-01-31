@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by MLukman at 2023-01-30T12:27:31Z
+
+Referring to the failing `Bundle CI / Tests 7.2`, which Symfony versions do we still need to support? `RequestStack::getSession()` has been existing since 5.3 ..
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-01-30T14:27:31Z
+
+Hi!
+
+>  Referring to the failing Bundle CI / Tests 7.2, which Symfony versions do we still need to support? RequestStack::getSession() has been existing since 5.3 ..
+
+We could bump the minimum-supported version of Symfony in this bundle to 5.4. Then we can just call the session properly. Does that help?
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by MLukman at 2023-01-30T23:03:42Z
+
+Dear maintainers, please assist on error PHP-CS-Fixer below which is not related to the code:
+
+```
+PHP needs to be a minimum version of PHP 7.4.0 and maximum version of PHP 8.1.*.
+Current PHP version: 8.2.1.
+To ignore this requirement please set `PHP_CS_FIXER_IGNORE_ENV`.
+If you use PHP version higher than supported, you may experience code modified in a wrong way.
+Please report such cases at https://github.com/PHP-CS-Fixer/PHP-CS-Fixer .
+Error: Process completed with exit code 1.
+```
+
+---------------------------------------------------------------------------
+
+by MLukman at 2023-01-31T00:02:46Z
+
+> Hi!
+>
+> > Referring to the failing Bundle CI / Tests 7.2, which Symfony versions do we still need to support? RequestStack::getSession() has been existing since 5.3 ..
+>
+> We could bump the minimum-supported version of Symfony in this bundle to 5.4. Then we can just call the session properly. Does that help?
+>
+> Cheers!
+
+Thanks for your kind reply but I've modified the class a bit to fetch the session from the Request object fetched from `RequestStack::getCurrentRequest()` just like OAuth2Client does. So please maintain the current version support setting since we don't want to break other people's applications who use this bundle. There are still many out there still running Symfony 4.4 (*cough* prestashop *cough*)
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2023-01-31T12:08:48Z
+
+> Dear maintainers, please assist on error PHP-CS-Fixer below which is not related to the code
+
+PHP CS Fixer does not support the latest PHP 8.2 version yet. I created a PR to make it green, see #387
