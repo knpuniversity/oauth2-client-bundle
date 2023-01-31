@@ -25,6 +25,8 @@ jobs:
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.1'
 
             - name: Install PHP-CS-Fixer
               run: composer global require friendsofphp/php-cs-fixer --prefer-dist --no-progress
