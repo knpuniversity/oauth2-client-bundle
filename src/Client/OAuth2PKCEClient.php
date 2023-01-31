@@ -13,7 +13,6 @@ namespace KnpU\OAuth2ClientBundle\Client;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use LogicException;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -43,8 +42,7 @@ class OAuth2PKCEClient extends OAuth2Client
      * PKCE code challenge and code challenge method parameters.
      *
      * @see OAuth2Client::redirect()
-     * @param array $scopes
-     * @param array $options
+     *
      * @return RedirectResponse
      */
     public function redirect(array $scopes = [], array $options = [])
@@ -60,26 +58,29 @@ class OAuth2PKCEClient extends OAuth2Client
 
     /**
      * Enhance the token exchange calls by OAuth2Client::getAccessToken() with
-     * PKCE code verifier parameter
+     * PKCE code verifier parameter.
      *
      * @see OAuth2Client::getAccessToken()
-     * @param array $options
+     *
      * @return AccessToken|AccessTokenInterface
-     * @throws LogicException When there is no code verifier found in the session
+     *
+     * @throws \LogicException When there is no code verifier found in the session
      */
     public function getAccessToken(array $options = [])
     {
         if (!$this->getSession()->has(static::VERIFIER_KEY)) {
-            throw new LogicException('Unable to fetch token from OAuth2 server because there is no PKCE code verifier stored in the session');
+            throw new \LogicException('Unable to fetch token from OAuth2 server because there is no PKCE code verifier stored in the session');
         }
         $pkce = ['code_verifier' => $this->getSession()->get(static::VERIFIER_KEY)];
         $this->getSession()->remove(static::VERIFIER_KEY);
+
         return parent::getAccessToken($options + $pkce);
     }
 
     /**
      * @return SessionInterface
-     * @throws LogicException When there is no current request
+     *
+     * @throws \LogicException          When there is no current request
      * @throws SessionNotFoundException When session is not set properly [thrown by Request::getSession()]
      */
     protected function getSession()
@@ -87,7 +88,7 @@ class OAuth2PKCEClient extends OAuth2Client
         $request = $this->requestStack->getCurrentRequest();
 
         if (!$request) {
-            throw new LogicException('There is no "current request", and it is needed to perform this action');
+            throw new \LogicException('There is no "current request", and it is needed to perform this action');
         }
 
         return $request->getSession();
