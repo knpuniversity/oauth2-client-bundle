@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 class OAuth2PKCEClientTest extends TestCase
 {
     private $requestStack;
+    private $request;
     private $session;
     private $provider;
 
