@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\WaveClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class WaveProviderConfigurator implements ProviderConfiguratorInterface
@@ -49,6 +50,6 @@ class WaveProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\WaveClient';
+        return WaveClient::class;
     }
 }

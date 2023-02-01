@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\KeycloakClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class KeycloakProviderConfigurator implements ProviderConfiguratorInterface
@@ -79,6 +80,6 @@ class KeycloakProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\KeycloakClient';
+        return KeycloakClient::class;
     }
 }

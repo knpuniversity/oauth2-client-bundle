@@ -19,8 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class ProviderFactory
 {
-    /** @var UrlGeneratorInterface */
-    private $generator;
+    private UrlGeneratorInterface $generator;
 
     /**
      * ProviderFactory constructor.

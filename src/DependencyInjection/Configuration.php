@@ -46,9 +46,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->validate()
-                ->ifTrue(function ($v) {
-                    return isset($v['http_client_options'], $v['http_client']) && !empty($v['http_client_options']);
-                })
+                ->ifTrue(fn ($v) => isset($v['http_client_options'], $v['http_client']) && !empty($v['http_client_options']))
                 ->thenInvalid('You cannot use both "http_client_options" and "http_client" at the same time under "knpu_oauth2_client".')
             ->end()
         ;

@@ -10,8 +10,10 @@
 
 namespace KnpU\OAuth2ClientBundle\tests\DependencyInjection;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\DependencyInjection\KnpUOAuth2ClientExtension;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ProviderConfiguratorInterface;
+use League\OAuth2\Client\Provider\Facebook;
 use Symfony\Component\Config\Definition\ArrayNode;
 use Symfony\Component\Config\Definition\BooleanNode;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -62,7 +64,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
 
         $this->assertEquals(
             [
-                'League\OAuth2\Client\Provider\Facebook',
+                Facebook::class,
                 ['clientId' => 'CLIENT_ID', 'clientSecret' => 'SECRET', 'graphApiVersion' => 'API_VERSION'],
                 'the_route_name',
                 ['route_params' => 'foo'],
@@ -75,7 +77,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
         // the custom class is used
         $clientDefinition = $this->configuration->getDefinition('knpu.oauth2.client.facebook');
         $this->assertEquals(
-            'KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient',
+            FacebookClient::class,
             $clientDefinition->getClass()
         );
         $this->assertEquals(
@@ -88,7 +90,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
 
         // the client service has an alias
         $this->assertTrue(
-            $this->configuration->hasAlias('KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient'),
+            $this->configuration->hasAlias(FacebookClient::class),
             'FacebookClient service is missing an alias'
         );
     }
@@ -150,7 +152,7 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
                 'client_secret' => 'CLIENT_SECRET_TEST',
                 'redirect_route' => 'go_there',
                 'redirect_params' => [],
-                'use_state' => rand(0, 1) == 0,
+                'use_state' => random_int(0, 1) === 0,
             ];
 
             if (!KnpUOAuth2ClientExtension::configuratorNeedsClientSecret($configurator)) {
@@ -163,11 +165,11 @@ class KnpUOAuth2ClientExtensionTest extends TestCase
                 if ($child instanceof ArrayNode) {
                     $config[$child->getName()] = [];
                 } elseif ($child instanceof BooleanNode) {
-                    $config[$child->getName()] = (bool) rand(0, 1);
+                    $config[$child->getName()] = (bool) random_int(0, 1);
                 } elseif ($child instanceof IntegerNode) {
-                    $config[$child->getName()] = rand();
+                    $config[$child->getName()] = random_int(0, mt_getrandmax());
                 } else {
-                    $config[$child->getName()] = 'random_'.rand();
+                    $config[$child->getName()] = 'random_'.random_int(0, mt_getrandmax());
                 }
             }
 

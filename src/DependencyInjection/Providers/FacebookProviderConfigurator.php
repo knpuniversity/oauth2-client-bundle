@@ -10,6 +10,8 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
+use League\OAuth2\Client\Provider\Facebook;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class FacebookProviderConfigurator implements ProviderConfiguratorInterface
@@ -26,7 +28,7 @@ class FacebookProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderClass(array $config)
     {
-        return 'League\OAuth2\Client\Provider\Facebook';
+        return Facebook::class;
     }
 
     public function getProviderOptions(array $config)
@@ -55,6 +57,6 @@ class FacebookProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient';
+        return FacebookClient::class;
     }
 }

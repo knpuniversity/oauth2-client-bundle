@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class GenericProviderConfigurator implements ProviderConfiguratorInterface
@@ -23,7 +24,7 @@ class GenericProviderConfigurator implements ProviderConfiguratorInterface
             ->end()
             ->scalarNode('client_class')
                 ->info('If you have a sub-class of OAuth2Client you want to use, add it here')
-                ->defaultValue('KnpU\OAuth2ClientBundle\Client\OAuth2Client')
+                ->defaultValue(OAuth2Client::class)
             ->end()
             ->arrayNode('provider_options')
                 ->info('Other options to pass to your provider\'s constructor')

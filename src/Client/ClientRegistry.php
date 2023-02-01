@@ -14,11 +14,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ClientRegistry
 {
-    /** @var ContainerInterface */
-    private $container;
+    private ContainerInterface $container;
 
-    /** @var array */
-    private $serviceMap;
+    private array $serviceMap;
 
     /**
      * ClientRegistry constructor.

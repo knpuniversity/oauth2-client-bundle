@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class OAuthUser implements UserInterface
 {
     private $username;
-    private $roles;
+    private array $roles;
 
     public function __construct($username, array $roles)
     {

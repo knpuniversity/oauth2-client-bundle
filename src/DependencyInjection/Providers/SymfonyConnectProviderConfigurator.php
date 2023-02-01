@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\SymfonyConnectClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class SymfonyConnectProviderConfigurator implements ProviderConfiguratorInterface
@@ -49,6 +50,6 @@ class SymfonyConnectProviderConfigurator implements ProviderConfiguratorInterfac
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\SymfonyConnectClient';
+        return SymfonyConnectClient::class;
     }
 }

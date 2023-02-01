@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
@@ -65,6 +66,6 @@ class Auth0ProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\Auth0Client';
+        return Auth0Client::class;
     }
 }

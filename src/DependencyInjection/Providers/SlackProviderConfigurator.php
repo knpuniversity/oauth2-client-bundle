@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\SlackClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class SlackProviderConfigurator implements ProviderConfiguratorInterface
@@ -49,6 +50,6 @@ class SlackProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\SlackClient';
+        return SlackClient::class;
     }
 }

@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\AppleClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class AppleProviderConfigurator implements ProviderConfiguratorInterface, ProviderWithoutClientSecretConfiguratorInterface
@@ -41,7 +42,7 @@ class AppleProviderConfigurator implements ProviderConfiguratorInterface, Provid
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\AppleClient';
+        return AppleClient::class;
     }
 
     public function getProviderOptions(array $configuration)

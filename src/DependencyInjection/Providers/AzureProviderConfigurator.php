@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\AzureClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class AzureProviderConfigurator implements ProviderConfiguratorInterface, ProviderWithoutClientSecretConfiguratorInterface
@@ -90,15 +91,11 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface, Provid
         $node
             ->end()
               ->validate()
-                ->ifTrue(function ($v) {
-                    return empty($v['client_secret']) && empty($v['client_certificate_private_key']);
-                })
+                ->ifTrue(fn ($v) => empty($v['client_secret']) && empty($v['client_certificate_private_key']))
                 ->thenInvalid('You have to define either client_secret or client_certificate_private_key')
               ->end()
                 ->validate()
-                ->ifTrue(function ($v) {
-                    return !empty($v['client_certificate_private_key']) && empty($v['client_certificate_thumbprint']);
-                })
+                ->ifTrue(fn ($v) => !empty($v['client_certificate_private_key']) && empty($v['client_certificate_thumbprint']))
               ->thenInvalid('You have to define the client_certificate_thumbprint when using a certificate')
             ->end();
     }
@@ -145,6 +142,6 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface, Provid
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\AzureClient';
+        return AzureClient::class;
     }
 }

@@ -26,7 +26,7 @@ class FinishRegistrationBehaviorTest extends TestCase
     public function setUp(): void
     {
         $this->traitObject = $this
-            ->getMockForTrait('KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior');
+            ->getMockForTrait(FinishRegistrationBehavior::class);
     }
 
     public function testGetUserInfoFromSession()

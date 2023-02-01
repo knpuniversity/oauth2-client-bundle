@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\GitlabClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 /**
@@ -60,6 +61,6 @@ class GitlabProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\GitlabClient';
+        return GitlabClient::class;
     }
 }

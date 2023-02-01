@@ -23,14 +23,11 @@ class OAuth2Client implements OAuth2ClientInterface
 {
     public const OAUTH2_SESSION_STATE_KEY = 'knpu.oauth2_client_state';
 
-    /** @var AbstractProvider */
-    private $provider;
+    private AbstractProvider $provider;
 
-    /** @var RequestStack */
-    private $requestStack;
+    private RequestStack $requestStack;
 
-    /** @var bool */
-    private $isStateless = false;
+    private bool $isStateless = false;
 
     /**
      * OAuth2Client constructor.

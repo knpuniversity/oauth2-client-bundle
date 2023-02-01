@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\UnsplashClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class UnsplashProviderConfigurator implements ProviderConfiguratorInterface
@@ -49,6 +50,6 @@ class UnsplashProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\UnsplashClient';
+        return UnsplashClient::class;
     }
 }

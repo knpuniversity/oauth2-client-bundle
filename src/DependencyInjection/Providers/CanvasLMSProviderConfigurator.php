@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\CanvasLMSClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class CanvasLMSProviderConfigurator implements ProviderConfiguratorInterface
@@ -64,6 +65,6 @@ class CanvasLMSProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\CanvasLMSClient';
+        return CanvasLMSClient::class;
     }
 }

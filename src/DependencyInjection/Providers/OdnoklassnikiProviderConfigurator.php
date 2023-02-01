@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\OdnoklassnikiClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class OdnoklassnikiProviderConfigurator implements ProviderConfiguratorInterface
@@ -49,6 +50,6 @@ class OdnoklassnikiProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\OdnoklassnikiClient';
+        return OdnoklassnikiClient::class;
     }
 }

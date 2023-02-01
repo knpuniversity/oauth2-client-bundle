@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\AppIdClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 /**
@@ -47,7 +48,7 @@ class AppIdProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\AppIdClient';
+        return AppIdClient::class;
     }
 
     public function getProviderOptions(array $configuration)

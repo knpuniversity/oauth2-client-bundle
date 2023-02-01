@@ -16,12 +16,12 @@ jobs:
       fail-fast: false
       matrix:
         # normal, highest, non-dev installs
-        php-version: ['7.3', '7.4', '8.0', '8.1', '8.2']
+        php-version: ['7.4', '8.0', '8.1', '8.2']
         composer-options: ['--prefer-stable']
         dependency-versions: ['highest']
         include:
           # testing lowest php with lowest dependencies
-          - php-version: '7.2'
+          - php-version: '7.4'
             dependency-versions: 'lowest'
             composer-options: '--prefer-lowest'
           # testing dev versions with highest PHP
