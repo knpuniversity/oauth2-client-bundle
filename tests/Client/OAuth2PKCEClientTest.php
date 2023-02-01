@@ -16,6 +16,7 @@ use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -23,10 +24,10 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class OAuth2PKCEClientTest extends TestCase
 {
-    private $requestStack;
-    private $request;
-    private $session;
-    private $provider;
+    private RequestStack $requestStack;
+    private Request $request;
+    private Session $session;
+    private AbstractProvider $provider;
 
     public function setup(): void
     {
@@ -86,7 +87,7 @@ class OAuth2PKCEClientTest extends TestCase
 
         $response = $client->redirect();
         $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\RedirectResponse',
+            RedirectResponse::class,
             $response
         );
 

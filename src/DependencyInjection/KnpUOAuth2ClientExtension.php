@@ -86,14 +86,11 @@ class KnpUOAuth2ClientExtension extends Extension
     /** @var bool */
     private $checkExternalClassExistence;
 
-    /** @var array */
-    private $configurators = [];
+    private array $configurators = [];
 
-    /** @var array */
-    private $duplicateProviderTypes = [];
+    private array $duplicateProviderTypes = [];
 
-    /** @var array */
-    private static $supportedProviderTypes = [
+    private static array $supportedProviderTypes = [
         'amazon' => AmazonProviderConfigurator::class,
         'appid' => AppIdProviderConfigurator::class,
         'apple' => AppleProviderConfigurator::class,

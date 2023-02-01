@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "symfony/framework-bundle": "^4.4|^5.0|^6.0",
         "symfony/dependency-injection": "^4.4|^5.0|^6.0",
         "symfony/routing": "^4.4|^5.0|^6.0",

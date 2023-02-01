@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\YandexClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class YandexProviderConfigurator implements ProviderConfiguratorInterface
@@ -49,6 +50,6 @@ class YandexProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\YandexClient';
+        return YandexClient::class;
     }
 }

@@ -27,8 +27,7 @@ class OAuth2PKCEClient extends OAuth2Client
 {
     public const VERIFIER_KEY = 'pkce_code_verifier';
 
-    /** @var RequestStack */
-    private $requestStack;
+    private RequestStack $requestStack;
 
     public function __construct(AbstractProvider $provider,
                                 RequestStack $requestStack)

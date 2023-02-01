@@ -26,10 +26,9 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class OAuth2ClientTest extends TestCase
 {
-    private $requestStack;
-    /** @var Request */
-    private $request;
-    private $session;
+    private RequestStack $requestStack;
+    private Request $request;
+    private Session $session;
     private $provider;
 
     public function setup(): void
@@ -59,7 +58,7 @@ class OAuth2ClientTest extends TestCase
 
         $response = $client->redirect(['scope1', 'scope2']);
         $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\RedirectResponse',
+            RedirectResponse::class,
             $response
         );
         $this->assertEquals(
@@ -273,7 +272,7 @@ class OAuth2ClientTest extends TestCase
         $this->provider->method('getResourceOwner')
             ->with($actualToken)
             ->willReturn($resourceOwner);
-        $user = $client->fetchUser($actualToken);
+        $user = $client->fetchUser();
 
         $this->assertInstanceOf(FacebookUser::class, $user);
         $this->assertEquals('testUser', $user->getName());

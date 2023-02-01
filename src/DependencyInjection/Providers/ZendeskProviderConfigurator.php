@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\ZendeskClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class ZendeskProviderConfigurator implements ProviderConfiguratorInterface
@@ -55,6 +56,6 @@ class ZendeskProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\ZendeskClient';
+        return ZendeskClient::class;
     }
 }

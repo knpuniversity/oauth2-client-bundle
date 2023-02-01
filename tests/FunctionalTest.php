@@ -11,7 +11,9 @@
 namespace KnpU\OAuth2ClientBundle\tests;
 
 use GuzzleHttp\Client;
+use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Tests\app\TestKernel;
+use League\OAuth2\Client\Provider\Facebook;
 use PHPUnit\Framework\TestCase;
 
 class FunctionalTest extends TestCase
@@ -25,8 +27,8 @@ class FunctionalTest extends TestCase
 
         /** @var \KnpU\OAuth2ClientBundle\Client\OAuth2Client $client */
         $client = $container->get('knpu.oauth2.client.my_facebook');
-        $this->assertInstanceOf('KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient', $client);
-        $this->assertInstanceOf('League\OAuth2\Client\Provider\Facebook', $client->getOAuth2Provider());
+        $this->assertInstanceOf(FacebookClient::class, $client);
+        $this->assertInstanceOf(Facebook::class, $client->getOAuth2Provider());
 
         $client2 = $container->get('knpu.oauth2.registry')
             ->getClient('my_facebook');

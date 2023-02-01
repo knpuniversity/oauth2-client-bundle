@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class OAuthUserProvider implements UserProviderInterface
 {
-    private $roles;
+    private array $roles;
 
     public function __construct(array $roles = ['ROLE_USER', 'ROLE_OAUTH_USER'])
     {

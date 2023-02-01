@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\Tests\Security\Helper;
 
+use KnpU\OAuth2ClientBundle\Security\Helper\PreviousUrlHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,7 +24,7 @@ class PreviousUrlHelperTest extends TestCase
     public function setUp(): void
     {
         $this->traitObject = $this
-            ->getMockForTrait('KnpU\OAuth2ClientBundle\Security\Helper\PreviousUrlHelper');
+            ->getMockForTrait(PreviousUrlHelper::class);
     }
 
     public function testGetPreviousUrl()

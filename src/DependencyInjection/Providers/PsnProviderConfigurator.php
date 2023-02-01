@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use KnpU\OAuth2ClientBundle\Client\Provider\PsnClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class PsnProviderConfigurator implements ProviderConfiguratorInterface
@@ -49,6 +50,6 @@ class PsnProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getClientClass(array $config)
     {
-        return 'KnpU\OAuth2ClientBundle\Client\Provider\PsnClient';
+        return PsnClient::class;
     }
 }
