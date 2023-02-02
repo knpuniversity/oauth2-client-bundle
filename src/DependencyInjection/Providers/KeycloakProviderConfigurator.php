@@ -57,6 +57,7 @@ class KeycloakProviderConfigurator implements ProviderConfiguratorInterface
             'clientSecret' => $config['client_secret'],
             'authServerUrl' => $config['auth_server_url'],
             'realm' => $config['realm'],
+            'version' => $config['version'],
             'encryptionAlgorithm' => $config['encryption_algorithm'],
             'encryptionKeyPath' => $config['encryption_key_path'],
             'encryptionKey' => $config['encryption_key'],
