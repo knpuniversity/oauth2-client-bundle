@@ -39,8 +39,9 @@ class KeycloakProviderConfigurator implements ProviderConfiguratorInterface
                 ->info('Optional: Encryption key, i.e. contents of key or certificate')
             ->end()
             ->scalarNode('version')
-                ->example("version: '20.0.1'")
+                ->defaultNull()
                 ->info('Optional: The keycloak version to run against')
+                ->example("version: '20.0.1'")
             ->end()
         ;
     }
