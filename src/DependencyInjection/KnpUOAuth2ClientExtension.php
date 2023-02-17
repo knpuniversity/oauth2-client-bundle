@@ -67,6 +67,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\UnsplashProviderConfig
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VimeoProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\VKontakteProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\WaveProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\WebflowProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YahooProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YandexProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ZendeskProviderConfigurator;
@@ -145,6 +146,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'vimeo' => VimeoProviderConfigurator::class,
         'vkontakte' => VKontakteProviderConfigurator::class,
         'wave' => WaveProviderConfigurator::class,
+        'webflow' => WebflowProviderConfigurator::class,
         'yahoo' => YahooProviderConfigurator::class,
         'yandex' => YandexProviderConfigurator::class,
         'zendesk' => ZendeskProviderConfigurator::class,
