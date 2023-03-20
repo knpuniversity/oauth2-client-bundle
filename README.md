@@ -105,6 +105,7 @@ via Composer:
 | [Vimeo](https://github.com/saf33r/oauth2-vimeo)                       | composer require saf33r/oauth2-vimeo               |
 | [VKontakte](https://github.com/j4k/oauth2-vkontakte)                  | composer require j4k/oauth2-vkontakte              |
 | [Wave](https://github.com/qdequippe/oauth2-wave)                      | composer require qdequippe/oauth2-wave             |
+| [Webflow](https://github.com/koalatiapp/oauth2-webflow)               | composer require koalati/oauth2-webflow            |
 | [Yahoo](https://github.com/hayageek/oauth2-yahoo)                     | composer require hayageek/oauth2-yahoo             |
 | [Yandex](https://github.com/rakeev/oauth2-yandex)                     | composer require aego/oauth2-yandex                |
 | [Zendesk](https://github.com/stevenmaguire/oauth2-zendesk)            | composer require stevenmaguire/oauth2-zendesk      |
@@ -1521,6 +1522,21 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_WAVE_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_wave_check
+            redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.webflow"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\WebflowClient
+        # composer require koalati/oauth2-webflow
+        webflow:
+            # must be "webflow" - it activates that type!
+            type: webflow
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_WEBFLOW_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_WEBFLOW_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_webflow_check
             redirect_params: {}
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
