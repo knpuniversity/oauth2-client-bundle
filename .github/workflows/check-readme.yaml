@@ -1,0 +1,24 @@
+name: Check README.md is in sync
+
+on:
+    pull_request:
+    push:
+        branches: [ master ]
+
+jobs:
+    # Fail CI if repo is in dirty state after bin/update_readme
+    update-readme:
+        name: bin/update_readme
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+
+            - name: Install Composer dependencies
+              run: composer install --no-progress --prefer-dist
+
+            - name: Check status
+              run: ./bin/update_readme && git diff --exit-code README.md
