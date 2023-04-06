@@ -29,8 +29,7 @@ class OAuth2PKCEClient extends OAuth2Client
 
     private RequestStack $requestStack;
 
-    public function __construct(AbstractProvider $provider,
-                                RequestStack $requestStack)
+    public function __construct(AbstractProvider $provider, RequestStack $requestStack)
     {
         parent::__construct($provider, $requestStack);
         $this->requestStack = $requestStack;
