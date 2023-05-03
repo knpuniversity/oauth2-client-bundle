@@ -65,6 +65,7 @@ via Composer:
 | [DevianArt](https://github.com/SeinopSys/oauth2-deviantart)           | composer require seinopsys/oauth2-deviantart       |
 | [DigitalOcean](https://github.com/chrishemmings/oauth2-digitalocean)  | composer require chrishemmings/oauth2-digitalocean |
 | [Discord](https://github.com/wohali/oauth2-discord-new)               | composer require wohali/oauth2-discord-new         |
+| [Disqus](https://github.com/antalaron/oauth2-disqus)                  | composer require antalaron/oauth2-disqus           |
 | [Dribbble](https://github.com/crewlabs/oauth2-dribbble)               | composer require crewlabs/oauth2-dribbble          |
 | [Dropbox](https://github.com/stevenmaguire/oauth2-dropbox)            | composer require stevenmaguire/oauth2-dropbox      |
 | [Drupal](https://github.com/chrishemmings/oauth2-drupal)              | composer require chrishemmings/oauth2-drupal       |
@@ -877,6 +878,21 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_DISCORD_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_discord_check
+            redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.disqus"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\DisqusClient
+        # composer require antalaron/oauth2-disqus
+        disqus:
+            # must be "disqus" - it activates that type!
+            type: disqus
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_DISQUS_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_DISQUS_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_disqus_check
             redirect_params: {}
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
