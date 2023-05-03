@@ -24,6 +24,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\CleverProviderConfigur
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DevianArtProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DigitalOceanProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DiscordProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DisqusProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DribbbleProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DropboxProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\DrupalProviderConfigurator;
@@ -106,6 +107,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'devian_art' => DevianArtProviderConfigurator::class,
         'digital_ocean' => DigitalOceanProviderConfigurator::class,
         'discord' => DiscordProviderConfigurator::class,
+        'disqus' => DisqusProviderConfigurator::class,
         'dribbble' => DribbbleProviderConfigurator::class,
         'dropbox' => DropboxProviderConfigurator::class,
         'drupal' => DrupalProviderConfigurator::class,
