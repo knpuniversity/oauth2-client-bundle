@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\DependencyInjection\Providers;
 
+use Antalaron\DisqusOAuth2\Disqus;
 use KnpU\OAuth2ClientBundle\Client\Provider\DisqusClient;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
@@ -22,7 +23,7 @@ class DisqusProviderConfigurator implements ProviderConfiguratorInterface
 
     public function getProviderClass(array $config)
     {
-        return 'Antalaron\DisqusOAuth2\Disqus';
+        return Disqus::class;
     }
 
     public function getProviderOptions(array $config)
