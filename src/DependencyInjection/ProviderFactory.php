@@ -34,8 +34,6 @@ class ProviderFactory
      *
      * @param string $class
      * @param string $redirectUri
-     *
-     * @return mixed
      */
     public function createProvider($class, array $options, string $redirectUri = null, array $redirectParams = [], array $collaborators = [])
     {

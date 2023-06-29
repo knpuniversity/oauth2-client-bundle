@@ -16,33 +16,21 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class SpotifyProviderConfigurator implements ProviderConfiguratorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildConfiguration(NodeBuilder $node): void
     {
         // no custom options
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderClass(array $configuration): string
     {
         return Spotify::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClientClass(array $config): string
     {
         return SpotifyClient::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderOptions(array $configuration): array
     {
         return [
@@ -51,25 +39,16 @@ class SpotifyProviderConfigurator implements ProviderConfiguratorInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPackagistName(): string
     {
         return 'kerox/oauth2-spotify';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLibraryHomepage(): string
     {
         return 'https://github.com/ker0x/oauth2-spotify';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProviderDisplayName(): string
     {
         return 'Spotify';
