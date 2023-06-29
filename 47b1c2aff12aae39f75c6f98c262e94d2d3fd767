@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2023-06-29T09:28:06Z
+
+Seems the lowest support version here is 7.4 so I had to downgrade the PHP version for PHP CS Fixer to 7.4 as well to avoid fixing:
+```diff
+-throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
++throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
+```
+
+that is not supported by PHP 7.4
