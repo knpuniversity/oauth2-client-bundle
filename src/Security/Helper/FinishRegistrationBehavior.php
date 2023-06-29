@@ -42,8 +42,6 @@ trait FinishRegistrationBehavior
     /**
      * Useful during registration to get your user information back out.
      *
-     * @return mixed
-     *
      * @throws \LogicException
      */
     public function getUserInfoFromSession(Request $request)

@@ -19,6 +19,8 @@ jobs:
 
     cs:
         uses: SymfonyCasts/.github/.github/workflows/php-cs-fixer.yaml@main
+        with:
+            php: '7.4'
 
     sca:
         uses: SymfonyCasts/.github/.github/workflows/phpstan.yaml@main
