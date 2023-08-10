@@ -1200,7 +1200,7 @@ knpu_oauth2_client:
             auth_server_url: null
             # Keycloak realm
             realm: null
-            # Optional: Encryption algorith, i.e. RS256
+            # Optional: Encryption algorithm, i.e. RS256
             # encryption_algorithm: null
             # Optional: Encryption key path, i.e. ../key.pem
             # encryption_key_path: null
