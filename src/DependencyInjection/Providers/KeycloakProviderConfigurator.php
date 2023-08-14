@@ -28,7 +28,7 @@ class KeycloakProviderConfigurator implements ProviderConfiguratorInterface
             ->end()
             ->scalarNode('encryption_algorithm')
                 ->defaultNull()
-                ->info('Optional: Encryption algorith, i.e. RS256')
+                ->info('Optional: Encryption algorithm, i.e. RS256')
             ->end()
             ->scalarNode('encryption_key_path')
                 ->defaultNull()
