@@ -45,13 +45,14 @@ class OAuth2PKCEClient extends OAuth2Client
      */
     public function redirect(array $scopes = [], array $options = [])
     {
-        $this->getSession()->set(static::VERIFIER_KEY, $code_verifier = bin2hex(random_bytes(64)));
-        $pkce = [
-            'code_challenge' => rtrim(strtr(base64_encode(hash('sha256', $code_verifier, true)), '+/', '-_'), '='),
-            'code_challenge_method' => 'S256',
-        ];
+        $response = parent::redirect($scopes, $options);
 
-        return parent::redirect($scopes, $options + $pkce);
+        $codeVerifier = $this->getOAuth2Provider()->getPkceCode();
+        if (null !== $codeVerifier) {
+            $this->getSession()->set(static::VERIFIER_KEY, $codeVerifier);
+        }
+
+        return $response;
     }
 
     /**
@@ -69,10 +70,12 @@ class OAuth2PKCEClient extends OAuth2Client
         if (!$this->getSession()->has(static::VERIFIER_KEY)) {
             throw new \LogicException('Unable to fetch token from OAuth2 server because there is no PKCE code verifier stored in the session');
         }
-        $pkce = ['code_verifier' => $this->getSession()->get(static::VERIFIER_KEY)];
+
+        $codeVerifier = $this->getSession()->get(static::VERIFIER_KEY);
+        $this->getOAuth2Provider()->setPkceCode($codeVerifier);
         $this->getSession()->remove(static::VERIFIER_KEY);
 
-        return parent::getAccessToken($options + $pkce);
+        return parent::getAccessToken($options);
     }
 
     /**
