@@ -24,7 +24,8 @@
         "league/oauth2-facebook": "^1.1|^2.0",
         "symfony/phpunit-bridge": "^5.3.1|^6.0|^7.0",
         "symfony/security-guard": "^4.4|^5.0|^6.0|^7.0",
-        "symfony/yaml": "^4.4|^5.0|^6.0|^7.0"
+        "symfony/yaml": "^4.4|^5.0|^6.0|^7.0",
+        "phpstan/phpstan": "^0.12"
     },
     "autoload": {
         "psr-4": { "KnpU\\OAuth2ClientBundle\\": "src/" }
