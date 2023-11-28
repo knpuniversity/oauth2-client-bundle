@@ -51,7 +51,7 @@ class OAuthUser implements UserInterface
         return $this->username;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // Do nothing.
     }
