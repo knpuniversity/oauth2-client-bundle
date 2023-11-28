@@ -11,7 +11,7 @@ jobs:
     test:
         uses: SymfonyCasts/.github/.github/workflows/phpunit.yaml@main
         with:
-            php-version-matrix: '["7.4", "8.0", "8.1", "8.2"]'
+            php-version-matrix: '["7.4", "8.0", "8.1", "8.2", "8.3"]'
             php-version-lowest: '7.4'
 
     composer-validate:
