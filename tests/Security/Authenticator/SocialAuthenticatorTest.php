@@ -141,7 +141,7 @@ class SomeUser implements UserInterface
     {
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
