@@ -35,8 +35,3 @@ parameters:
 		-
 			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.#'
 			path: ./src/DependencyInjection
-
-		# Searches for root(), for backward compatibility with Symfony <4.2. Removed in 5.0
-		-
-			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder::root\(\)\.#'
-			path: ./src/DependencyInjection

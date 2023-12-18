@@ -198,9 +198,7 @@ class KnpUOAuth2ClientExtension extends Extension
 
             // process the configuration
             $tree = new TreeBuilder('knpu_oauth2_client/clients/'.$key);
-            $node = method_exists($tree, 'getRootNode')
-                ? $tree->getRootNode()
-                : $tree->root('knpu_oauth2_client/clients/'.$key);
+            $node = $tree->getRootNode();
 
             $this->buildConfigurationForType($node, $type);
             $processor = new Processor();
