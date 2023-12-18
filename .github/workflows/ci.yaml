@@ -10,9 +10,6 @@ on:
 jobs:
     test:
         uses: SymfonyCasts/.github/.github/workflows/phpunit.yaml@main
-        with:
-            php-version-matrix: '["8.1", "8.2", "8.3"]'
-            php-version-lowest: '8.1.0'
 
     composer-validate:
         uses: SymfonyCasts/.github/.github/workflows/composer-validate.yaml@main
