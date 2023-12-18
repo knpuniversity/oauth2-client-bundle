@@ -3,7 +3,7 @@ parameters:
 	inferPrivatePropertyTypeFromConstructor: true
 	paths:
 		- ./src/
-	excludes_analyse:
+	excludePaths:
 		- */cache/*
 	ignoreErrors:
 		# False positive: clients are not dependencies of this project.
