@@ -40,7 +40,7 @@ class PassageClient extends OAuth2Client
         $provider = $this->getOAuth2Provider();
 
         if (!($provider instanceof Passage)) {
-            throw new \RuntimeException('Invalid provider "'.\get_class($provider).'", expected provider "'.Passage::class.'"');
+            throw new \RuntimeException('Invalid provider "'.$provider::class.'", expected provider "'.Passage::class.'"');
         }
 
         return new RedirectResponse($provider->getLogoutUrl());

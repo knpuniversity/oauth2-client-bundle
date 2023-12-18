@@ -18,9 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('knpu_oauth2_client');
-        $rootNode = method_exists($treeBuilder, 'getRootNode')
-            ? $treeBuilder->getRootNode()
-            : $treeBuilder->root('knpu_oauth2_client');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

@@ -10,19 +10,12 @@ on:
 jobs:
     test:
         uses: SymfonyCasts/.github/.github/workflows/phpunit.yaml@main
-        with:
-            php-version-matrix: '["7.4", "8.0", "8.1", "8.2", "8.3"]'
-            php-version-lowest: '7.4'
 
     composer-validate:
         uses: SymfonyCasts/.github/.github/workflows/composer-validate.yaml@main
 
     cs:
         uses: SymfonyCasts/.github/.github/workflows/php-cs-fixer.yaml@main
-        with:
-            php: '7.4'
 
     sca:
         uses: SymfonyCasts/.github/.github/workflows/phpstan.yaml@main
-        with:
-            php: '8.0'
