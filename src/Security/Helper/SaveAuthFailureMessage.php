@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 trait SaveAuthFailureMessage
 {
@@ -22,7 +23,11 @@ trait SaveAuthFailureMessage
         if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
             throw new \LogicException('In order to save an authentication error, you must have a session available.');
         }
+        
+        $securityClass = class_exists(SecurityRequestAttributes::class)
+            ? SecurityRequestAttributes::class
+            : Security::class;
 
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+        $request->getSession()->set($securityClass::AUTHENTICATION_ERROR, $exception);
     }
 }
