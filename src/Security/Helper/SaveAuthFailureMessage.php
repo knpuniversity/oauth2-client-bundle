@@ -23,11 +23,11 @@ trait SaveAuthFailureMessage
         if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
             throw new \LogicException('In order to save an authentication error, you must have a session available.');
         }
-        
-        $securityClass = class_exists(SecurityRequestAttributes::class)
-            ? SecurityRequestAttributes::class
-            : Security::class;
 
-        $request->getSession()->set($securityClass::AUTHENTICATION_ERROR, $exception);
+        $authenticationError = class_exists(Security::class)
+            ? Security::AUTHENTICATION_ERROR
+            : SecurityRequestAttributes::AUTHENTICATION_ERROR;
+
+        $request->getSession()->set($authenticationError, $exception);
     }
 }
