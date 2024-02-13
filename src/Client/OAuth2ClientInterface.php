@@ -40,7 +40,7 @@ interface OAuth2ClientInterface
      *
      * @param array $options Additional options that should be passed to the getAccessToken() of the underlying provider
      *
-     * @return \League\OAuth2\Client\Token\AccessToken
+     * @return AccessToken
      *
      * @throws \KnpU\OAuth2ClientBundle\Exception\InvalidStateException
      * @throws \KnpU\OAuth2ClientBundle\Exception\MissingAuthorizationCodeException
