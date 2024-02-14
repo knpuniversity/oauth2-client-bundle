@@ -34,7 +34,7 @@ class ProviderFactory
      *
      * @param string $class
      */
-    public function createProvider($class, array $options, string $redirectUri = null, array $redirectParams = [], array $collaborators = [])
+    public function createProvider($class, array $options, ?string $redirectUri = null, array $redirectParams = [], array $collaborators = [])
     {
         if (null !== $redirectUri) {
             $redirectUri = $this->generator

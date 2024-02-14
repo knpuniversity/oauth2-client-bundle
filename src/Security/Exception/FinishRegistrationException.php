@@ -24,7 +24,7 @@ class FinishRegistrationException extends AuthenticationException
      * @param string $message
      * @param int    $code
      */
-    public function __construct($userInfo, $message = '', $code = 0, \Exception $previous = null)
+    public function __construct($userInfo, $message = '', $code = 0, ?\Exception $previous = null)
     {
         $this->userInformation = $userInfo;
 
