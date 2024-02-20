@@ -142,7 +142,7 @@ knpu_oauth2_client:
             graph_api_version: v2.12
 ```
 
-Notice the two `'%env(var)%'`calls? Add these anywhere in your `.env` and `.env.dist` files.
+Notice the two `'%env(var)%'`calls? Add these in your `.env` file, or to the [vault](https://symfony.com/doc/current/configuration/secrets.html). 
 These are the credentials for the OAuth provider. For Facebook, you'll get these by registering
 your app on [developers.facebook.com](https://developers.facebook.com/apps/):
 
