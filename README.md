@@ -188,7 +188,6 @@ class FacebookController extends AbstractController
      */
     public function connectAction(ClientRegistry $clientRegistry)
     {
-
         // will redirect to Facebook!
         return $clientRegistry
             ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
