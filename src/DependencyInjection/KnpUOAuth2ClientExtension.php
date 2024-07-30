@@ -187,13 +187,13 @@ class KnpUOAuth2ClientExtension extends Extension
         foreach ($clientConfigurations as $key => $clientConfig) {
             // manually make sure "type" is there
             if (!isset($clientConfig['type'])) {
-                throw new InvalidConfigurationException(sprintf('Your "knpu_oauth2_client.clients.%s" config entry is missing the "type" key.', $key));
+                throw new InvalidConfigurationException(\sprintf('Your "knpu_oauth2_client.clients.%s" config entry is missing the "type" key.', $key));
             }
 
             $type = $clientConfig['type'];
             unset($clientConfig['type']);
             if (!isset(self::$supportedProviderTypes[$type])) {
-                throw new InvalidConfigurationException(sprintf('The "knpu_oauth2_client.clients" config "type" key "%s" is not supported. We support (%s)', $type, implode(', ', array_keys(self::$supportedProviderTypes))));
+                throw new InvalidConfigurationException(\sprintf('The "knpu_oauth2_client.clients" config "type" key "%s" is not supported. We support (%s)', $type, implode(', ', array_keys(self::$supportedProviderTypes))));
             }
 
             // process the configuration
@@ -253,12 +253,12 @@ class KnpUOAuth2ClientExtension extends Extension
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
             if ('generic' === $providerType) {
-                throw new \LogicException(sprintf('The provider class `%s` must exist in order to use with the "%s" OAuth provider.', $providerClass, $providerType));
+                throw new \LogicException(\sprintf('The provider class `%s` must exist in order to use with the "%s" OAuth provider.', $providerClass, $providerType));
             }
-            throw new \LogicException(sprintf('Run `composer require %s` in order to use the "%s" OAuth provider.', $packageName, $providerType));
+            throw new \LogicException(\sprintf('Run `composer require %s` in order to use the "%s" OAuth provider.', $packageName, $providerType));
         }
 
-        $providerServiceKey = sprintf('knpu.oauth2.provider.%s', $providerKey);
+        $providerServiceKey = \sprintf('knpu.oauth2.provider.%s', $providerKey);
 
         $providerDefinition = $container->register(
             $providerServiceKey,
@@ -279,7 +279,7 @@ class KnpUOAuth2ClientExtension extends Extension
             $collaborators,
         ]);
 
-        $clientServiceKey = sprintf('knpu.oauth2.client.%s', $providerKey);
+        $clientServiceKey = \sprintf('knpu.oauth2.client.%s', $providerKey);
         $clientDefinition = $container->register(
             $clientServiceKey,
             $clientClass

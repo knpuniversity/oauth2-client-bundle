@@ -39,13 +39,13 @@ class ClientRegistry
         if (isset($this->serviceMap[$key])) {
             $client = $this->container->get($this->serviceMap[$key]);
             if (!$client instanceof OAuth2ClientInterface) {
-                throw new \InvalidArgumentException(sprintf('Somehow the "%s" client is not an instance of OAuth2ClientInterface.', $key));
+                throw new \InvalidArgumentException(\sprintf('Somehow the "%s" client is not an instance of OAuth2ClientInterface.', $key));
             }
 
             return $client;
         }
 
-        throw new \InvalidArgumentException(sprintf('There is no OAuth2 client called "%s". Available are: %s', $key, implode(', ', array_keys($this->serviceMap))));
+        throw new \InvalidArgumentException(\sprintf('There is no OAuth2 client called "%s". Available are: %s', $key, implode(', ', array_keys($this->serviceMap))));
     }
 
     /**
