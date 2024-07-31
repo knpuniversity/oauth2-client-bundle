@@ -12,9 +12,9 @@ namespace KnpU\OAuth2ClientBundle;
 
 use KnpU\OAuth2ClientBundle\DependencyInjection\KnpUOAuth2ClientExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-class KnpUOAuth2ClientBundle extends Bundle
+class KnpUOAuth2ClientBundle extends AbstractBundle
 {
     /**
      * Overridden to allow for the custom extension alias.
