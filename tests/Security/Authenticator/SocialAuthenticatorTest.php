@@ -100,7 +100,7 @@ class StubSocialAuthenticator extends SocialAuthenticator
         return $this->fetchAccessToken($client);
     }
 
-    public function start(Request $request, AuthenticationException $authException = null): Response
+    public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
     }
     public function supports(Request $request): bool
