@@ -17,10 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ClientRegistryTest extends TestCase
 {
-    /**
-     * @group legacy
-     * @legacy drop legacy group when no longer using guard authenticators
-     */
     public function testShouldKnowWhatServicesAreConfigured()
     {
         $mockServiceMap = [
