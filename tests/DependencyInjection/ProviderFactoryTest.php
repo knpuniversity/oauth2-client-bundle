@@ -45,6 +45,21 @@ class ProviderFactoryTest extends TestCase
         $this->assertEquals([], $result->getCollaborators());
     }
 
+    public function testShouldCreateProviderWithExternalRedirectUrl()
+    {
+        $mockGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockGenerator->expects($this->never())->method('generate');
+
+        $testProviderFactory = new ProviderFactory($mockGenerator);
+        $externalRedirectUri = 'https://external-site.com/callback';
+        $result = $testProviderFactory->createProvider(MockProvider::class, [], $externalRedirectUri);
+
+        $this->assertInstanceOf(MockProvider::class, $result);
+        $this->assertEquals(['redirectUri' => $externalRedirectUri], $result->getOptions());
+    }
+
     private function getMockGenerator($generateReturn)
     {
         $mockGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->disableOriginalConstructor()->getMock();
