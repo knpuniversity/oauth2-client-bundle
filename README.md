@@ -1,5 +1,7 @@
 # OAuth / Social Integration for Symfony: KnpUOAuth2ClientBundle
 
+[![CI](https://github.com/knpuniversity/oauth2-client-bundle/actions/workflows/ci.yaml/badge.svg)](https://github.com/knpuniversity/oauth2-client-bundle/actions/workflows/ci.yaml)
+
 Easily integrate with an OAuth2 server (e.g. Facebook, GitHub) for:
 
 * "Social" authentication / login
