@@ -44,6 +44,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HeadHunterProviderConf
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\HerokuProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\InstagramProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\JiraProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\KeycloakPkceProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\KeycloakProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\LinkedInProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\MailRuProviderConfigurator;
@@ -128,6 +129,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'instagram' => InstagramProviderConfigurator::class,
         'jira' => JiraProviderConfigurator::class,
         'keycloak' => KeycloakProviderConfigurator::class,
+        'keycloak_pkce' => KeycloakPkceProviderConfigurator::class,
         'linkedin' => LinkedInProviderConfigurator::class,
         'mail_ru' => MailRuProviderConfigurator::class,
         'microsoft' => MicrosoftProviderConfigurator::class,
