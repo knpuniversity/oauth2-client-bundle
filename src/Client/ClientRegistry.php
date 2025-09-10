@@ -10,6 +10,7 @@
 
 namespace KnpU\OAuth2ClientBundle\Client;
 
+use KnpU\OAuth2ClientBundle\DependencyInjection\InvalidOAuth2ClientException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ClientRegistry
@@ -33,19 +34,21 @@ class ClientRegistry
      * @param string $key
      *
      * @return OAuth2ClientInterface
+     *
+     * @throws InvalidOAuth2ClientException
      */
     public function getClient($key)
     {
         if (isset($this->serviceMap[$key])) {
             $client = $this->container->get($this->serviceMap[$key]);
             if (!$client instanceof OAuth2ClientInterface) {
-                throw new \InvalidArgumentException(\sprintf('Somehow the "%s" client is not an instance of OAuth2ClientInterface.', $key));
+                throw new InvalidOAuth2ClientException(\sprintf('Somehow the "%s" client is not an instance of OAuth2ClientInterface.', $key));
             }
 
             return $client;
         }
 
-        throw new \InvalidArgumentException(\sprintf('There is no OAuth2 client called "%s". Available are: %s', $key, implode(', ', array_keys($this->serviceMap))));
+        throw new InvalidOAuth2ClientException(\sprintf('There is no OAuth2 client called "%s". Available are: %s', $key, implode(', ', array_keys($this->serviceMap))));
     }
 
     /**
