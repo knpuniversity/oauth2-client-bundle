@@ -8,6 +8,12 @@ parameters:
 	ignoreErrors:
 		# False positive: clients are not dependencies of this project.
 		-
+			message: '#Method KnpU\\OAuth2ClientBundle\\Client\\Provider\\Pkce\\\w+::fetchUserFromToken\(\) has invalid return type .+#'
+			path: ./src/Client/Provider/Pkce/
+		-
+			message: '#Method KnpU\\OAuth2ClientBundle\\Client\\Provider\\Pkce\\\w+::fetchUser\(\) has invalid return type .+#'
+			path: ./src/Client/Provider/Pkce/
+		-
 			message: '#Method KnpU\\OAuth2ClientBundle\\Client\\Provider\\\w+::fetchUserFromToken\(\) has invalid return type .+#'
 			path: ./src/Client/Provider/
 		-

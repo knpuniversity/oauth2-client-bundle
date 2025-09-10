@@ -87,6 +87,7 @@ via Composer:
 | [Instagram](https://github.com/thephpleague/oauth2-instagram)         | composer require league/oauth2-instagram           |
 | [Jira](https://github.com/mrjoops/oauth2-jira)                        | composer require mrjoops/oauth2-jira               |
 | [Keycloak](https://github.com/stevenmaguire/oauth2-keycloak)          | composer require stevenmaguire/oauth2-keycloak     |
+| [KeycloakPkce](https://github.com/stevenmaguire/oauth2-keycloak)      | composer require stevenmaguire/oauth2-keycloak     |
 | [LinkedIn](https://github.com/thephpleague/oauth2-linkedin)           | composer require league/oauth2-linkedin            |
 | [MailRu](https://github.com/rakeev/oauth2-mailru)                     | composer require aego/oauth2-mailru                |
 | [Microsoft](https://github.com/stevenmaguire/oauth2-microsoft)        | composer require stevenmaguire/oauth2-microsoft    |
@@ -1196,6 +1197,33 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_KEYCLOAK_CLIENT_SECRET)%'
             # a route name you'll create
             redirect_route: connect_keycloak_check
+            redirect_params: {}
+            # Keycloak server URL
+            auth_server_url: null
+            # Keycloak realm
+            realm: null
+            # Optional: Encryption algorithm, i.e. RS256
+            # encryption_algorithm: null
+            # Optional: Encryption key path, i.e. ../key.pem
+            # encryption_key_path: null
+            # Optional: Encryption key, i.e. contents of key or certificate
+            # encryption_key: null
+            # Optional: The keycloak version to run against
+            # version: '20.0.1'
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.keycloak_pkce"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\Pkce\KeycloakPkceClient
+        # composer require stevenmaguire/oauth2-keycloak
+        keycloak_pkce:
+            # must be "keycloak_pkce" - it activates that type!
+            type: keycloak_pkce
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_KEYCLOAK_PKCE_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_KEYCLOAK_PKCE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_keycloak_pkce_check
             redirect_params: {}
             # Keycloak server URL
             auth_server_url: null
