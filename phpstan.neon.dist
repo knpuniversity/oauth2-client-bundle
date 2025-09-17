@@ -33,11 +33,5 @@ parameters:
 
 		# The DependencyInjection returns are very complex to deal with
 		-
-			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.#'
-			path: ./src/DependencyInjection/Providers
-		-
-			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::arrayNode\(\)\.#'
-			path: ./src/DependencyInjection/Providers
-		-
 			message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.#'
 			path: ./src/DependencyInjection
