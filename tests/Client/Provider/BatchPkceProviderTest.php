@@ -17,7 +17,9 @@ use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class BatchPkceProviderTest extends TestCase
 {
@@ -27,14 +29,16 @@ class BatchPkceProviderTest extends TestCase
 
         $mockAccessToken = $this->getMockBuilder(AccessToken::class)->disableOriginalConstructor()->getMock();
         $mockProvider = $this->getMockProvider($mockAccessToken);
-        $mockRequestStack = $this->getMockRequestStack($this->getMockRequest());
+        $requestStack = $this->getRequestStack($this->getRequest());
 
         $clients = scandir(__DIR__ . "/../../../src/Client/Provider/Pkce");
         foreach($clients as $client) {
-            if(substr($client, -4, 4) !== ".php") { continue; }
+            if(!str_ends_with($client, ".php")) {
+                continue;
+            }
 
             $client = sprintf("KnpU\OAuth2ClientBundle\Client\Provider\Pkce\%s", explode(".", $client)[0]);
-            $testClient = new $client($mockProvider, $mockRequestStack);
+            $testClient = new $client($mockProvider, $requestStack);
             $testClient->setAsStateless();
             $this->assertTrue(is_subclass_of($testClient, OAuth2PKCEClient::class));
 
@@ -48,27 +52,28 @@ class BatchPkceProviderTest extends TestCase
         $mockProvider = $this->getMockBuilder(AbstractProvider::class)->getMock();
         $mockProvider->method("getResourceOwner")->willReturn($this->getMockBuilder(ResourceOwnerInterface::class)->getMock());
         $mockProvider->method("getAccessToken")->willReturn($mockAccessToken);
+
         return $mockProvider;
     }
 
-    private function getMockRequest()
+    private function getRequest(): Request
     {
-        $mockRequest = $this->getMockBuilder(Request::class)->getMock();
+        $request = new Request();
 
-        $session = $this->getMockBuilder(SessionInterface::class)->getMock();
-        $session->method("has")->with(OAuth2PKCEClient::VERIFIER_KEY)->willReturn(true);
-        $session->method("get")->with(OAuth2PKCEClient::VERIFIER_KEY)->willReturn('test_code_verifier');
+        $session = new Session(new MockArraySessionStorage());
+        $session->set(OAuth2PKCEClient::VERIFIER_KEY, 'test_code_verifier');
 
-        $mockRequest->method("getSession")->willReturn($session);
+        $request->setSession($session);
+        $request->query->set('code', 'test_code_verifier');
 
-        $mockRequest->method("get")->willReturn(true);
-        return $mockRequest;
+        return $request;
     }
 
-    private function getMockRequestStack($mockRequest)
+    private function getRequestStack(Request $request): RequestStack
     {
-        $mockRequestStack = $this->getMockBuilder(RequestStack::class)->getMock();
-        $mockRequestStack->method("getCurrentRequest")->willReturn($mockRequest);
-        return $mockRequestStack;
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        return $requestStack;
     }
 }
