@@ -74,6 +74,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\WebflowProviderConfigu
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YahooProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\YandexProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\ZendeskProviderConfigurator;
+use KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -174,11 +175,13 @@ class KnpUOAuth2ClientExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
+        trigger_deprecation('OA2CBundle', '99999', 'Load() deprecated... Moving to %s', KnpUOAuth2ClientBundle::class);
+
         $processor = new Processor();
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__, 2).'/config'));
         $loader->load('services.xml');
 
         $httpClient = $config['http_client'];
@@ -313,6 +316,8 @@ class KnpUOAuth2ClientExtension extends Extension
 
     public static function getAllSupportedTypes(): array
     {
+        trigger_deprecation('OA2CBundle', '99999', 'getAllSupportedTypes() deprecated... Moving to %s', KnpUOAuth2ClientBundle::class);
+
         return array_keys(self::$supportedProviderTypes);
     }
 
@@ -321,6 +326,8 @@ class KnpUOAuth2ClientExtension extends Extension
      */
     public function getConfigurator($type): ProviderConfiguratorInterface
     {
+        trigger_deprecation('OA2CBundle', '99999', 'getConfigurator() deprecated... Moving to %s', KnpUOAuth2ClientBundle::class);
+
         if (!isset($this->configurators[$type])) {
             $class = self::$supportedProviderTypes[$type];
 
@@ -335,6 +342,8 @@ class KnpUOAuth2ClientExtension extends Extension
      */
     public function getAlias(): string
     {
+        trigger_deprecation('OA2CBundle', '99999', 'getAlias() deprecated... Moving to %s', KnpUOAuth2ClientBundle::class);
+
         return 'knpu_oauth2_client';
     }
 
@@ -368,6 +377,8 @@ class KnpUOAuth2ClientExtension extends Extension
      */
     public static function configuratorNeedsClientSecret(ProviderConfiguratorInterface $configurator): bool
     {
+        trigger_deprecation('OA2CBundle', '99999', 'configuratorNeedsClientSecret() deprecated... Moving to %s', KnpUOAuth2ClientBundle::class);
+
         if (!$configurator instanceof ProviderWithoutClientSecretConfiguratorInterface) {
             return true;
         }
