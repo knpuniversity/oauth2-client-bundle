@@ -1,8 +1,6 @@
 parameters:
 	level: 5
 	inferPrivatePropertyTypeFromConstructor: true
-	bootstrapFiles:
-	    - ./vendor/symfony/dependency-injection/Loader/Configurator/functions.php
 	paths:
 		- ./src/
 	excludePaths:
