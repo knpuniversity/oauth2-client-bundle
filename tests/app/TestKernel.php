@@ -43,9 +43,6 @@ class TestKernel extends Kernel
                     'resource' => __DIR__ . '/routing.yml',
                     'utf8' => true,
                 ],
-                // turn this off - otherwise we need doctrine/annotation
-                // the change that required this was in Symfony 3.2.0
-                'annotations' => Kernel::VERSION_ID >= 30200 ? false : [],
             ]);
 
             $container->loadFromExtension('knpu_oauth2_client', [

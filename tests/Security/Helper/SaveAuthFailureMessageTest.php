@@ -12,9 +12,8 @@ namespace KnpU\OAuth2ClientBundle\Tests\Security\Helper;
 
 use KnpU\OAuth2ClientBundle\Security\Helper\SaveAuthFailureMessage;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class SaveAuthFailureMessageTest extends TestCase
 {
@@ -41,7 +40,7 @@ class SaveAuthFailureMessageTest extends TestCase
 
         $testFailureMessage->callSaveAuthenticationErrorToSession($request, $mockAuthException);
         $session = $request->getSession();
-        $this->assertInstanceOf(AuthenticationException::class, $session->get(Security::AUTHENTICATION_ERROR));
+        $this->assertInstanceOf(AuthenticationException::class, $session->get(SecurityRequestAttributes::AUTHENTICATION_ERROR));
     }
 }
 

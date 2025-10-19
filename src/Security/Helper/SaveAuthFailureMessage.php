@@ -13,7 +13,6 @@ namespace KnpU\OAuth2ClientBundle\Security\Helper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 trait SaveAuthFailureMessage
@@ -24,10 +23,6 @@ trait SaveAuthFailureMessage
             throw new \LogicException('In order to save an authentication error, you must have a session available.');
         }
 
-        $authenticationError = class_exists(Security::class)
-            ? Security::AUTHENTICATION_ERROR
-            : SecurityRequestAttributes::AUTHENTICATION_ERROR;
-
-        $request->getSession()->set($authenticationError, $exception);
+        $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
     }
 }
