@@ -387,6 +387,14 @@ security:
 +           custom_authenticators:
 +               - App\Security\MyFacebookAuthenticator
 ```
+> **IMPORTANT** If you have Symfony 6.4 or lower - you will also need to enable the new authenticator manager:
+
+```diff
+# app/config/packages/security.yaml
+security:
+    # ...  
++   enable_authenticator_manager: true
+```
 
 > **CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
 into your authenticator instead of the `ClientRegistry`. However, this may cause
