@@ -373,15 +373,13 @@ class MyFacebookAuthenticator extends OAuth2Authenticator implements Authenticat
 
 ### Step 2) Configuring the Security
 
-Next, enable the new authenticator manager and then register your authenticator
+Next, register your authenticator
 in `security.yaml` under the `custom_authenticators` section:
 
 ```diff
 # app/config/packages/security.yaml
 security:
-    # ...
-+   enable_authenticator_manager: true
-  
+    # ...  
     firewalls:
         # ...
         main:
