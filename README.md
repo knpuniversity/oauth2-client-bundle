@@ -373,21 +373,27 @@ class MyFacebookAuthenticator extends OAuth2Authenticator implements Authenticat
 
 ### Step 2) Configuring the Security
 
-Next, enable the new authenticator manager and then register your authenticator
+Next, register your authenticator
 in `security.yaml` under the `custom_authenticators` section:
 
 ```diff
 # app/config/packages/security.yaml
 security:
-    # ...
-+   enable_authenticator_manager: true
-  
+    # ...  
     firewalls:
         # ...
         main:
         # ...
 +           custom_authenticators:
 +               - App\Security\MyFacebookAuthenticator
+```
+> **IMPORTANT** If you have Symfony 6.4 or lower - you will also need to enable the new authenticator manager:
+
+```diff
+# app/config/packages/security.yaml
+security:
+    # ...  
++   enable_authenticator_manager: true
 ```
 
 > **CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
