@@ -16,8 +16,8 @@ use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OAuth2Client implements OAuth2ClientInterface
@@ -197,9 +197,6 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
-     * @param Request $request
-     * @param string $key
-     *
      * @return string|int|float|bool|null
      */
     private function getRequestParameter(Request $request, string $key)
