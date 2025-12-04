@@ -16,6 +16,7 @@ use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -93,13 +94,13 @@ class OAuth2Client implements OAuth2ClientInterface
 
         if (!$this->isStateless()) {
             $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
-            $actualState = $request->query->get('state');
+            $actualState = $this->getRequestParameter($request, 'state');
             if (!$actualState || ($actualState !== $expectedState)) {
                 throw new InvalidStateException('Invalid state');
             }
         }
 
-        $code = $request->query->get('code');
+        $code = $this->getRequestParameter($request, 'code');
 
         if (!$code) {
             throw new MissingAuthorizationCodeException('No "code" parameter was found (usually this is a query parameter)!');
@@ -170,7 +171,7 @@ class OAuth2Client implements OAuth2ClientInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Request
+     * @return Request
      */
     private function getCurrentRequest()
     {
@@ -193,5 +194,17 @@ class OAuth2Client implements OAuth2ClientInterface
         }
 
         return $this->getCurrentRequest()->getSession();
+    }
+
+    /**
+     * @return string|int|float|bool|null
+     */
+    private function getRequestParameter(Request $request, string $key)
+    {
+        if ($request->query->has($key)) {
+            return $request->query->get($key);
+        }
+
+        return $request->request->get($key);
     }
 }

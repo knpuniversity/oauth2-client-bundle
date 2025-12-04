@@ -160,6 +160,23 @@ class OAuth2ClientTest extends TestCase
         $this->assertSame($expectedToken, $actualToken);
     }
 
+    public function testGetAccessTokenFromPOST()
+    {
+        $this->request->request->set('code', 'CODE_ABC');
+
+        $expectedToken = new AccessToken(['access_token' => 'foo']);
+        $this->provider->method('getAccessToken')
+            ->with('authorization_code', ['code' => 'CODE_ABC'])
+            ->willReturn($expectedToken);
+
+        $client = new OAuth2Client(
+            $this->provider,
+            $this->requestStack
+        );
+        $client->setAsStateless();
+        $this->assertSame($expectedToken, $client->getAccessToken());
+    }
+
     public function testRefreshAccessToken()
     {
         $existingToken = new AccessToken([
