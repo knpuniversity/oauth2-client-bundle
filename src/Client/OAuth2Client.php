@@ -90,17 +90,16 @@ class OAuth2Client implements OAuth2ClientInterface
      */
     public function getAccessToken(array $options = [])
     {
-        $request = $this->getCurrentRequest();
-
         if (!$this->isStateless()) {
             $expectedState = $this->getSession()->get(self::OAUTH2_SESSION_STATE_KEY);
-            $actualState = $this->getRequestParameter($request, 'state');
+            $actualState = $this->getRequestParameter('state');
+
             if (!$actualState || ($actualState !== $expectedState)) {
                 throw new InvalidStateException('Invalid state');
             }
         }
 
-        $code = $this->getRequestParameter($request, 'code');
+        $code = $this->getRequestParameter('code');
 
         if (!$code) {
             throw new MissingAuthorizationCodeException('No "code" parameter was found (usually this is a query parameter)!');
@@ -187,10 +186,14 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * @return SessionInterface
      */
-    private function getSession()
+    protected function getSession(bool $isPKCE = false)
     {
         if (!$this->getCurrentRequest()->hasSession()) {
-            throw new \LogicException('In order to use "state", you must have a session. Set the OAuth2Client to stateless to avoid state');
+            $errorMessage = $isPKCE ?
+                'You must have a session to utilize the PKCE OAuth2 Client flow. Ensure you are not utilizing PKCE in a stateless environment.' :
+                'In order to use "state", you must have a session. Set the OAuth2Client to stateless to avoid state';
+
+            throw new \LogicException($errorMessage);
         }
 
         return $this->getCurrentRequest()->getSession();
@@ -199,12 +202,10 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * @return string|int|float|bool|null
      */
-    private function getRequestParameter(Request $request, string $key)
+    private function getRequestParameter(string $key)
     {
-        if ($request->query->has($key)) {
-            return $request->query->get($key);
-        }
+        $request = $this->getCurrentRequest();
 
-        return $request->request->get($key);
+        return $request->query->has($key) ? $request->query->get($key) : $request->request->get($key);
     }
 }
