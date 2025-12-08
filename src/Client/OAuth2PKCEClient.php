@@ -10,12 +10,9 @@
 
 namespace KnpU\OAuth2ClientBundle\Client;
 
-use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -26,14 +23,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class OAuth2PKCEClient extends OAuth2Client
 {
     public const VERIFIER_KEY = 'pkce_code_verifier';
-
-    private RequestStack $requestStack;
-
-    public function __construct(AbstractProvider $provider, RequestStack $requestStack)
-    {
-        parent::__construct($provider, $requestStack);
-        $this->requestStack = $requestStack;
-    }
 
     /**
      * Enhance the RedirectResponse prepared by OAuth2Client::redirect() with
@@ -66,29 +55,23 @@ class OAuth2PKCEClient extends OAuth2Client
      */
     public function getAccessToken(array $options = [])
     {
-        if (!$this->getSession()->has(static::VERIFIER_KEY)) {
+        $session = $this->getSession();
+
+        if (!$session->has(static::VERIFIER_KEY)) {
             throw new \LogicException('Unable to fetch token from OAuth2 server because there is no PKCE code verifier stored in the session');
         }
-        $pkce = ['code_verifier' => $this->getSession()->get(static::VERIFIER_KEY)];
-        $this->getSession()->remove(static::VERIFIER_KEY);
+
+        $pkce = ['code_verifier' => $session->get(static::VERIFIER_KEY)];
+        $session->remove(static::VERIFIER_KEY);
 
         return parent::getAccessToken($options + $pkce);
     }
 
     /**
      * @return SessionInterface
-     *
-     * @throws \LogicException          When there is no current request
-     * @throws SessionNotFoundException When session is not set properly [thrown by Request::getSession()]
      */
-    protected function getSession()
+    protected function getSession(bool $isPKCE = true)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        if (!$request) {
-            throw new \LogicException('There is no "current request", and it is needed to perform this action');
-        }
-
-        return $request->getSession();
+        return parent::getSession($isPKCE);
     }
 }
