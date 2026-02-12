@@ -91,11 +91,11 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface, Provid
         $node
             ->end()
               ->validate()
-                ->ifTrue(fn ($v) => empty($v['client_secret']) && empty($v['client_certificate_private_key']))
+                ->ifTrue(static fn ($v) => empty($v['client_secret']) && empty($v['client_certificate_private_key']))
                 ->thenInvalid('You have to define either client_secret or client_certificate_private_key')
               ->end()
                 ->validate()
-                ->ifTrue(fn ($v) => !empty($v['client_certificate_private_key']) && empty($v['client_certificate_thumbprint']))
+                ->ifTrue(static fn ($v) => !empty($v['client_certificate_private_key']) && empty($v['client_certificate_thumbprint']))
               ->thenInvalid('You have to define the client_certificate_thumbprint when using a certificate')
             ->end();
     }
