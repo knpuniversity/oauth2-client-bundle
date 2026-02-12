@@ -88,7 +88,7 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface, Provid
             ->end();
 
         // Validate that either client_secret or client_certificate_private_key is set:
-        $node
+        $node // @phpstan-ignore-line
             ->end()
               ->validate()
                 ->ifTrue(static fn ($v) => empty($v['client_secret']) && empty($v['client_certificate_private_key']))
