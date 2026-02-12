@@ -263,9 +263,99 @@ them into your system. In that case, instead of putting all of
 the logic in `connectCheckAction()` as shown above, you'll leave that
 blank and create an authenticator which will hold similar logic.
 
-Now you can use the new Symfony Authenticator system (available **since Symfony 5.2**,
-don't use it before this version) to login in your app. For legacy Symfony versions,
-use [Guard Authenticator](#authenticating-with-guard) below.
+Now you can use the `access_token` authenticator available **since Symfony 6.2**.
+
+* If you use symfony ≥5.2 or <6.2, use [OAuth2Authenticator](#authenticating-with-oauth2authenticator) below.
+* If you use symfony <5.2, use [Guard Authenticator](#authenticating-with-guard) below.
+
+### Step 1) Using the `access_token` Authenticator
+
+```php
+namespace App\Security;
+
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface; // your user entity
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use SensitiveParameter;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+
+final class AccessTokenHandler implements AccessTokenHandlerInterface
+{
+    private $client;
+
+    public function __construct(
+        ClientRegistry $clientRegistry,
+        private readonly EntityManagerInterface $entityManager,
+    ) {
+        $this->client = $clientRegistry->getClient('facebook_main');
+    }
+
+    public function getUserBadgeFrom(#[SensitiveParameter] string $accessToken): UserBadge
+    {
+        /** @var FacebookUser $facebookUser */
+        $facebookUser = $this->client->fetchUserFromToken($accessToken);
+
+        $email = $facebookUser->getEmail();
+
+        // 1) have they logged in with Facebook before? Easy!
+        $existingUser = $this->entityManager->getRepository(User::class)->findOneBy([
+            'facebookId' => $facebookUser->getId(),
+        ]);
+
+        if ($existingUser) {
+            return new UserBadge($existingUser->getIdentifier(), fn () => $existingUser);
+        }
+
+        // 2) do we have a matching user by email?
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'email' => $email,
+        ]);
+
+        // 3) Maybe you just want to "register" them by creating
+        // a User object
+        if ($user === null) {
+            // Register the user here or throw an exception depending on your security policy
+            throw new BadCredentialsException('Invalid credentials.');
+        }
+        $user->setFacebookId($facebookUser->getId());
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return new UserBadge($user->getIdentifier(), fn () => $user);
+    }
+}
+```
+
+### Step 2) Configuring the Security
+
+Next, enable the new authenticator manager and then register your authenticator
+in `security.yaml` under the `custom_authenticators` section:
+
+```diff
+# app/config/packages/security.yaml
+security:
+    # ...
++   enable_authenticator_manager: true
+  
+    firewalls:
+        # ...
+        main:
+        # ...
++           access_token:
++               token_handler: App\Security\AccessTokenHandler
+```
+
+> **CAUTION** You *can* also inject the individual client (e.g. `FacebookClient`)
+into your authenticator instead of the `ClientRegistry`. However, this may cause
+circular reference issues and degrades performance (because authenticators are instantiated
+on every request, even though you *rarely* need the `FacebookClient` to be created).
+The `ClientRegistry` lazily creates the client objects.
+
+
+
+## Authenticating with OAuth2Authenticator
 
 ### Step 1) Using the new OAuth2Authenticator Class
 
