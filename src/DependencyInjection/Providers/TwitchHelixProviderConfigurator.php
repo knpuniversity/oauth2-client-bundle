@@ -19,7 +19,7 @@ use Vertisan\OAuth2\Client\Provider\TwitchHelix;
  */
 class TwitchHelixProviderConfigurator implements ProviderConfiguratorInterface
 {
-    public function buildConfiguration(NodeBuilder $node)
+    public function buildConfiguration(NodeBuilder $node): void
     {
         // no custom options
     }

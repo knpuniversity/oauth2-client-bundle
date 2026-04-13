@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 trait SaveAuthFailureMessage
 {
-    protected function saveAuthenticationErrorToSession(Request $request, AuthenticationException $exception)
+    protected function saveAuthenticationErrorToSession(Request $request, AuthenticationException $exception): void
     {
         if (!$request->hasSession() || !$request->getSession() instanceof SessionInterface) {
             throw new \LogicException('In order to save an authentication error, you must have a session available.');

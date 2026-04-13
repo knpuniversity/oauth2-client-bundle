@@ -15,7 +15,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class LinkedInProviderConfigurator implements ProviderConfiguratorInterface
 {
-    public function buildConfiguration(NodeBuilder $node)
+    public function buildConfiguration(NodeBuilder $node): void
     {
         $node
             ->integerNode('api_version')

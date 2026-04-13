@@ -338,7 +338,7 @@ class KnpUOAuth2ClientExtension extends Extension
         return 'knpu_oauth2_client';
     }
 
-    private function buildConfigurationForType(NodeDefinition $node, $type)
+    private function buildConfigurationForType(NodeDefinition $node, $type): void
     {
         $optionsNode = $node->children();
         $optionsNode

@@ -15,7 +15,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class KeycloakPkceProviderConfigurator implements ProviderConfiguratorInterface
 {
-    public function buildConfiguration(NodeBuilder $node)
+    public function buildConfiguration(NodeBuilder $node): void
     {
         $node
             ->scalarNode('auth_server_url')

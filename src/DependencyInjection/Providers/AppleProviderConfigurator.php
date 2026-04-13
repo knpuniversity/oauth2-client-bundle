@@ -20,7 +20,7 @@ class AppleProviderConfigurator implements ProviderConfiguratorInterface, Provid
         return false;
     }
 
-    public function buildConfiguration(NodeBuilder $node)
+    public function buildConfiguration(NodeBuilder $node): void
     {
         $node
             ->scalarNode('team_id')

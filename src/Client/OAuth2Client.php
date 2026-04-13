@@ -42,7 +42,7 @@ class OAuth2Client implements OAuth2ClientInterface
     /**
      * Call this to avoid using and checking "state".
      */
-    public function setAsStateless()
+    public function setAsStateless(): void
     {
         $this->isStateless = true;
     }

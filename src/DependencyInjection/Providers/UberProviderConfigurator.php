@@ -15,7 +15,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class UberProviderConfigurator implements ProviderConfiguratorInterface
 {
-    public function buildConfiguration(NodeBuilder $node)
+    public function buildConfiguration(NodeBuilder $node): void
     {
         // no custom options
     }

@@ -21,7 +21,7 @@ class AzureProviderConfigurator implements ProviderConfiguratorInterface, Provid
         return false;
     }
 
-    public function buildConfiguration(NodeBuilder $node)
+    public function buildConfiguration(NodeBuilder $node): void
     {
         $node
             ->scalarNode('client_secret')

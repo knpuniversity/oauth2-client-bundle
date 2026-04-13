@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 class FacebookProviderConfigurator implements ProviderConfiguratorInterface
 {
-    public function buildConfiguration(NodeBuilder $node)
+    public function buildConfiguration(NodeBuilder $node): void
     {
         $node
             ->scalarNode('graph_api_version')
